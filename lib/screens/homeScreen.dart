@@ -7,9 +7,15 @@ import 'package:nirvana/widgets/songTile.dart';
 import 'package:nirvana/widgets/textFormField.dart';
 
 // ignore_for_file: prefer_const_constructors
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
 
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+ 
   @override
   Widget build(BuildContext context) {
     var songSearchController;
@@ -17,7 +23,7 @@ class HomeScreen extends StatelessWidget {
       backgroundColor: Color(0xFF3B1F50),
       body: SafeArea(
         child: Padding(
-          padding: const EdgeInsets.all(15.0),
+          padding: const EdgeInsets.only(top: 15, left: 15, right: 15),
           child: Column(
             children: [
               Row(
@@ -84,7 +90,10 @@ class HomeScreen extends StatelessWidget {
               //Start LIstView From Here
               Expanded(
                 child: NotificationListener<OverscrollIndicatorNotification>(
-                  
+                  onNotification: (overscroll) {
+                    overscroll.disallowIndicator();
+                    return true;
+                  },
                   child: ListView(
                     children: [
                       Row(
@@ -211,6 +220,7 @@ class HomeScreen extends StatelessWidget {
           ),
         ),
       ),
+     
     );
   }
 }

@@ -35,7 +35,7 @@ class SongPlayScreen extends StatelessWidget {
                       Navigator.of(context).pop();
                     },
                     child: Container(
-                      height: 10,
+                      height: 13,
                       width: 62,
                       decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(25),
