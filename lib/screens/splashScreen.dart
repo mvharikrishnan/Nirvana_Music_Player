@@ -48,7 +48,7 @@ class _SplashScreenState extends State<SplashScreen> {
                   waveColor: Colors.white,
                   boxBackgroundColor: Color(0xFF3B1F50),
                   textStyle: TextStyle(
-                    fontSize: 40.0,
+                    fontSize: 50.0,
                     fontWeight: FontWeight.bold,
                   ),
                   boxHeight: 100.0,
