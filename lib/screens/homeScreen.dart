@@ -84,10 +84,7 @@ class HomeScreen extends StatelessWidget {
               //Start LIstView From Here
               Expanded(
                 child: NotificationListener<OverscrollIndicatorNotification>(
-                  onNotification: (overScroll) {
-                    overScroll.disallowIndicator();
-                    return true;
-                  },
+                  
                   child: ListView(
                     children: [
                       Row(
