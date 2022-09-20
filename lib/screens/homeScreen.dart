@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:nirvana/screens/profieScreen.dart';
+import 'package:nirvana/screens/recentlyPlayedScreen.dart';
 import 'package:nirvana/widgets/playlistTileHomeScreen.dart';
 import 'package:nirvana/widgets/songTile.dart';
 
@@ -32,7 +33,13 @@ class HomeScreen extends StatelessWidget {
                   Row(
                     children: [
                       IconButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          Navigator.of(context).push(
+                            MaterialPageRoute(
+                              builder: (ctx) => RecentlyPlayedScreen(),
+                            ),
+                          );
+                        },
                         icon: Icon(
                           Icons.av_timer,
                           color: Colors.white,
