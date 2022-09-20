@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:nirvana/screens/homeScreen.dart';
 import 'package:nirvana/screens/navigationScreen.dart';
+import 'package:nirvana/screens/splashScreen.dart';
 
 void main(){
   runApp(MyApp());
@@ -14,7 +15,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: Screen_Navigation(),
+      home: SplashScreen(),
     );
   }
 }
