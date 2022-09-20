@@ -16,6 +16,8 @@ class SongPlayScreen extends StatelessWidget {
   final String songDetails;
   final String Start;
   final String end;
+
+  
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -28,12 +30,17 @@ class SongPlayScreen extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Container(
-                    height: 10,
-                    width: 62,
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(25),
-                        color: Color.fromARGB(121, 212, 148, 238)),
+                  GestureDetector(
+                    onPanDown: (details) {
+                      Navigator.of(context).pop();
+                    },
+                    child: Container(
+                      height: 10,
+                      width: 62,
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(25),
+                          color: Color.fromARGB(121, 212, 148, 238)),
+                    ),
                   )
                 ],
               ),
@@ -101,7 +108,8 @@ class SongPlayScreen extends StatelessWidget {
                     lineHeight: 10,
                   ),
                 ],
-              )
+              ),
+
             ],
           ),
         ),

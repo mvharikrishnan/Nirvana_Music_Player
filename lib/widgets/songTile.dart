@@ -1,5 +1,3 @@
-
-
 import 'package:flutter/material.dart';
 import 'package:nirvana/screens/songPlayScreen.dart';
 
@@ -17,20 +15,38 @@ class SongTile extends StatelessWidget {
   final String SongDetails;
   final String StartTimer;
   final String EndTimer;
+
+  Route _createRoute() {
+    return PageRouteBuilder(
+      pageBuilder: (context, animation, secondaryAnimation) =>
+        SongPlayScreen(
+        SongTitle: SongTitle,
+        songDetails: SongDetails,
+        SongImagePath: SongCoverImage,
+        Start: StartTimer,
+        end: EndTimer,
+      ),
+      transitionsBuilder: (context, animation, secondaryAnimation, child) {
+        const begin = Offset(0.0, 1.0);
+        const end = Offset.zero;
+        const curve = Curves.ease;
+
+        var tween =
+            Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
+
+        return SlideTransition(
+          position: animation.drive(tween),
+          child: child,
+        );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () async {
-        Navigator.of(context).push(
-          MaterialPageRoute(
-              builder: (ctx) => SongPlayScreen(
-                    SongTitle: SongTitle,
-                    songDetails: SongDetails,
-                    SongImagePath: SongCoverImage,
-                    Start: StartTimer,
-                    end: EndTimer,
-                  )),
-        );
+        Navigator.of(context).push(_createRoute());
       },
       child: Container(
         margin: EdgeInsets.only(

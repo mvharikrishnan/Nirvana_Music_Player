@@ -11,6 +11,7 @@ class PlaylistHomeScreenTile extends StatelessWidget {
   final String PlaylistName;
   final String PlaylistCoverIMGPath;
   final String songsCountInPlaylist;
+  
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
