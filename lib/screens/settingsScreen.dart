@@ -9,6 +9,7 @@ class SettingsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        elevation: 0,
         backgroundColor: Color(0xFF3B1F50),
       ),
       backgroundColor: Color(0xFF3B1F50),

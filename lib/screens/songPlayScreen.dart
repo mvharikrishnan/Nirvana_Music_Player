@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:nirvana/main.dart';
+import 'package:nirvana/screens/addPlaylist.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
 
 class SongPlayScreen extends StatelessWidget {
@@ -205,7 +206,13 @@ class SongPlayScreen extends StatelessWidget {
                         icon: Icon(Icons.favorite_rounded,
                             color: Color(0xFFD933C3), size: 30)),
                     IconButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          Navigator.of(context).push(
+                            MaterialPageRoute(
+                              builder: (ctx) => AddToPlaylist(),
+                            ),
+                          );
+                        },
                         icon: Icon(Icons.playlist_play,
                             color: Colors.white, size: 30)),
                   ],
