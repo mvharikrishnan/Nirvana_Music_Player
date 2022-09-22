@@ -14,9 +14,10 @@ class SplashScreen extends StatefulWidget {
 class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
-     gotoScreenHome(context);
+    gotoScreenHome(context);
     super.initState();
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -25,20 +26,20 @@ class _SplashScreenState extends State<SplashScreen> {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Column(
-           mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Text(
                 'Connect Music',
                 style: TextStyle(
                     color: Colors.white,
-                    fontSize: 20,
+                    fontSize: 15,
                     fontWeight: FontWeight.w500),
               ),
               Text(
                 'With',
                 style: TextStyle(
                     color: Colors.white,
-                    fontSize: 20,
+                    fontSize: 15,
                     fontWeight: FontWeight.w500),
               ),
               SizedBox(
@@ -61,14 +62,14 @@ class _SplashScreenState extends State<SplashScreen> {
     );
   }
 }
-Future<void> gotoScreenHome(BuildContext context) async {
-    await Future.delayed(const Duration(seconds: 7));
-    // ignore: use_build_context_synchronously
-    Navigator.pushReplacement(
-      context,
-      MaterialPageRoute(
-        builder: (ctx) => const Screen_Navigation(),
-      ),
-    );
-  }
 
+Future<void> gotoScreenHome(BuildContext context) async {
+  await Future.delayed(const Duration(seconds: 7));
+  // ignore: use_build_context_synchronously
+  Navigator.pushReplacement(
+    context,
+    MaterialPageRoute(
+      builder: (ctx) => const Screen_Navigation(),
+    ),
+  );
+}

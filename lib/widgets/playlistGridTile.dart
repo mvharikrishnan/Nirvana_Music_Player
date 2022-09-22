@@ -43,6 +43,17 @@ class PlaylistGridTile extends StatelessWidget {
             ),
           ),
           Positioned(
+            right: 20,
+            child: IconButton(
+              onPressed: () {},
+              icon: Icon(
+                Icons.more_vert,
+                size: 30,
+                color: Colors.white,
+              ),
+            ),
+          ),
+          Positioned(
             bottom: 10.01,
             child: Container(
               height: 52,

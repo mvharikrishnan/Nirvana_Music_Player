@@ -52,7 +52,7 @@ class SongTile extends StatelessWidget {
         margin: EdgeInsets.only(
           bottom: 9,
         ),
-        height: 60,
+        height: 70,
         width: double.infinity,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(20),
@@ -67,8 +67,8 @@ class SongTile extends StatelessWidget {
                 children: [
                   Container(
                     margin: EdgeInsets.only(left: 10),
-                    height: 36,
-                    width: 36,
+                    height: 40,
+                    width: 40,
                     decoration: BoxDecoration(
                       image: DecorationImage(
                         image: AssetImage(SongCoverImage),
