@@ -1,9 +1,13 @@
+import 'package:assets_audio_player/assets_audio_player.dart';
+import 'package:audio_video_progress_bar/audio_video_progress_bar.dart';
 import 'package:flutter/material.dart';
+import 'package:marquee/marquee.dart';
 import 'package:nirvana/main.dart';
 import 'package:nirvana/screens/addPlaylist.dart';
+import 'package:on_audio_query/on_audio_query.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
 
-class SongPlayScreen extends StatelessWidget {
+class SongPlayScreen extends StatefulWidget {
   const SongPlayScreen({
     Key? key,
     required this.SongTitle,
@@ -11,12 +15,29 @@ class SongPlayScreen extends StatelessWidget {
     required this.SongImagePath,
     required this.Start,
     required this.end,
+    required this.SongUri,
   }) : super(key: key);
   final String SongTitle;
   final String SongImagePath;
   final String songDetails;
   final String Start;
   final String end;
+  final String SongUri;
+
+  @override
+  State<SongPlayScreen> createState() => _SongPlayScreenState();
+}
+
+class _SongPlayScreenState extends State<SongPlayScreen> {
+  final _audioQurey = new OnAudioQuery();
+  final _audioPlayer = new AssetsAudioPlayer();
+  bool playorpauseIcon = true;
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    PlaySong(widget.SongUri);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -33,6 +54,7 @@ class SongPlayScreen extends StatelessWidget {
                   GestureDetector(
                     onPanDown: (details) {
                       Navigator.of(context).pop();
+                      _audioPlayer.stop();
                     },
                     child: Container(
                       height: 13,
@@ -56,7 +78,8 @@ class SongPlayScreen extends StatelessWidget {
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(20),
                       image: DecorationImage(
-                          image: AssetImage(SongImagePath), fit: BoxFit.cover),
+                          image: AssetImage(widget.SongImagePath),
+                          fit: BoxFit.cover),
                     ),
                   )
                 ],
@@ -64,17 +87,19 @@ class SongPlayScreen extends StatelessWidget {
               SizedBox(
                 height: 20,
               ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    SongTitle,
+              Padding(
+                padding: const EdgeInsets.only(left: 20, right: 20),
+                child: SizedBox(
+                  height: 30,
+                  width: double.infinity,
+                  child: Marquee(
+                    text: widget.SongTitle,
                     style: TextStyle(
                         color: Colors.white,
                         fontSize: 24,
                         fontWeight: FontWeight.bold),
                   ),
-                ],
+                ),
               ),
               SizedBox(
                 height: 20,
@@ -83,7 +108,7 @@ class SongPlayScreen extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
-                    songDetails,
+                    widget.songDetails,
                     style: TextStyle(
                         color: Color(0xFFC87DFF),
                         fontSize: 15,
@@ -96,23 +121,24 @@ class SongPlayScreen extends StatelessWidget {
               ),
               Column(
                 children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      LinearPercentIndicator(
-                        padding: EdgeInsets.symmetric(horizontal: 20),
-                        width: 297,
-                        barRadius: Radius.circular(20),
-                        animation: true,
-                        progressColor: Color(0xFFC87DFF),
-                        backgroundColor: Color.fromARGB(100, 201, 125, 255),
-                        animationDuration: 1000,
-                        percent: 0.5,
-                        // fillColor: Color(0xFFC87DFF),
-                        lineHeight: 10,
-                      ),
-                    ],
-                  ),
+                  // Row(
+                  //   mainAxisAlignment: MainAxisAlignment.center,
+                  //   children: [
+                  //     // LinearPercentIndicator(
+                  //     //   padding: EdgeInsets.symmetric(horizontal: 20),
+                  //     //   width: 297,
+                  //     //   barRadius: Radius.circular(20),
+                  //     //   animation: true,
+                  //     //   progressColor: Color(0xFFC87DFF),
+                  //     //   backgroundColor: Color.fromARGB(100, 201, 125, 255),
+                  //     //   animationDuration: 1000,
+                  //     //   percent: 0.5,
+                  //     //   // fillColor: Color(0xFFC87DFF),
+                  //     //   lineHeight: 10,
+                  //     // ),
+                  //   ],
+                  // ),
+
                   Padding(
                     padding:
                         const EdgeInsets.only(left: 60, right: 60, top: 10),
@@ -120,11 +146,11 @@ class SongPlayScreen extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
-                          Start,
+                          widget.Start,
                           style: TextStyle(fontSize: 15, color: Colors.white),
                         ),
                         Text(
-                          end,
+                          widget.end,
                           style: TextStyle(
                               color: Color.fromARGB(204, 113, 66, 147),
                               fontSize: 15),
@@ -154,19 +180,37 @@ class SongPlayScreen extends StatelessWidget {
                         size: 30,
                         color: Colors.white,
                       )),
-                  Container(
-                    height: 60,
-                    width: 60,
-                    decoration: BoxDecoration(
-                        shape: BoxShape.circle, color: Color(0xFFD933C3)),
-                    child: Icon(
-                      Icons.pause_rounded,
-                      color: Colors.white,
-                      size: 40,
+                  GestureDetector(
+                    onTap: () {
+                      _audioPlayer.playOrPause();
+
+                      setState(() {
+                        playorpauseIcon ? pauseIcons() : PlayIcon();
+                      });
+                    },
+                    child: Container(
+                      height: 60,
+                      width: 60,
+                      decoration: BoxDecoration(
+                          shape: BoxShape.circle, color: Color(0xFFD933C3)),
+                      child: playorpauseIcon
+                          ? Icon(
+                              Icons.pause_rounded,
+                              color: Colors.white,
+                              size: 40,
+                            )
+                          : Icon(
+                              Icons.play_arrow_rounded,
+                              color: Colors.white,
+                              size: 40,
+                            ),
                     ),
                   ),
                   IconButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        _audioPlayer.next();
+                        PlayIcon();
+                      },
                       icon: Icon(
                         Icons.fast_forward,
                         size: 30,
@@ -223,5 +267,29 @@ class SongPlayScreen extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  PlaySong(String? Uri) {
+    try {
+      _audioPlayer.open(
+        Audio.file(Uri!),
+        showNotification: true,
+      );
+      _audioPlayer.play();
+    } on Exception {
+      print('Song is not Playable');
+    }
+  }
+
+  pauseIcons() {
+    setState(() {
+      playorpauseIcon = false;
+    });
+  }
+
+  PlayIcon() {
+    setState(() {
+      playorpauseIcon = true;
+    });
   }
 }

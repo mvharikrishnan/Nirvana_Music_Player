@@ -1,7 +1,10 @@
+import 'package:assets_audio_player/assets_audio_player.dart';
 import 'package:flutter/material.dart';
+import 'package:marquee/marquee.dart';
 import 'package:nirvana/screens/songPlayScreen.dart';
+import 'package:on_audio_query/on_audio_query.dart';
 
-class SongTile extends StatelessWidget {
+class SongTile extends StatefulWidget {
   const SongTile({
     Key? key,
     required this.SongTitle,
@@ -9,22 +12,31 @@ class SongTile extends StatelessWidget {
     required this.SongCoverImage,
     required this.StartTimer,
     required this.EndTimer,
+    required this.SongURI,
   }) : super(key: key);
   final String SongCoverImage;
   final String SongTitle;
   final String SongDetails;
   final String StartTimer;
   final String EndTimer;
+  final String SongURI;
 
+  @override
+  State<SongTile> createState() => _SongTileState();
+}
+
+class _SongTileState extends State<SongTile> {
+  final _audioQurey = new OnAudioQuery();
+  final _audioPlayer = new AssetsAudioPlayer();
   Route _createRoute() {
     return PageRouteBuilder(
-      pageBuilder: (context, animation, secondaryAnimation) =>
-        SongPlayScreen(
-        SongTitle: SongTitle,
-        songDetails: SongDetails,
-        SongImagePath: SongCoverImage,
-        Start: StartTimer,
-        end: EndTimer,
+      pageBuilder: (context, animation, secondaryAnimation) => SongPlayScreen(
+        SongTitle: widget.SongTitle,
+        songDetails: widget.SongDetails,
+        SongImagePath: widget.SongCoverImage,
+        Start: widget.StartTimer,
+        end: widget.EndTimer,
+        SongUri: widget.SongURI,
       ),
       transitionsBuilder: (context, animation, secondaryAnimation, child) {
         const begin = Offset(0.0, 1.0);
@@ -71,7 +83,7 @@ class SongTile extends StatelessWidget {
                     width: 40,
                     decoration: BoxDecoration(
                       image: DecorationImage(
-                        image: AssetImage(SongCoverImage),
+                        image: AssetImage(widget.SongCoverImage),
                         fit: BoxFit.cover,
                       ),
                       //borderRadius: BorderRadius.circular(8),
@@ -83,16 +95,32 @@ class SongTile extends StatelessWidget {
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(
-                        SongTitle,
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 15,
-                          fontWeight: FontWeight.w500,
+                      SizedBox(
+                        height: 20,
+                        width: 200,
+                        child:
+                            //  Marquee(
+                            //   text: widget.SongTitle,
+                            //   style: TextStyle(
+                            //     color: Colors.white,
+                            //     fontSize: 15,
+                            //     fontWeight: FontWeight.w500,
+                            //   ),
+                            // ),
+                            //start here
+                            Text(
+                          widget.SongTitle,
+                          overflow: TextOverflow.ellipsis,
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 15,
+                            fontWeight: FontWeight.w500,
+                          ),
                         ),
+                        //end here
                       ),
                       Text(
-                        SongDetails,
+                        widget.SongDetails,
                         style: TextStyle(
                           color: Color(0xFFD594EE),
                           fontSize: 15,
@@ -128,6 +156,15 @@ class SongTile extends StatelessWidget {
         ),
       ),
     );
+  }
+   PlaySong(String? Uri) {
+    try {
+      _audioPlayer.open(
+        Audio.file(Uri!),
+      );
+    } on Exception {
+      print('Song is not Playable');
+    }
   }
 }
 

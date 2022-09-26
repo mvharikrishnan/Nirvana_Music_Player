@@ -1,3 +1,4 @@
+import 'package:assets_audio_player/assets_audio_player.dart';
 import 'package:flutter/material.dart';
 import 'package:nirvana/screens/profieScreen.dart';
 import 'package:nirvana/screens/recentlyPlayedScreen.dart';
@@ -6,6 +7,8 @@ import 'package:nirvana/widgets/playlistTileHomeScreen.dart';
 import 'package:nirvana/widgets/songTile.dart';
 
 import 'package:nirvana/widgets/textFormField.dart';
+import 'package:on_audio_query/on_audio_query.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 // ignore_for_file: prefer_const_constructors
 class HomeScreen extends StatefulWidget {
@@ -16,6 +19,19 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  final _audioQurey = new OnAudioQuery();
+  final _audioPlayer = new AssetsAudioPlayer();
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    requestPermission();
+  }
+
+  void requestPermission() {
+    Permission.storage.request();
+  }
+
   @override
   Widget build(BuildContext context) {
     var songSearchController;
@@ -155,64 +171,52 @@ class _HomeScreenState extends State<HomeScreen> {
                         SizedBox(
                           height: 8,
                         ),
-                        //Song Tile
-                        SongTile(
-                          SongTitle: 'Story Of My Life',
-                          SongDetails: 'One Direction',
-                          SongCoverImage: 'assets/images/StoryOfMyLife.png',
-                          StartTimer: '1:12',
-                          EndTimer: '2:59',
-                        ),
-                        SongTile(
-                          SongTitle: 'Whats Makes You Beautuful',
-                          SongDetails: 'One Direction',
-                          SongCoverImage:
-                              'assets/images/What_Makes_You_Beautiful_Album_Cover.jpg',
-                          StartTimer: '0:00',
-                          EndTimer: '3.03',
-                        ),
-                        SongTile(
-                          SongTitle: 'Drag Me Down',
-                          SongDetails: 'One Direction',
-                          SongCoverImage:
-                              'assets/images/One_Direction_-_Drag_Me_Down_(Official_Single_Cover).png',
-                          StartTimer: '0:00',
-                          EndTimer: '3:12',
-                        ),
-                        SongTile(
-                          SongTitle: 'Ole Melody',
-                          SongDetails: 'Thallumaala',
-                          SongCoverImage: 'assets/images/ole meledy.jpg',
-                          StartTimer: '0:00',
-                          EndTimer: '3:12',
-                        ),
-                        SongTile(
-                          SongTitle: 'Dard E Disco',
-                          SongDetails: 'Sukhwindar Singh',
-                          SongCoverImage: 'assets/images/dard e disco.jpg',
-                          StartTimer: '0:00',
-                          EndTimer: '3:12',
-                        ),
-                        SongTile(
-                          SongTitle: 'Kumkummamake',
-                          SongDetails: 'Hesham Abdul Wahab',
-                          SongCoverImage: 'assets/images/Brahmastra-1b.jpg',
-                          StartTimer: '0:00',
-                          EndTimer: '3:12',
-                        ),
-                        SongTile(
-                          SongTitle: 'Christmas Eval',
-                          SongDetails: 'Stray Kids',
-                          SongCoverImage: 'assets/images/christmas.jpg',
-                          StartTimer: '0:00',
-                          EndTimer: '3:12',
-                        ),
-                        SongTile(
-                          SongTitle: '16 Shots',
-                          SongDetails: 'Stefflon Don',
-                          SongCoverImage: 'assets/images/16 shots.jpg',
-                          StartTimer: '0:00',
-                          EndTimer: '3:12',
+                        //Song Tile Starts here -- dummy content
+                        // SongTile(
+                        //   SongTitle: 'Story Of My Life',
+                        //   SongDetails: 'One Direction',
+                        //   SongCoverImage: 'assets/images/StoryOfMyLife.png',
+                        //   StartTimer: '1:12',
+                        //   EndTimer: '2:59',
+                        // ),
+                        FutureBuilder<List<SongModel>>(
+                          future: _audioQurey.querySongs(
+                            sortType: SongSortType.DISPLAY_NAME,
+                            orderType: OrderType.ASC_OR_SMALLER,
+                            uriType: UriType.EXTERNAL,
+                            ignoreCase: true,
+                          ),
+                          builder: (context, items) {
+                            if (items.data == null) {
+                              return Center(
+                                child: CircularProgressIndicator(),
+                              );
+                            }
+                            if (items.data!.isEmpty) {
+                              return Center(child: Text('No Songs Identified'));
+                            }
+                            return ListView.builder(
+                              itemCount: items.data!.length,
+                              shrinkWrap: true,
+                              physics: ScrollPhysics(),
+                              itemBuilder: (context, index) {
+                                return SongTile(
+                                  SongTitle:
+                                      items.data![index].displayNameWOExt,
+                                  SongDetails:
+                                      items.data![index].artistId.toString(),
+                                  SongCoverImage:
+                                       'assets/images/What_Makes_You_Beautiful_Album_Cover.jpg',
+                                      
+                                  StartTimer:
+                                      items.data![index].duration.toString(),
+                                  EndTimer:
+                                      items.data![index].duration.toString(),
+                                  SongURI: items.data![index].uri.toString(),
+                                );
+                              },
+                            );
+                          },
                         ),
                       ],
                     ),

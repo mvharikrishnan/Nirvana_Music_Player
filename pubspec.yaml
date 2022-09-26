@@ -28,10 +28,15 @@ environment:
 # versions available, run `flutter pub outdated`.
 dependencies:
     animated_text_kit: ^4.2.2
+    assets_audio_player: ^3.0.5
+    audio_video_progress_bar: ^0.10.0
     cupertino_icons: ^1.0.2
     flutter:
         sdk: flutter
+    marquee: ^2.2.3
+    on_audio_query: ^2.6.1
     percent_indicator: ^4.2.2
+    permission_handler: ^10.0.1
 
 dev_dependencies:
     flutter_lints: ^2.0.0

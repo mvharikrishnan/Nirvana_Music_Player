@@ -103,64 +103,64 @@ class PlaylistViewingScreen extends StatelessWidget {
             padding: const EdgeInsets.all(15.0),
             child: Column(
               children: [
-                SongTile(
-                        SongTitle: 'Story Of My Life',
-                        SongDetails: 'One Direction',
-                        SongCoverImage: 'assets/images/StoryOfMyLife.png',
-                        StartTimer: '1:12',
-                        EndTimer: '2:59',
-                      ),
-                      SongTile(
-                        SongTitle: 'Whats Makes You Beautuful',
-                        SongDetails: 'One Direction',
-                        SongCoverImage:
-                            'assets/images/What_Makes_You_Beautiful_Album_Cover.jpg',
-                        StartTimer: '0:00',
-                        EndTimer: '3.03',
-                      ),
-                      SongTile(
-                        SongTitle: 'Drag Me Down',
-                        SongDetails: 'One Direction',
-                        SongCoverImage:
-                            'assets/images/One_Direction_-_Drag_Me_Down_(Official_Single_Cover).png',
-                        StartTimer: '0:00',
-                        EndTimer: '3:12',
-                      ),
-                      SongTile(
-                        SongTitle: 'Ole Melody',
-                        SongDetails: 'Thallumaala',
-                        SongCoverImage: 'assets/images/ole meledy.jpg',
-                        StartTimer: '0:00',
-                        EndTimer: '3:12',
-                      ),
-                      SongTile(
-                        SongTitle: 'Dard E Disco',
-                        SongDetails: 'Sukhwindar Singh',
-                        SongCoverImage: 'assets/images/dard e disco.jpg',
-                        StartTimer: '0:00',
-                        EndTimer: '3:12',
-                      ),
-                      SongTile(
-                        SongTitle: 'Kumkummamake',
-                        SongDetails: 'Hesham Abdul Wahab',
-                        SongCoverImage: 'assets/images/Brahmastra-1b.jpg',
-                        StartTimer: '0:00',
-                        EndTimer: '3:12',
-                      ),
-                      SongTile(
-                        SongTitle: 'Christmas Eval',
-                        SongDetails: 'Stray Kids',
-                        SongCoverImage: 'assets/images/christmas.jpg',
-                        StartTimer: '0:00',
-                        EndTimer: '3:12',
-                      ),
-                      SongTile(
-                        SongTitle: '16 Shots',
-                        SongDetails: 'Stefflon Don',
-                        SongCoverImage: 'assets/images/16 shots.jpg',
-                        StartTimer: '0:00',
-                        EndTimer: '3:12',
-                      ),
+                // SongTile(
+                //         SongTitle: 'Story Of My Life',
+                //         SongDetails: 'One Direction',
+                //         SongCoverImage: 'assets/images/StoryOfMyLife.png',
+                //         StartTimer: '1:12',
+                //         EndTimer: '2:59',
+                //       ),
+                //       SongTile(
+                //         SongTitle: 'Whats Makes You Beautuful',
+                //         SongDetails: 'One Direction',
+                //         SongCoverImage:
+                //             'assets/images/What_Makes_You_Beautiful_Album_Cover.jpg',
+                //         StartTimer: '0:00',
+                //         EndTimer: '3.03',
+                //       ),
+                //       SongTile(
+                //         SongTitle: 'Drag Me Down',
+                //         SongDetails: 'One Direction',
+                //         SongCoverImage:
+                //             'assets/images/One_Direction_-_Drag_Me_Down_(Official_Single_Cover).png',
+                //         StartTimer: '0:00',
+                //         EndTimer: '3:12',
+                //       ),
+                //       SongTile(
+                //         SongTitle: 'Ole Melody',
+                //         SongDetails: 'Thallumaala',
+                //         SongCoverImage: 'assets/images/ole meledy.jpg',
+                //         StartTimer: '0:00',
+                //         EndTimer: '3:12',
+                //       ),
+                //       SongTile(
+                //         SongTitle: 'Dard E Disco',
+                //         SongDetails: 'Sukhwindar Singh',
+                //         SongCoverImage: 'assets/images/dard e disco.jpg',
+                //         StartTimer: '0:00',
+                //         EndTimer: '3:12',
+                //       ),
+                //       SongTile(
+                //         SongTitle: 'Kumkummamake',
+                //         SongDetails: 'Hesham Abdul Wahab',
+                //         SongCoverImage: 'assets/images/Brahmastra-1b.jpg',
+                //         StartTimer: '0:00',
+                //         EndTimer: '3:12',
+                //       ),
+                //       SongTile(
+                //         SongTitle: 'Christmas Eval',
+                //         SongDetails: 'Stray Kids',
+                //         SongCoverImage: 'assets/images/christmas.jpg',
+                //         StartTimer: '0:00',
+                //         EndTimer: '3:12',
+                //       ),
+                //       SongTile(
+                //         SongTitle: '16 Shots',
+                //         SongDetails: 'Stefflon Don',
+                //         SongCoverImage: 'assets/images/16 shots.jpg',
+                //         StartTimer: '0:00',
+                //         EndTimer: '3:12',
+                //       ),
               ],
             ),
           )
