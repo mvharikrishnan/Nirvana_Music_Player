@@ -32,6 +32,9 @@ class _SongPlayScreenState extends State<SongPlayScreen> {
   final _audioQurey = new OnAudioQuery();
   final _audioPlayer = new AssetsAudioPlayer();
   bool playorpauseIcon = true;
+  bool isLooping = false;
+  bool isSound = true;
+
   @override
   void initState() {
     // TODO: implement initState
@@ -78,7 +81,10 @@ class _SongPlayScreenState extends State<SongPlayScreen> {
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(20),
                       image: DecorationImage(
-                          image: AssetImage(widget.SongImagePath),
+                          image: (widget.SongImagePath == null)
+                              ? AssetImage(
+                                  'assets/images/What_Makes_You_Beautiful_Album_Cover.jpg')
+                              : AssetImage(widget.SongImagePath),
                           fit: BoxFit.cover),
                     ),
                   )
@@ -119,60 +125,48 @@ class _SongPlayScreenState extends State<SongPlayScreen> {
               SizedBox(
                 height: 50,
               ),
-              Column(
-                children: [
-                  // Row(
-                  //   mainAxisAlignment: MainAxisAlignment.center,
-                  //   children: [
-                  //     // LinearPercentIndicator(
-                  //     //   padding: EdgeInsets.symmetric(horizontal: 20),
-                  //     //   width: 297,
-                  //     //   barRadius: Radius.circular(20),
-                  //     //   animation: true,
-                  //     //   progressColor: Color(0xFFC87DFF),
-                  //     //   backgroundColor: Color.fromARGB(100, 201, 125, 255),
-                  //     //   animationDuration: 1000,
-                  //     //   percent: 0.5,
-                  //     //   // fillColor: Color(0xFFC87DFF),
-                  //     //   lineHeight: 10,
-                  //     // ),
-                  //   ],
-                  // ),
-
-                  Padding(
-                    padding:
-                        const EdgeInsets.only(left: 60, right: 60, top: 10),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          widget.Start,
-                          style: TextStyle(fontSize: 15, color: Colors.white),
-                        ),
-                        Text(
-                          widget.end,
-                          style: TextStyle(
-                              color: Color.fromARGB(204, 113, 66, 147),
-                              fontSize: 15),
-                        )
-                      ],
-                    ),
-                  ),
-                ],
-              ),
+             _audioPlayer.builderRealtimePlayingInfos(builder: (context,info){
+              return  Padding(
+                padding: const EdgeInsets.only(left: 20,right: 20),
+                child: ProgressBar(
+                  //progress: Duration(milliseconds: 1000),
+                  progress: info.currentPosition,
+                  //total: Duration(milliseconds: 2000),
+                  total: info.duration,
+                  progressBarColor: Color(0xFFD933C3),
+                  thumbColor: Color(0xFFD933C3),
+                  thumbGlowColor: Color.fromARGB(103, 217, 51, 195),
+                  baseBarColor: Color.fromARGB(87, 217, 51, 195),
+                  barHeight: 8,
+                  timeLabelTextStyle: TextStyle(color: Colors.white,fontSize: 13),
+                  onSeek: ((value) {
+                   _audioPlayer.seek(value);
+                  }),
+                ),
+              );
+             }),
               SizedBox(
-                height: 170,
+                height: 150,
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   IconButton(
-                      onPressed: () {},
-                      icon: Icon(
-                        Icons.loop,
-                        size: 30,
-                        color: Colors.white,
-                      )),
+                    onPressed: () {
+                      isLooping ? loopingOff() : loopingOn();
+                    },
+                    icon: isLooping
+                        ? Icon(
+                            Icons.loop,
+                            size: 30,
+                            color: Color(0xFFD933C3),
+                          )
+                        : Icon(
+                            Icons.loop,
+                            size: 30,
+                            color: Colors.white,
+                          ),
+                  ),
                   IconButton(
                       onPressed: () {},
                       icon: Icon(
@@ -217,12 +211,21 @@ class _SongPlayScreenState extends State<SongPlayScreen> {
                         color: Colors.white,
                       )),
                   IconButton(
-                      onPressed: () {},
-                      icon: Icon(
-                        Icons.speaker_phone,
-                        size: 30,
-                        color: Colors.white,
-                      )),
+                    onPressed: () {
+                      isSound ? soundOff() : soundOn();
+                    },
+                    icon: isSound
+                        ? Icon(
+                            Icons.music_note_outlined,
+                            size: 30,
+                            color: Colors.white,
+                          )
+                        : Icon(
+                            Icons.music_off_outlined,
+                            size: 30,
+                            color: Color(0xFFD933C3),
+                          ),
+                  ),
                 ],
               ),
               SizedBox(
@@ -290,6 +293,36 @@ class _SongPlayScreenState extends State<SongPlayScreen> {
   PlayIcon() {
     setState(() {
       playorpauseIcon = true;
+    });
+  }
+
+  //code for looping
+  loopingOn() {
+    _audioPlayer.play();
+    _audioPlayer.setLoopMode(LoopMode.single);
+    setState(() {
+      isLooping = true;
+    });
+  }
+
+  loopingOff() {
+    _audioPlayer.setLoopMode(LoopMode.none);
+    setState(() {
+      isLooping = false;
+    });
+  }
+
+  soundOn() {
+    _audioPlayer.setVolume(1);
+    setState(() {
+      isSound = true;
+    });
+  }
+
+  soundOff() {
+    _audioPlayer.setVolume(0.0);
+    setState(() {
+      isSound = false;
     });
   }
 }

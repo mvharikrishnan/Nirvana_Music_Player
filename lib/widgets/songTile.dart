@@ -119,12 +119,17 @@ class _SongTileState extends State<SongTile> {
                         ),
                         //end here
                       ),
-                      Text(
-                        widget.SongDetails,
-                        style: TextStyle(
-                          color: Color(0xFFD594EE),
-                          fontSize: 15,
-                          fontWeight: FontWeight.w500,
+                      SizedBox(
+                        width: 150,
+                        height: 20,
+                        child: Text(
+                          widget.SongDetails,
+                          overflow: TextOverflow.ellipsis,
+                          style: TextStyle(
+                            color: Color(0xFFD594EE),
+                            fontSize: 15,
+                            fontWeight: FontWeight.w500,
+                          ),
                         ),
                       ),
                     ],
@@ -157,10 +162,12 @@ class _SongTileState extends State<SongTile> {
       ),
     );
   }
-   PlaySong(String? Uri) {
+
+  PlaySong(String? Uri) {
     try {
       _audioPlayer.open(
         Audio.file(Uri!),
+        headPhoneStrategy: HeadPhoneStrategy.pauseOnUnplug,
       );
     } on Exception {
       print('Song is not Playable');
