@@ -21,6 +21,7 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   final _audioQurey = new OnAudioQuery();
   final _audioPlayer = new AssetsAudioPlayer();
+  TextEditingController searchController = new TextEditingController();
   @override
   void initState() {
     // TODO: implement initState
@@ -34,7 +35,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    var songSearchController;
+    //var songSearchController;
     return Scaffold(
       backgroundColor: Color(0xFF3B1F50),
       body: SafeArea(
@@ -98,7 +99,7 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
               textFormField(
                   hinttext: 'Song or artist',
-                  textEditController: songSearchController),
+                  textEditController: searchController),
               SizedBox(
                 height: 15,
               ),
@@ -207,7 +208,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                       items.data![index].artist.toString(),
                                   SongCoverImage:
                                       'assets/images/What_Makes_You_Beautiful_Album_Cover.jpg',
-                                      // items.data![index].album.toString(),
+                                  // items.data![index].album.toString(),
                                   StartTimer:
                                       items.data![index].duration.toString(),
                                   EndTimer:
@@ -223,12 +224,14 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                 ),
               ),
-              MiniMusicPlayer(
-                miniSongTitle: 'Story Of My Life',
-                miniSongAuther: 'One Direction',
-                miniImagePath: 'assets/images/StoryOfMyLife.png',
-                miniSongStart: '1:12',
-                miniSongEnd: '2:59',
+              GestureDetector(
+                child: MiniMusicPlayer(
+                  miniSongTitle: 'Story Of My Life',
+                  miniSongAuther: 'One Direction',
+                  miniImagePath: 'assets/images/StoryOfMyLife.png',
+                  miniSongStart: '1:12',
+                  miniSongEnd: '2:59',
+                ),
               ),
             ],
           ),

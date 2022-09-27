@@ -38,34 +38,37 @@ class PlaylistScreen extends StatelessWidget {
               SizedBox(
                 height: 15,
               ),
-              Expanded(
-                child: GridView.count(
-                  
-                  mainAxisSpacing: 10,
-                  shrinkWrap: true,
-                  crossAxisCount: 2,
-                  children: [
-                    PlaylistGridTile(
-                        PlaylistTitle: 'Liked Songs',
-                        PlaylistSongCount: '8 Songs',
-                        PlaylistBackgroundImage:
-                            'assets/images/ArtisticIMage.jpg'),
-                    PlaylistGridTile(
-                        PlaylistTitle: 'Malayalam Songs',
-                        PlaylistSongCount: '10 Songs',
-                        PlaylistBackgroundImage:
-                            'assets/images/PlaylistImage3.jpg'),
-                    PlaylistGridTile(
-                        PlaylistTitle: 'English Evergreen',
-                        PlaylistSongCount: '10 Songs',
-                        PlaylistBackgroundImage:
-                            'assets/images/PlaylistImage2.jpg'),
-                    PlaylistGridTile(
-                        PlaylistTitle: 'My Favorite Songs',
-                        PlaylistSongCount: '30 Songs',
-                        PlaylistBackgroundImage:
-                            'assets/images/Vaporwave Lamborghini.jpg'),
-                  ],
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Expanded(
+                  child: GridView.count(
+                    
+                    mainAxisSpacing: 10,
+                    shrinkWrap: true,
+                    crossAxisCount: 2,
+                    children: [
+                      PlaylistGridTile(
+                          PlaylistTitle: 'Liked Songs',
+                          PlaylistSongCount: '8 Songs',
+                          PlaylistBackgroundImage:
+                              'assets/images/ArtisticIMage.jpg'),
+                      PlaylistGridTile(
+                          PlaylistTitle: 'Malayalam Songs',
+                          PlaylistSongCount: '10 Songs',
+                          PlaylistBackgroundImage:
+                              'assets/images/PlaylistImage3.jpg'),
+                      PlaylistGridTile(
+                          PlaylistTitle: 'English Evergreen',
+                          PlaylistSongCount: '10 Songs',
+                          PlaylistBackgroundImage:
+                              'assets/images/PlaylistImage2.jpg'),
+                      PlaylistGridTile(
+                          PlaylistTitle: 'My Favorite Songs',
+                          PlaylistSongCount: '30 Songs',
+                          PlaylistBackgroundImage:
+                              'assets/images/Vaporwave Lamborghini.jpg'),
+                    ],
+                  ),
                 ),
               )
             ],

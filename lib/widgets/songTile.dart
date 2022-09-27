@@ -1,5 +1,8 @@
+import 'dart:io';
+
 import 'package:assets_audio_player/assets_audio_player.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:marquee/marquee.dart';
 import 'package:nirvana/screens/songPlayScreen.dart';
 import 'package:on_audio_query/on_audio_query.dart';
@@ -148,7 +151,9 @@ class _SongTileState extends State<SongTile> {
                     width: 12,
                   ),
                   IconButton(
-                    onPressed: () {},
+                    onPressed: () {
+                     //SystemNavigator.pop();
+                    },
                     icon: Icon(
                       Icons.more_vert,
                       color: Colors.white,
