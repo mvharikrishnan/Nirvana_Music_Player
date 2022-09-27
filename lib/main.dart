@@ -5,6 +5,7 @@ import 'package:nirvana/screens/navigationScreen.dart';
 import 'package:nirvana/screens/splashScreen.dart';
 
 void main(){
+
   runApp(MyApp());
 }
 

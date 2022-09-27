@@ -12,12 +12,12 @@ class SongTile extends StatefulWidget {
     Key? key,
     required this.SongTitle,
     required this.SongDetails,
-    required this.SongCoverImage,
+    required this.SongID,
     required this.StartTimer,
     required this.EndTimer,
     required this.SongURI,
   }) : super(key: key);
-  final String SongCoverImage;
+  final String SongID;
   final String SongTitle;
   final String SongDetails;
   final String StartTimer;
@@ -36,7 +36,7 @@ class _SongTileState extends State<SongTile> {
       pageBuilder: (context, animation, secondaryAnimation) => SongPlayScreen(
         SongTitle: widget.SongTitle,
         songDetails: widget.SongDetails,
-        SongImagePath: widget.SongCoverImage,
+        SongImagePath: widget.SongID,
         Start: widget.StartTimer,
         end: widget.EndTimer,
         SongUri: widget.SongURI,
@@ -84,12 +84,16 @@ class _SongTileState extends State<SongTile> {
                     margin: EdgeInsets.only(left: 10),
                     height: 40,
                     width: 40,
-                    decoration: BoxDecoration(
-                      image: DecorationImage(
-                        image: AssetImage(widget.SongCoverImage),
-                        fit: BoxFit.cover,
+                    child: QueryArtworkWidget(
+                      artworkHeight: 200.0,
+                      
+                      id: int.parse(widget.SongID),
+                      type: ArtworkType.AUDIO,
+                      nullArtworkWidget: Icon(
+                        Icons.music_note,
+                        size: 30,
+                        color: Colors.white,
                       ),
-                      //borderRadius: BorderRadius.circular(8),
                     ),
                   ),
                   SizedBox(
@@ -97,6 +101,7 @@ class _SongTileState extends State<SongTile> {
                   ),
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       SizedBox(
                         height: 20,
@@ -152,7 +157,7 @@ class _SongTileState extends State<SongTile> {
                   ),
                   IconButton(
                     onPressed: () {
-                     //SystemNavigator.pop();
+                      //SystemNavigator.pop();
                     },
                     icon: Icon(
                       Icons.more_vert,

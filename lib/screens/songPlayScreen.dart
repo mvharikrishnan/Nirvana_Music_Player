@@ -78,15 +78,7 @@ class _SongPlayScreenState extends State<SongPlayScreen> {
                   Container(
                     height: 297,
                     width: 297,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(20),
-                      image: DecorationImage(
-                          image: (widget.SongImagePath == null)
-                              ? AssetImage(
-                                  'assets/images/What_Makes_You_Beautiful_Album_Cover.jpg')
-                              : AssetImage(widget.SongImagePath),
-                          fit: BoxFit.cover),
-                    ),
+                   child: QueryArtworkWidget(id: int.parse(widget.SongImagePath), type: ArtworkType.AUDIO),
                   )
                 ],
               ),

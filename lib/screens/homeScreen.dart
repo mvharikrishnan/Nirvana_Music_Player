@@ -206,8 +206,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                       items.data![index].displayNameWOExt,
                                   SongDetails:
                                       items.data![index].artist.toString(),
-                                  SongCoverImage:
-                                      'assets/images/What_Makes_You_Beautiful_Album_Cover.jpg',
+                                  SongID:
+                                      items.data![index].id.toString(),
                                   // items.data![index].album.toString(),
                                   StartTimer:
                                       items.data![index].duration.toString(),

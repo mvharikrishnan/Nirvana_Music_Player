@@ -30,7 +30,7 @@ class MiniMusicPlayer extends StatelessWidget {
               width: 350,
               child: Container(
                 decoration: BoxDecoration(
-                    color: Color(0xFF4F2C69),
+                    color: Color(0xFF4F2C69),    //color code for the container 0xFF4F2C69
                     borderRadius: BorderRadius.circular(30)),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.end,
