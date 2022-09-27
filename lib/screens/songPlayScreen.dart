@@ -78,8 +78,8 @@ class _SongPlayScreenState extends State<SongPlayScreen> {
                   Container(
                     height: 297,
                     width: 297,
-                   child: QueryArtworkWidget(id: int.parse(widget.SongImagePath), type: ArtworkType.AUDIO),
-                  )
+                   child:widget.SongImagePath.isEmpty?Image(image: AssetImage('assets/images/concreteGIF.gif')):QueryArtworkWidget(id: int.parse(widget.SongImagePath), type: ArtworkType.AUDIO),
+                  ),
                 ],
               ),
               SizedBox(
