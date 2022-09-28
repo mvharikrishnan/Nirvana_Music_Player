@@ -82,7 +82,15 @@ class _SongPlayScreenState extends State<SongPlayScreen> {
                       artworkBorder: BorderRadius.circular(10),
                       id: int.parse(widget.SongImagePath),
                       type: ArtworkType.AUDIO,
-                      nullArtworkWidget: Image(image: AssetImage('assets/images/concreteGIF.gif')),
+                      nullArtworkWidget: Container(
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(10),
+                          image: DecorationImage(
+                            fit: BoxFit.cover,
+                            image: AssetImage('assets/images/concreteGIF.gif'),
+                          ),
+                        ),
+                      ),
                     ),
                   ),
                 ],
