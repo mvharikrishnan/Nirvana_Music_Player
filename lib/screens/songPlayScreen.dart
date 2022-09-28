@@ -78,7 +78,12 @@ class _SongPlayScreenState extends State<SongPlayScreen> {
                   Container(
                     height: 297,
                     width: 297,
-                   child:widget.SongImagePath.isEmpty?Image(image: AssetImage('assets/images/concreteGIF.gif')):QueryArtworkWidget(id: int.parse(widget.SongImagePath), type: ArtworkType.AUDIO),
+                    child: QueryArtworkWidget(
+                      artworkBorder: BorderRadius.circular(10),
+                      id: int.parse(widget.SongImagePath),
+                      type: ArtworkType.AUDIO,
+                      nullArtworkWidget: Image(image: AssetImage('assets/images/concreteGIF.gif')),
+                    ),
                   ),
                 ],
               ),
@@ -117,26 +122,28 @@ class _SongPlayScreenState extends State<SongPlayScreen> {
               SizedBox(
                 height: 50,
               ),
-             _audioPlayer.builderRealtimePlayingInfos(builder: (context,info){
-              return  Padding(
-                padding: const EdgeInsets.only(left: 20,right: 20),
-                child: ProgressBar(
-                  //progress: Duration(milliseconds: 1000),
-                  progress: info.currentPosition,
-                  //total: Duration(milliseconds: 2000),
-                  total: info.duration,
-                  progressBarColor: Color(0xFFD933C3),
-                  thumbColor: Color(0xFFD933C3),
-                  thumbGlowColor: Color.fromARGB(103, 217, 51, 195),
-                  baseBarColor: Color.fromARGB(87, 217, 51, 195),
-                  barHeight: 8,
-                  timeLabelTextStyle: TextStyle(color: Colors.white,fontSize: 13),
-                  onSeek: ((value) {
-                   _audioPlayer.seek(value);
-                  }),
-                ),
-              );
-             }),
+              _audioPlayer.builderRealtimePlayingInfos(
+                  builder: (context, info) {
+                return Padding(
+                  padding: const EdgeInsets.only(left: 20, right: 20),
+                  child: ProgressBar(
+                    //progress: Duration(milliseconds: 1000),
+                    progress: info.currentPosition,
+                    //total: Duration(milliseconds: 2000),
+                    total: info.duration,
+                    progressBarColor: Color(0xFFD933C3),
+                    thumbColor: Color(0xFFD933C3),
+                    thumbGlowColor: Color.fromARGB(103, 217, 51, 195),
+                    baseBarColor: Color.fromARGB(87, 217, 51, 195),
+                    barHeight: 8,
+                    timeLabelTextStyle:
+                        TextStyle(color: Colors.white, fontSize: 13),
+                    onSeek: ((value) {
+                      _audioPlayer.seek(value);
+                    }),
+                  ),
+                );
+              }),
               SizedBox(
                 height: 150,
               ),

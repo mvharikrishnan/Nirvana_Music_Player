@@ -85,14 +85,12 @@ class _SongTileState extends State<SongTile> {
                     height: 40,
                     width: 40,
                     child: QueryArtworkWidget(
+                      artworkBorder: BorderRadius.circular(8),
                       artworkHeight: 200.0,
-                      
                       id: int.parse(widget.SongID),
                       type: ArtworkType.AUDIO,
-                      nullArtworkWidget: Icon(
-                        Icons.music_note,
-                        size: 30,
-                        color: Colors.white,
+                      nullArtworkWidget: Image(
+                        image: AssetImage('assets/images/songTileDummy.jpg'),
                       ),
                     ),
                   ),
