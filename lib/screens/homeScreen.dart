@@ -1,5 +1,8 @@
 import 'package:assets_audio_player/assets_audio_player.dart';
 import 'package:flutter/material.dart';
+import 'package:hive_flutter/hive_flutter.dart';
+import 'package:nirvana/database/database_functions/dbFunctions.dart';
+import 'package:nirvana/database/songdb.dart';
 import 'package:nirvana/screens/profieScreen.dart';
 import 'package:nirvana/screens/recentlyPlayedScreen.dart';
 import 'package:nirvana/widgets/miniMusicPlayer.dart';
@@ -20,19 +23,20 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   final _audioQurey = new OnAudioQuery();
-  final _audioPlayer = new AssetsAudioPlayer();
+  final audioPlayer = new AssetsAudioPlayer();
   TextEditingController searchController = new TextEditingController();
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    requestPermission();
+    //requestPermission();
   }
 
-  void requestPermission() {
-    Permission.storage.request();
-  }
-
+  // void requestPermission() {
+  //   Permission.storage.request();
+  // }
+  //accessig the songBOx
+  Box<Songs> songBox = Hive.box<Songs>('Songs');
   @override
   Widget build(BuildContext context) {
     //var songSearchController;
@@ -180,40 +184,72 @@ class _HomeScreenState extends State<HomeScreen> {
                         //   StartTimer: '1:12',
                         //   EndTimer: '2:59',
                         // ),
-                        FutureBuilder<List<SongModel>>(
-                          future: _audioQurey.querySongs(
-                            sortType: SongSortType.DISPLAY_NAME,
-                            orderType: OrderType.ASC_OR_SMALLER,
-                            uriType: UriType.EXTERNAL,
-                            ignoreCase: true,
-                          ),
-                          builder: (context, items) {
-                            if (items.data == null) {
+                        // FutureBuilder<List<SongModel>>(
+                        //   future: _audioQurey.querySongs(
+                        //     sortType: SongSortType.DISPLAY_NAME,
+                        //     orderType: OrderType.ASC_OR_SMALLER,
+                        //     uriType: UriType.EXTERNAL,
+                        //     ignoreCase: true,
+                        //   ),
+                        //   builder: (context, items) {
+                        //     if (items.data == null) {
+                        //       return Center(
+                        //         child: CircularProgressIndicator(),
+                        //       );
+                        //     }
+                        //     if (items.data!.isEmpty) {
+                        //       return Center(child: Text('No Songs Identified'));
+                        //     }
+                        //     return ListView.builder(
+                        //       itemCount: items.data!.length,
+                        //       shrinkWrap: true,
+                        //       physics: ScrollPhysics(),
+                        //       itemBuilder: (context, index) {
+                        //         return SongTile(
+                        //           SongTitle:
+                        //               items.data![index].displayNameWOExt,
+                        //           SongDetails:
+                        //               items.data![index].artist.toString(),
+                        //           SongID: items.data![index].id.toString(),
+                        //           // items.data![index].album.toString(),
+                        //           StartTimer:
+                        //               items.data![index].duration.toString(),
+                        //           EndTimer:
+                        //               items.data![index].duration.toString(),
+                        //           SongURI: items.data![index].uri.toString(),
+                        //         );
+                        //       },
+                        //     );
+                        //   },
+                        // ),
+
+                        //This code below contains the songs that are accecced form the database
+                        ValueListenableBuilder(
+                          valueListenable: songBox.listenable(),
+                          builder: (context, Box<Songs> Songs, Widget? child) {
+                            final keys = Songs.keys.toList();
+                            if (Songs.values == null) {
                               return Center(
                                 child: CircularProgressIndicator(),
                               );
                             }
-                            if (items.data!.isEmpty) {
-                              return Center(child: Text('No Songs Identified'));
+                            if (Songs.values.isEmpty) {
+                              return Center(
+                                  child: Text(
+                                'No Songs Identified',
+                                style: TextStyle(color: Colors.white),
+                              ));
                             }
                             return ListView.builder(
-                              itemCount: items.data!.length,
+                              itemCount: Songs.length,
                               shrinkWrap: true,
                               physics: ScrollPhysics(),
                               itemBuilder: (context, index) {
                                 return SongTile(
-                                  SongTitle:
-                                      items.data![index].displayNameWOExt,
-                                  SongDetails:
-                                      items.data![index].artist.toString(),
-                                  SongID:
-                                      items.data![index].id.toString(),
-                                  // items.data![index].album.toString(),
-                                  StartTimer:
-                                      items.data![index].duration.toString(),
-                                  EndTimer:
-                                      items.data![index].duration.toString(),
-                                  SongURI: items.data![index].uri.toString(),
+                                  Index: index,
+                                  audioPlayer: audioPlayer,
+                                  keys: keys,
+                                  onpressed: () {},
                                 );
                               },
                             );
@@ -230,7 +266,8 @@ class _HomeScreenState extends State<HomeScreen> {
                   miniSongAuther: 'One Direction',
                   miniImagePath: 'assets/images/StoryOfMyLife.png',
                   miniSongStart: '1:12',
-                  miniSongEnd: '2:59', miniSongURI: '',
+                  miniSongEnd: '2:59',
+                  miniSongURI: '',
                 ),
               ),
             ],

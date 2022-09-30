@@ -1,46 +1,56 @@
-import 'dart:io';
+import 'dart:ui';
 
 import 'package:assets_audio_player/assets_audio_player.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:hive_flutter/adapters.dart';
 import 'package:marquee/marquee.dart';
+import 'package:nirvana/database/songdb.dart';
 import 'package:nirvana/screens/songPlayScreen.dart';
 import 'package:on_audio_query/on_audio_query.dart';
 
-class SongTile extends StatefulWidget {
-  const SongTile({
+class SongTile extends StatelessWidget {
+  SongTile({
     Key? key,
-    required this.SongTitle,
-    required this.SongDetails,
-    required this.SongID,
-    required this.StartTimer,
-    required this.EndTimer,
-    required this.SongURI,
+    required this.Index,
+    required this.audioPlayer,
+    required this.keys,
+    required this.onpressed,
   }) : super(key: key);
-  final String SongID;
-  final String SongTitle;
-  final String SongDetails;
-  final String StartTimer;
-  final String EndTimer;
-  final String SongURI;
-
-  @override
-  State<SongTile> createState() => _SongTileState();
-}
-
-class _SongTileState extends State<SongTile> {
-  final _audioQurey = new OnAudioQuery();
+  final dynamic keys;
+  final int Index;
+  final AssetsAudioPlayer audioPlayer;
+  final void Function()? onpressed;
+  // final _audioQurey = new OnAudioQuery();
   final _audioPlayer = new AssetsAudioPlayer();
+  Box<Songs> songBox = Hive.box<Songs>('Songs');
+  List<Songs> songConvertedList = [];
+//     // required this.SongTitle,
+//     // required this.SongDetails,
+//     // required this.SongID,
+//     // required this.StartTimer,
+//     // required this.EndTimer,
+//     // required this.SongURI,
+
+//   // final String SongID;
+//   // final String SongTitle;
+//   // final String SongDetails;
+//   // final String StartTimer;
+//   // final String EndTimer;
+//   // final String SongURI;
+
+//   @override
+//   State<SongTile> createState() => _SongTileState();
+// }
+
+// class _SongTileState extends State<SongTile> {
 
   Route _createRoute() {
     return PageRouteBuilder(
       pageBuilder: (context, animation, secondaryAnimation) => SongPlayScreen(
-        SongTitle: widget.SongTitle,
-        songDetails: widget.SongDetails,
-        SongImagePath: widget.SongID,
-        Start: widget.StartTimer,
-        end: widget.EndTimer,
-        SongUri: widget.SongURI,
+        Index: Index,
+        audioPlayer: audioPlayer,
+        songList: songConvertedList,
       ),
       transitionsBuilder: (context, animation, secondaryAnimation, child) {
         const begin = Offset(0.0, 1.0);
@@ -58,11 +68,20 @@ class _SongTileState extends State<SongTile> {
     );
   }
 
+  convertSong() {
+    for (var key in keys) {
+      songConvertedList.add(songBox.get(key)!);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
+    convertSong();
     return GestureDetector(
       onTap: () async {
-        Navigator.of(context).push(_createRoute());
+         Navigator.of(context).push(_createRoute());
+        // PlaySong(songConvertedList[Index].songPath);
+        // print(songConvertedList[Index].songTitle);
       },
       child: Container(
         margin: EdgeInsets.only(
@@ -89,7 +108,7 @@ class _SongTileState extends State<SongTile> {
                       artworkFit: BoxFit.cover,
                       artworkBorder: BorderRadius.circular(8),
                       artworkHeight: 200.0,
-                      id: int.parse(widget.SongID),
+                      id: int.parse(songConvertedList[Index].id.toString()),
                       type: ArtworkType.AUDIO,
                       nullArtworkWidget: Container(
                         decoration: BoxDecoration(
@@ -124,7 +143,7 @@ class _SongTileState extends State<SongTile> {
                             // ),
                             //start here
                             Text(
-                          widget.SongTitle,
+                          songConvertedList[Index].songTitle!,
                           overflow: TextOverflow.ellipsis,
                           style: TextStyle(
                             color: Colors.white,
@@ -138,7 +157,7 @@ class _SongTileState extends State<SongTile> {
                         width: 150,
                         height: 20,
                         child: Text(
-                          widget.SongDetails,
+                          songConvertedList[Index].songArtist!,
                           overflow: TextOverflow.ellipsis,
                           style: TextStyle(
                             color: Color(0xFFD594EE),

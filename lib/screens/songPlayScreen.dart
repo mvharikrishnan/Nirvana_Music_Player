@@ -2,27 +2,34 @@ import 'package:assets_audio_player/assets_audio_player.dart';
 import 'package:audio_video_progress_bar/audio_video_progress_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:marquee/marquee.dart';
+import 'package:nirvana/database/songdb.dart';
 import 'package:nirvana/main.dart';
 import 'package:nirvana/screens/addPlaylist.dart';
 import 'package:on_audio_query/on_audio_query.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
 
 class SongPlayScreen extends StatefulWidget {
-  const SongPlayScreen({
+   SongPlayScreen({
     Key? key,
-    required this.SongTitle,
-    required this.songDetails,
-    required this.SongImagePath,
-    required this.Start,
-    required this.end,
-    required this.SongUri,
+    // required this.SongTitle,
+    // required this.songDetails,
+    // required this.SongImagePath,
+    // required this.Start,
+    // required this.end,
+    // required this.SongUri,
+    required this.Index,
+    required this.audioPlayer,
+    required this.songList,
   }) : super(key: key);
-  final String SongTitle;
-  final String SongImagePath;
-  final String songDetails;
-  final String Start;
-  final String end;
-  final String SongUri;
+  // final String SongTitle;
+  // final String SongImagePath;
+  // final String songDetails;
+  // final String Start;
+  // final String end;
+  // final String SongUri;
+  final int Index;
+  final List<Songs> songList;
+  final AssetsAudioPlayer audioPlayer;
 
   @override
   State<SongPlayScreen> createState() => _SongPlayScreenState();
@@ -39,7 +46,7 @@ class _SongPlayScreenState extends State<SongPlayScreen> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    PlaySong(widget.SongUri);
+    PlaySong(widget.songList[widget.Index].songPath);
   }
 
   @override
@@ -80,7 +87,7 @@ class _SongPlayScreenState extends State<SongPlayScreen> {
                     width: 297,
                     child: QueryArtworkWidget(
                       artworkBorder: BorderRadius.circular(10),
-                      id: int.parse(widget.SongImagePath),
+                      id: int.parse(widget.songList[widget.Index].id.toString()),
                       type: ArtworkType.AUDIO,
                       nullArtworkWidget: Container(
                         decoration: BoxDecoration(
@@ -104,7 +111,7 @@ class _SongPlayScreenState extends State<SongPlayScreen> {
                   height: 30,
                   width: double.infinity,
                   child: Marquee(
-                    text: widget.SongTitle,
+                    text: widget.songList[widget.Index].songTitle!,
                     style: TextStyle(
                         color: Colors.white,
                         fontSize: 24,
@@ -119,7 +126,7 @@ class _SongPlayScreenState extends State<SongPlayScreen> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
-                    widget.songDetails,
+                   widget.songList[widget.Index].songArtist!,
                     style: TextStyle(
                         color: Color(0xFFC87DFF),
                         fontSize: 15,
@@ -175,7 +182,9 @@ class _SongPlayScreenState extends State<SongPlayScreen> {
                           ),
                   ),
                   IconButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        widget.audioPlayer.previous();
+                      },
                       icon: Icon(
                         Icons.fast_rewind,
                         size: 30,
@@ -208,8 +217,9 @@ class _SongPlayScreenState extends State<SongPlayScreen> {
                     ),
                   ),
                   IconButton(
-                      onPressed: () {
-                        _audioPlayer.next();
+                      onPressed: ()async{
+                        //_audioPlayer.next();
+                       await widget.audioPlayer.next();
                         PlayIcon();
                       },
                       icon: Icon(
