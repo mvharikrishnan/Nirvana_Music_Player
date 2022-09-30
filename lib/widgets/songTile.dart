@@ -31,6 +31,7 @@ class SongTile extends StatefulWidget {
 class _SongTileState extends State<SongTile> {
   final _audioQurey = new OnAudioQuery();
   final _audioPlayer = new AssetsAudioPlayer();
+
   Route _createRoute() {
     return PageRouteBuilder(
       pageBuilder: (context, animation, secondaryAnimation) => SongPlayScreen(
@@ -161,15 +162,29 @@ class _SongTileState extends State<SongTile> {
                   SizedBox(
                     width: 12,
                   ),
-                  IconButton(
-                    onPressed: () {
-                      //SystemNavigator.pop();
-                    },
-                    icon: Icon(
-                      Icons.more_vert,
-                      color: Colors.white,
-                    ),
-                  ),
+                  PopupMenuButton(
+                      color: Color.fromARGB(250, 59, 31, 80),
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(20)),
+                      icon: Icon(
+                        Icons.more_vert_outlined,
+                        color: Colors.white,
+                      ),
+                      itemBuilder: (context) => [
+                            PopupMenuItem(
+                                child: Column(
+                              children: [
+                                TextButton(
+                                  autofocus: false,
+                                  onPressed: () {},
+                                  child: Text(
+                                    'ADD TO PLAYLIST',
+                                    style: TextStyle(color: Colors.white),
+                                  ),
+                                ),
+                              ],
+                            ))
+                          ])
                 ],
               ),
             ],
@@ -190,8 +205,6 @@ class _SongTileState extends State<SongTile> {
     }
   }
 }
-
-
 
 // Navigator.of(context).push(
 //           MaterialPageRoute(

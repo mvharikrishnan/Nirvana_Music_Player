@@ -230,7 +230,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   miniSongAuther: 'One Direction',
                   miniImagePath: 'assets/images/StoryOfMyLife.png',
                   miniSongStart: '1:12',
-                  miniSongEnd: '2:59',
+                  miniSongEnd: '2:59', miniSongURI: '',
                 ),
               ),
             ],
