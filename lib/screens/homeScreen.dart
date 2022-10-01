@@ -260,16 +260,16 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                 ),
               ),
-              GestureDetector(
-                child: MiniMusicPlayer(
-                  miniSongTitle: 'Story Of My Life',
-                  miniSongAuther: 'One Direction',
-                  miniImagePath: 'assets/images/StoryOfMyLife.png',
-                  miniSongStart: '1:12',
-                  miniSongEnd: '2:59',
-                  miniSongURI: '',
-                ),
-              ),
+              // GestureDetector(
+              //   child: MiniMusicPlayer(
+              //     miniSongTitle: 'Story Of My Life',
+              //     miniSongAuther: 'One Direction',
+              //     miniImagePath: 'assets/images/StoryOfMyLife.png',
+              //     miniSongStart: '1:12',
+              //     miniSongEnd: '2:59',
+              //     miniSongURI: '',
+              //   ),
+              // ),
             ],
           ),
         ),

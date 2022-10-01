@@ -4,126 +4,222 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:marquee/marquee.dart';
+import 'package:nirvana/database/songdb.dart';
+import 'package:nirvana/screens/songPlayScreen.dart';
 
 class MiniMusicPlayer extends StatefulWidget {
-  const MiniMusicPlayer({
-    Key? key,
-    required this.miniSongTitle,
-    required this.miniSongAuther,
-    required this.miniImagePath,
-    required this.miniSongStart,
-    required this.miniSongEnd,
-    required this.miniSongURI,
-    
-    
-  }) : super(key: key);
-    final String miniImagePath;
-    final String miniSongTitle;
-    final String miniSongAuther;
-    final String miniSongEnd;
-    final String miniSongStart;
-    final String miniSongURI;
-    
+  const MiniMusicPlayer(
+      {Key? key,
+      // required this.miniSongTitle,
+      // required this.miniSongAuther,
+      // required this.miniImagePath,
+      // required this.miniSongStart,
+      // required this.miniSongEnd,
+      // required this.miniSongURI,
+      required this.audioPlayer,
+      required this.index,
+      required this.songList})
+      : super(key: key);
+  // final String miniImagePath;
+  // final String miniSongTitle;
+  // final String miniSongAuther;
+  // final String miniSongEnd;
+  // final String miniSongStart;
+  // final String miniSongURI;
+  final List<Songs> songList;
+  final int index;
+  final AssetsAudioPlayer audioPlayer;
+
   @override
   State<MiniMusicPlayer> createState() => _MiniMusicPlayerState();
 }
 
 class _MiniMusicPlayerState extends State<MiniMusicPlayer> {
+  List<Audio> songAudio = [];
   bool playbuttonMini = false;
+  bool playorpause = true;
   //final _audioPlayer = AssetsAudioPlayer();
+  Audio find(List<Audio> source, String fromPath) {
+    return source.firstWhere((element) => element.path == fromPath);
+  }
+
+  convertMusic() {
+    for (var song in widget.songList) {
+      songAudio.add(
+        Audio.file(song.songPath!,
+            metas: Metas(
+              title: song.songTitle,
+              id: song.id.toString(),
+              artist: song.songArtist,
+            )),
+      );
+    }
+  }
+
+  Future<void> openAudioPlayer() async {
+    convertMusic();
+    await widget.audioPlayer.open(
+      Playlist(audios: songAudio, startIndex: widget.index),
+      autoStart: true,
+      showNotification: true,
+      playInBackground: PlayInBackground.enabled,
+    );
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    openAudioPlayer();
+    super.initState();
+  }
+
+  Route _createRoute() {
+    return PageRouteBuilder(
+      pageBuilder: (context, animation, secondaryAnimation) => SongPlayScreen(
+        Index: widget.index,
+        audioPlayer: widget.audioPlayer,
+        songList: widget.songList,
+      ),
+      transitionsBuilder: (context, animation, secondaryAnimation, child) {
+        const begin = Offset(0.0, 1.0);
+        const end = Offset.zero;
+        const curve = Curves.ease;
+
+        var tween =
+            Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
+
+        return SlideTransition(
+          position: animation.drive(tween),
+          child: child,
+        );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
-    return  Stack(
-      children: [
-        InkWell(
-          child: Padding(
-            padding: const EdgeInsets.only(bottom: 8),
-            child: Container(
-              height: 65,
-              width: 350,
-              child: Container(
-                decoration: BoxDecoration(
-                    color: Color(
-                        0xFF4F2C69), //color code for the container 0xFF4F2C69
-                    borderRadius: BorderRadius.circular(30)),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      children: [
-                        Container(
-                          width: 120,
-                          child: Marquee(
-                            startAfter: Duration(seconds: 10),
-                            text: widget.miniSongTitle,
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 15,
-                              fontWeight: FontWeight.w500,
-                            ),
+    return widget.audioPlayer.builderCurrent(
+      builder: (context, playing) {
+        final musicAudio = find(songAudio, playing.audio.assetAudioPath);
+        return Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 40),
+          child: Stack(
+            children: [
+              InkWell(
+                onTap: () {
+                  Navigator.of(context).push(_createRoute());
+                },
+                child: Padding(
+                  padding: const EdgeInsets.only(bottom: 8),
+                  child: Container(
+                    height: 65,
+                    width: double.infinity,
+                    child: Container(
+                      decoration: BoxDecoration(
+                          color: Color.fromARGB(255, 124, 77,
+                              159), //color code for the container 0xFF4F2C69
+                          borderRadius: BorderRadius.circular(30)),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                            children: [
+                              Container(
+                                width: 120,
+                                child: Marquee(
+                                  startAfter: Duration(seconds: 2),
+                                  text: widget.audioPlayer.getCurrentAudioTitle,
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 15,
+                                    fontWeight: FontWeight.w500,
+                                  ),
+                                ),
+                              ),
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceAround,
+                                children: [
+                                  IconButton(
+                                    onPressed: () {
+                                      widget.audioPlayer.previous();
+                                    },
+                                    icon: Icon(
+                                      Icons.fast_rewind,
+                                      color: Colors.white,
+                                    ),
+                                  ),
+                                  GestureDetector(
+                                    onTap: () {
+                                      setState(() {
+                                        playbuttonMini
+                                            ? pausedmini()
+                                            : playMini();
+                                      });
+                                    },
+                                    child: InkWell(
+                                      onTap: () {
+                                        widget.audioPlayer.playOrPause();
+                                        setState(() {
+                                          playorpause
+                                              ? pausedmini()
+                                              : playMini();
+                                        });
+                                      },
+                                      child: Container(
+                                          height: 50,
+                                          width: 50,
+                                          decoration: BoxDecoration(
+                                              shape: BoxShape.circle,
+                                              color: Color(0xFFD933C3)),
+                                          child: playbuttonMini
+                                              ? Icon(
+                                                  Icons.pause_rounded,
+                                                  color: Colors.white,
+                                                  size: 40,
+                                                )
+                                              : Icon(
+                                                  Icons.play_arrow_rounded,
+                                                  color: Colors.white,
+                                                  size: 40,
+                                                )),
+                                    ),
+                                  ),
+                                  IconButton(
+                                    onPressed: () {
+                                      widget.audioPlayer.next();
+                                    },
+                                    icon: Icon(
+                                      Icons.fast_forward,
+                                      color: Colors.white,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ],
                           ),
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceAround,
-                          children: [
-                            IconButton(
-                              onPressed: () {},
-                              icon: Icon(
-                                Icons.fast_rewind,
-                                color: Colors.white,
-                              ),
-                            ),
-                            GestureDetector(
-                              onTap: () {
-                                setState(() {
-                                  playbuttonMini ? playMini() : pausedmini();
-                                });
-                              },
-                              child: Container(
-                                  height: 50,
-                                  width: 50,
-                                  decoration: BoxDecoration(
-                                      shape: BoxShape.circle,
-                                      color: Color(0xFFD933C3)),
-                                  child: playbuttonMini
-                                      ? Icon(
-                                          Icons.pause_rounded,
-                                          color: Colors.white,
-                                          size: 40,
-                                        )
-                                      : Icon(
-                                          Icons.play_arrow_rounded,
-                                          color: Colors.white,
-                                          size: 40,
-                                        )),
-                            ),
-                            IconButton(
-                              onPressed: () {},
-                              icon: Icon(
-                                Icons.fast_forward,
-                                color: Colors.white,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
-                  ],
+                    //child: ,
+                  ),
                 ),
               ),
-              //child: ,
-            ),
+              Positioned(
+                child:
+                 CircleAvatar(
+                  radius: 35,
+                  backgroundImage: AssetImage(
+                      widget.audioPlayer.getCurrentAudioImage.toString()),
+                ),
+              ),
+            ],
           ),
-        ),
-        Positioned(
-          child: CircleAvatar(
-            radius: 35,
-            backgroundImage: AssetImage(widget.miniImagePath),
-          ),
-        ),
-      ],
+        );
+      },
     );
+    
   }
 
   pausedmini() {

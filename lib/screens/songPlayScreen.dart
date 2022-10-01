@@ -46,7 +46,7 @@ class _SongPlayScreenState extends State<SongPlayScreen> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    PlaySong(widget.songList[widget.Index].songPath);
+    //PlaySong(widget.songList[widget.Index].songPath);
   }
 
   @override
@@ -87,7 +87,7 @@ class _SongPlayScreenState extends State<SongPlayScreen> {
                     width: 297,
                     child: QueryArtworkWidget(
                       artworkBorder: BorderRadius.circular(10),
-                      id: int.parse(widget.songList[widget.Index].id.toString()),
+                      id: int.parse(_audioPlayer.getCurrentAudioImage.toString()),
                       type: ArtworkType.AUDIO,
                       nullArtworkWidget: Container(
                         decoration: BoxDecoration(
@@ -111,7 +111,7 @@ class _SongPlayScreenState extends State<SongPlayScreen> {
                   height: 30,
                   width: double.infinity,
                   child: Marquee(
-                    text: widget.songList[widget.Index].songTitle!,
+                    text:_audioPlayer.getCurrentAudioTitle ,
                     style: TextStyle(
                         color: Colors.white,
                         fontSize: 24,
@@ -126,7 +126,7 @@ class _SongPlayScreenState extends State<SongPlayScreen> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
-                   widget.songList[widget.Index].songArtist!,
+                   _audioPlayer.getCurrentAudioArtist,
                     style: TextStyle(
                         color: Color(0xFFC87DFF),
                         fontSize: 15,
@@ -139,13 +139,15 @@ class _SongPlayScreenState extends State<SongPlayScreen> {
               ),
               _audioPlayer.builderRealtimePlayingInfos(
                   builder: (context, info) {
+                    final duration = info.current!.audio.duration;
+                    final progress = info.currentPosition;
                 return Padding(
                   padding: const EdgeInsets.only(left: 20, right: 20),
                   child: ProgressBar(
                     //progress: Duration(milliseconds: 1000),
-                    progress: info.currentPosition,
+                    progress: progress,
                     //total: Duration(milliseconds: 2000),
-                    total: info.duration,
+                    total: duration,
                     progressBarColor: Color(0xFFD933C3),
                     thumbColor: Color(0xFFD933C3),
                     thumbGlowColor: Color.fromARGB(103, 217, 51, 195),

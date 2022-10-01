@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:hive_flutter/adapters.dart';
 import 'package:marquee/marquee.dart';
+import 'package:nirvana/Functions/musicFunctions.dart';
 import 'package:nirvana/database/songdb.dart';
 import 'package:nirvana/screens/songPlayScreen.dart';
 import 'package:on_audio_query/on_audio_query.dart';
@@ -45,28 +46,7 @@ class SongTile extends StatelessWidget {
 
 // class _SongTileState extends State<SongTile> {
 
-  Route _createRoute() {
-    return PageRouteBuilder(
-      pageBuilder: (context, animation, secondaryAnimation) => SongPlayScreen(
-        Index: Index,
-        audioPlayer: audioPlayer,
-        songList: songConvertedList,
-      ),
-      transitionsBuilder: (context, animation, secondaryAnimation, child) {
-        const begin = Offset(0.0, 1.0);
-        const end = Offset.zero;
-        const curve = Curves.ease;
-
-        var tween =
-            Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
-
-        return SlideTransition(
-          position: animation.drive(tween),
-          child: child,
-        );
-      },
-    );
-  }
+  
 
   convertSong() {
     for (var key in keys) {
@@ -79,9 +59,15 @@ class SongTile extends StatelessWidget {
     convertSong();
     return GestureDetector(
       onTap: () async {
-         Navigator.of(context).push(_createRoute());
+        //Navigator.of(context).push(_createRoute());
         // PlaySong(songConvertedList[Index].songPath);
         // print(songConvertedList[Index].songTitle);
+        showMiniPlayer(
+          context: context,
+          index: Index,
+          songList: songConvertedList,
+          audioPlayer: audioPlayer,
+        );
       },
       child: Container(
         margin: EdgeInsets.only(
