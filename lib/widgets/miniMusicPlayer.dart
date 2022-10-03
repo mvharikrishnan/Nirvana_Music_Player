@@ -36,8 +36,8 @@ class MiniMusicPlayer extends StatefulWidget {
 
 class _MiniMusicPlayerState extends State<MiniMusicPlayer> {
   List<Audio> songAudio = [];
-  bool playbuttonMini = false;
-  bool playorpause = true;
+  bool playbuttonMini = true;
+  //bool playorpause = false;
   //final _audioPlayer = AssetsAudioPlayer();
   Audio find(List<Audio> source, String fromPath) {
     return source.firstWhere((element) => element.path == fromPath);
@@ -78,7 +78,7 @@ class _MiniMusicPlayerState extends State<MiniMusicPlayer> {
       pageBuilder: (context, animation, secondaryAnimation) => SongPlayScreen(
         Index: widget.index,
         audioPlayer: widget.audioPlayer,
-        songList: widget.songList,
+        songList:songAudio,
       ),
       transitionsBuilder: (context, animation, secondaryAnimation, child) {
         const begin = Offset(0.0, 1.0);
@@ -144,51 +144,44 @@ class _MiniMusicPlayerState extends State<MiniMusicPlayer> {
                                   IconButton(
                                     onPressed: () {
                                       widget.audioPlayer.previous();
+                                      playMini();
                                     },
                                     icon: Icon(
                                       Icons.fast_rewind,
                                       color: Colors.white,
                                     ),
                                   ),
-                                  GestureDetector(
+                                  InkWell(
                                     onTap: () {
+                                      widget.audioPlayer.playOrPause();
                                       setState(() {
                                         playbuttonMini
                                             ? pausedmini()
                                             : playMini();
                                       });
                                     },
-                                    child: InkWell(
-                                      onTap: () {
-                                        widget.audioPlayer.playOrPause();
-                                        setState(() {
-                                          playorpause
-                                              ? pausedmini()
-                                              : playMini();
-                                        });
-                                      },
-                                      child: Container(
-                                          height: 50,
-                                          width: 50,
-                                          decoration: BoxDecoration(
-                                              shape: BoxShape.circle,
-                                              color: Color(0xFFD933C3)),
-                                          child: playbuttonMini
-                                              ? Icon(
-                                                  Icons.pause_rounded,
-                                                  color: Colors.white,
-                                                  size: 40,
-                                                )
-                                              : Icon(
-                                                  Icons.play_arrow_rounded,
-                                                  color: Colors.white,
-                                                  size: 40,
-                                                )),
-                                    ),
+                                    child: Container(
+                                        height: 50,
+                                        width: 50,
+                                        decoration: BoxDecoration(
+                                            shape: BoxShape.circle,
+                                            color: Color(0xFFD933C3)),
+                                        child: playbuttonMini
+                                            ? Icon(
+                                                Icons.pause_rounded,
+                                                color: Colors.white,
+                                                size: 40,
+                                              )
+                                            : Icon(
+                                                Icons.play_arrow_rounded,
+                                                color: Colors.white,
+                                                size: 40,
+                                              )),
                                   ),
                                   IconButton(
                                     onPressed: () {
                                       widget.audioPlayer.next();
+                                      playMini();
                                     },
                                     icon: Icon(
                                       Icons.fast_forward,
@@ -224,13 +217,13 @@ class _MiniMusicPlayerState extends State<MiniMusicPlayer> {
 
   pausedmini() {
     setState(() {
-      playbuttonMini = true;
+      playbuttonMini = false;
     });
   }
 
   playMini() {
     setState(() {
-      playbuttonMini = false;
+      playbuttonMini = true;
     });
   }
 }
