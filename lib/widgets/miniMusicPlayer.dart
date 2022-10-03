@@ -6,6 +6,7 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:marquee/marquee.dart';
 import 'package:nirvana/database/songdb.dart';
 import 'package:nirvana/screens/songPlayScreen.dart';
+import 'package:on_audio_query/on_audio_query.dart';
 
 class MiniMusicPlayer extends StatefulWidget {
   const MiniMusicPlayer(
@@ -78,7 +79,7 @@ class _MiniMusicPlayerState extends State<MiniMusicPlayer> {
       pageBuilder: (context, animation, secondaryAnimation) => SongPlayScreen(
         Index: widget.index,
         audioPlayer: widget.audioPlayer,
-        songList:songAudio,
+        songList: songAudio,
       ),
       transitionsBuilder: (context, animation, secondaryAnimation, child) {
         const begin = Offset(0.0, 1.0);
@@ -200,11 +201,19 @@ class _MiniMusicPlayerState extends State<MiniMusicPlayer> {
                 ),
               ),
               Positioned(
-                child:
-                 CircleAvatar(
-                  radius: 35,
-                  backgroundImage: AssetImage(
-                      widget.audioPlayer.getCurrentAudioImage.toString()),
+                child: CircleAvatar(
+                  // radius: 35,
+                  // backgroundImage: AssetImage(
+                  //     widget.audioPlayer.getCurrentAudioImage.toString()),
+                  child: QueryArtworkWidget(
+                    id: int.parse(musicAudio.metas.id!),
+                    type: ArtworkType.AUDIO,
+                    artworkBorder: BorderRadius.circular(10),
+                    nullArtworkWidget: CircleAvatar(
+                      radius: 35,
+                      backgroundImage: AssetImage('assets/images/wave-sound.gif'),
+                    ),
+                  ),
                 ),
               ),
             ],
@@ -212,7 +221,6 @@ class _MiniMusicPlayerState extends State<MiniMusicPlayer> {
         );
       },
     );
-    
   }
 
   pausedmini() {
