@@ -1,3 +1,4 @@
+import 'dart:developer';
 import 'dart:ui';
 
 import 'package:assets_audio_player/assets_audio_player.dart';
@@ -5,58 +6,44 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:hive_flutter/adapters.dart';
 import 'package:marquee/marquee.dart';
+import 'package:nirvana/Functions/likedSongs.dart';
 import 'package:nirvana/Functions/musicFunctions.dart';
 import 'package:nirvana/database/songdb.dart';
 import 'package:nirvana/screens/songPlayScreen.dart';
 import 'package:on_audio_query/on_audio_query.dart';
 
-class SongTile extends StatelessWidget {
+class SongTile extends StatefulWidget {
   SongTile({
     Key? key,
     required this.Index,
     required this.audioPlayer,
-    required this.keys,
+    // required this.keys,
     required this.onpressed,
+    required this.audioList,
   }) : super(key: key);
-  final dynamic keys;
+
+  //final dynamic keys;
   final int Index;
   final AssetsAudioPlayer audioPlayer;
   final void Function()? onpressed;
-  // final _audioQurey = new OnAudioQuery();
-  final _audioPlayer = new AssetsAudioPlayer();
-  Box<Songs> songBox = Hive.box<Songs>('Songs');
-  List<Songs> songConvertedList = [];
-//     // required this.SongTitle,
-//     // required this.SongDetails,
-//     // required this.SongID,
-//     // required this.StartTimer,
-//     // required this.EndTimer,
-//     // required this.SongURI,
-
-//   // final String SongID;
-//   // final String SongTitle;
-//   // final String SongDetails;
-//   // final String StartTimer;
-//   // final String EndTimer;
-//   // final String SongURI;
-
-//   @override
-//   State<SongTile> createState() => _SongTileState();
-// }
-
-// class _SongTileState extends State<SongTile> {
-
-  
-
-  convertSong() {
-    for (var key in keys) {
-      songConvertedList.add(songBox.get(key)!);
-    }
-  }
+  final List<Songs> audioList;
 
   @override
+  State<SongTile> createState() => _SongTileState();
+}
+
+class _SongTileState extends State<SongTile> {
+  // final _audioQurey = new OnAudioQuery();
+  final _audioPlayer = new AssetsAudioPlayer();
+
+  Box<Songs> songBox = Hive.box<Songs>('Songs');
+
+  List<Songs> songConvertedList = [];
+
+//     // required this.SongTitle,
+  @override
   Widget build(BuildContext context) {
-    convertSong();
+    //convertSong();
     return GestureDetector(
       onTap: () async {
         //Navigator.of(context).push(_createRoute());
@@ -64,9 +51,9 @@ class SongTile extends StatelessWidget {
         // print(songConvertedList[Index].songTitle);
         showMiniPlayer(
           context: context,
-          index: Index,
-          songList: songConvertedList,
-          audioPlayer: audioPlayer,
+          index: widget.Index,
+          songList: widget.audioList,
+          audioPlayer: widget.audioPlayer,
         );
       },
       child: Container(
@@ -94,7 +81,8 @@ class SongTile extends StatelessWidget {
                       artworkFit: BoxFit.cover,
                       artworkBorder: BorderRadius.circular(8),
                       artworkHeight: 200.0,
-                      id: int.parse(songConvertedList[Index].id.toString()),
+                      id: int.parse(
+                          widget.audioList[widget.Index].id.toString()),
                       type: ArtworkType.AUDIO,
                       nullArtworkWidget: Container(
                         decoration: BoxDecoration(
@@ -129,7 +117,7 @@ class SongTile extends StatelessWidget {
                             // ),
                             //start here
                             Text(
-                          songConvertedList[Index].songTitle!,
+                          widget.audioList[widget.Index].songTitle,
                           overflow: TextOverflow.ellipsis,
                           style: TextStyle(
                             color: Colors.white,
@@ -143,7 +131,7 @@ class SongTile extends StatelessWidget {
                         width: 150,
                         height: 20,
                         child: Text(
-                          songConvertedList[Index].songArtist!,
+                          widget.audioList[widget.Index].songArtist,
                           overflow: TextOverflow.ellipsis,
                           style: TextStyle(
                             color: Color(0xFFD594EE),
@@ -158,15 +146,23 @@ class SongTile extends StatelessWidget {
               ),
               Row(
                 children: [
-                  Icon(
-                    Icons.favorite,
-                    color: Color(
-                      0xFFD594EE,
+                  IconButton(
+                    onPressed: () {
+                      PlaylistSongsClass.addSongToLiked(
+                          context: context,
+                          ID: widget.audioList[widget.Index].songPath);
+                          
+                    },
+                    icon: Icon(
+                      Icons.favorite,
+                      color: Color(
+                        0xFFD594EE,
+                      ),
                     ),
                   ),
-                  SizedBox(
-                    width: 12,
-                  ),
+                  // SizedBox(
+                  //   width: 5,
+                  // ),
                   PopupMenuButton(
                       color: Color.fromARGB(250, 59, 31, 80),
                       shape: RoundedRectangleBorder(
@@ -210,14 +206,3 @@ class SongTile extends StatelessWidget {
     }
   }
 }
-
-// Navigator.of(context).push(
-//           MaterialPageRoute(
-//               builder: (ctx) => SongPlayScreen(
-//                     SongTitle: SongTitle,
-//                     songDetails: SongDetails,
-//                     SongImagePath: SongCoverImage,
-//                     Start: StartTimer,
-//                     end: EndTimer,
-//                   )),
-//         );

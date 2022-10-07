@@ -14,15 +14,13 @@ class Screen_Navigation extends StatefulWidget {
 }
 
 class _Screen_NavigationState extends State<Screen_Navigation> {
-
-
   final List<Widget> _screens = <Widget>[
     const HomeScreen(),
-    const FavoriteScreen(),
+    FavoriteScreen(),
     const PlaylistScreen(),
     const ProfileScreen(),
   ];
-   int _currentIndex = 0;
+  int _currentIndex = 0;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -39,12 +37,11 @@ class _Screen_NavigationState extends State<Screen_Navigation> {
           BottomNavigationBarItem(
               icon: Icon(Icons.headphones), label: 'Favorite'),
           BottomNavigationBarItem(icon: Icon(Icons.layers), label: 'Playlist'),
-          BottomNavigationBarItem(
-              icon: Icon(Icons.person), label: 'Me'),
+          BottomNavigationBarItem(icon: Icon(Icons.person), label: 'Me'),
         ],
         onTap: (value) {
           setState(() {
-            _currentIndex=value;
+            _currentIndex = value;
           });
         },
       ),

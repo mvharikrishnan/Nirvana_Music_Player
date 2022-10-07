@@ -47,7 +47,7 @@ class _MiniMusicPlayerState extends State<MiniMusicPlayer> {
   convertMusic() {
     for (var song in widget.songList) {
       songAudio.add(
-        Audio.file(song.songPath!,
+        Audio.file(song.songPath,
             metas: Metas(
               title: song.songTitle,
               id: song.id.toString(),
@@ -201,8 +201,9 @@ class _MiniMusicPlayerState extends State<MiniMusicPlayer> {
                 ),
               ),
               Positioned(
+                
                 child: CircleAvatar(
-                  // radius: 35,
+                   radius: 35,
                   // backgroundImage: AssetImage(
                   //     widget.audioPlayer.getCurrentAudioImage.toString()),
                   child: QueryArtworkWidget(

@@ -17,10 +17,10 @@ class SongsAdapter extends TypeAdapter<Songs> {
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
     return Songs(
-      songPath: fields[0] as String?,
-      songTitle: fields[1] as String?,
-      songArtist: fields[2] as String?,
-      id: fields[3] as int?,
+      songPath: fields[0] as String,
+      songTitle: fields[1] as String,
+      songArtist: fields[2] as String,
+      id: fields[3] as int,
     );
   }
 

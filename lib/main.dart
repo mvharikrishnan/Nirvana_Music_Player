@@ -13,6 +13,7 @@ Future <void> main() async {
    Hive.registerAdapter(SongsAdapter());
  }
   await Hive.openBox<Songs>('Songs');
+  await Hive.openBox<List>('Playlist');
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp])
       .then((value) => runApp(MyApp()));
 }

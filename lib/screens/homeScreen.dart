@@ -25,10 +25,17 @@ class _HomeScreenState extends State<HomeScreen> {
   final _audioQurey = new OnAudioQuery();
   final audioPlayer = new AssetsAudioPlayer();
   TextEditingController searchController = new TextEditingController();
+  Box<Songs> songBox = Hive.box<Songs>('Songs');
+
+  List<Songs> audioList = [];
   @override
   void initState() {
     // TODO: implement initState
-    super.initState();
+    final List<int> Keys = songBox.keys.toList().cast<int>();
+    for( var key in Keys){
+     audioList.add(songBox.get(key)!);
+    }
+      super.initState();
     //requestPermission();
   }
 
@@ -36,7 +43,7 @@ class _HomeScreenState extends State<HomeScreen> {
   //   Permission.storage.request();
   // }
   //accessig the songBOx
-  Box<Songs> songBox = Hive.box<Songs>('Songs');
+  
   @override
   Widget build(BuildContext context) {
     //var songSearchController;
@@ -176,58 +183,12 @@ class _HomeScreenState extends State<HomeScreen> {
                         SizedBox(
                           height: 8,
                         ),
-                        //Song Tile Starts here -- dummy content
-                        // SongTile(
-                        //   SongTitle: 'Story Of My Life',
-                        //   SongDetails: 'One Direction',
-                        //   SongCoverImage: 'assets/images/StoryOfMyLife.png',
-                        //   StartTimer: '1:12',
-                        //   EndTimer: '2:59',
-                        // ),
-                        // FutureBuilder<List<SongModel>>(
-                        //   future: _audioQurey.querySongs(
-                        //     sortType: SongSortType.DISPLAY_NAME,
-                        //     orderType: OrderType.ASC_OR_SMALLER,
-                        //     uriType: UriType.EXTERNAL,
-                        //     ignoreCase: true,
-                        //   ),
-                        //   builder: (context, items) {
-                        //     if (items.data == null) {
-                        //       return Center(
-                        //         child: CircularProgressIndicator(),
-                        //       );
-                        //     }
-                        //     if (items.data!.isEmpty) {
-                        //       return Center(child: Text('No Songs Identified'));
-                        //     }
-                        //     return ListView.builder(
-                        //       itemCount: items.data!.length,
-                        //       shrinkWrap: true,
-                        //       physics: ScrollPhysics(),
-                        //       itemBuilder: (context, index) {
-                        //         return SongTile(
-                        //           SongTitle:
-                        //               items.data![index].displayNameWOExt,
-                        //           SongDetails:
-                        //               items.data![index].artist.toString(),
-                        //           SongID: items.data![index].id.toString(),
-                        //           // items.data![index].album.toString(),
-                        //           StartTimer:
-                        //               items.data![index].duration.toString(),
-                        //           EndTimer:
-                        //               items.data![index].duration.toString(),
-                        //           SongURI: items.data![index].uri.toString(),
-                        //         );
-                        //       },
-                        //     );
-                        //   },
-                        // ),
 
                         //This code below contains the songs that are accecced form the database
                         ValueListenableBuilder(
                           valueListenable: songBox.listenable(),
                           builder: (context, Box<Songs> Songs, Widget? child) {
-                            final keys = Songs.keys.toList();
+                           // final keys = Songs.keys.toList();
                             if (Songs.values == null) {
                               return Center(
                                 child: CircularProgressIndicator(),
@@ -248,8 +209,9 @@ class _HomeScreenState extends State<HomeScreen> {
                                 return SongTile(
                                   Index: index,
                                   audioPlayer: audioPlayer,
-                                  keys: keys,
+                                  //keys: keys,
                                   onpressed: () {},
+                                   audioList:audioList ,
                                 );
                               },
                             );
@@ -260,16 +222,6 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                 ),
               ),
-              // GestureDetector(
-              //   child: MiniMusicPlayer(
-              //     miniSongTitle: 'Story Of My Life',
-              //     miniSongAuther: 'One Direction',
-              //     miniImagePath: 'assets/images/StoryOfMyLife.png',
-              //     miniSongStart: '1:12',
-              //     miniSongEnd: '2:59',
-              //     miniSongURI: '',
-              //   ),
-              // ),
             ],
           ),
         ),

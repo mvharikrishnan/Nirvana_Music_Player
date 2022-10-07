@@ -26,6 +26,12 @@ class _SplashScreenState extends State<SplashScreen> {
   //list for songs sorted out with extension ending with mp3
   List<SongModel> sortedSongs = [];
 
+  //Referance for playlist box
+  Box<List> playlistbox = getPlaylistBox();
+
+  //list for liked songs
+  List<Songs> likedSongs = [];
+
   //refering the songBox
   Box<Songs> songBox = getSongBox();
 
@@ -70,9 +76,9 @@ class _SplashScreenState extends State<SplashScreen> {
     //for adding the sorted list to the database
     for (var audio in sortedSongs) {
       final song = Songs(
-        songPath: audio.uri,
+        songPath: audio.uri!,
         songTitle: audio.title,
-        songArtist: audio.artist,
+        songArtist: audio.artist!,
         id: audio.id,
       );
       await songBox.put(audio.id, song);
@@ -81,6 +87,13 @@ class _SplashScreenState extends State<SplashScreen> {
       print('Song Box is empty');
     } else {
       print('Song box is not empty ${songBox.length}');
+    }
+    accesssTheKeysForLikedSongs();
+  }
+
+  Future accesssTheKeysForLikedSongs() async {
+    if (!playlistbox.keys.contains('LikedSongs')) {
+      await playlistbox.put('LikedSongs', likedSongs);
     }
   }
 

@@ -1,12 +1,19 @@
+import 'package:assets_audio_player/assets_audio_player.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/framework.dart';
+// import 'package:flutter/src/foundation/key.dart';
+// import 'package:flutter/src/widgets/framework.dart';
+import 'package:hive_flutter/hive_flutter.dart';
+//import 'package:hive/hive.dart';
+import 'package:nirvana/database/database_functions/dbFunctions.dart';
+import 'package:nirvana/database/songdb.dart';
 
 import '../widgets/songTile.dart';
 
 class FavoriteScreen extends StatelessWidget {
-  const FavoriteScreen({Key? key}) : super(key: key);
-
+  FavoriteScreen({Key? key}) : super(key: key);
+  final audioPlayer = new AssetsAudioPlayer.withId('0');
+  Box<List> PlaylistBox = getPlaylistBox();
+  Box<Songs> musicBox = getSongBox();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -27,75 +34,49 @@ class FavoriteScreen extends StatelessWidget {
                         fontWeight: FontWeight.w500),
                   ),
                   Text(
-                    '8 Songs',
+                    '${PlaylistBox.get('LikedSongs')!.toList().length} Songs',
                     style: TextStyle(color: Color(0xFFC87DFF), fontSize: 15),
                   ),
                 ],
               ),
-              SizedBox(height: 20,),
-              Expanded(child: ListView(
-                children: [
-                  // SongTile(
-                  //       SongTitle: 'Story Of My Life',
-                  //       SongDetails: 'One Direction',
-                  //       SongCoverImage: 'assets/images/StoryOfMyLife.png',
-                  //       StartTimer: '1:12',
-                  //       EndTimer: '2:59',
-                  //     ),
-                  //     SongTile(
-                  //       SongTitle: 'Whats Makes You Beautuful',
-                  //       SongDetails: 'One Direction',
-                  //       SongCoverImage:
-                  //           'assets/images/What_Makes_You_Beautiful_Album_Cover.jpg',
-                  //       StartTimer: '0:00',
-                  //       EndTimer: '3.03',
-                  //     ),
-                  //     SongTile(
-                  //       SongTitle: 'Drag Me Down',
-                  //       SongDetails: 'One Direction',
-                  //       SongCoverImage:
-                  //           'assets/images/One_Direction_-_Drag_Me_Down_(Official_Single_Cover).png',
-                  //       StartTimer: '0:00',
-                  //       EndTimer: '3:12',
-                  //     ),
-                  //     SongTile(
-                  //       SongTitle: 'Ole Melody',
-                  //       SongDetails: 'Thallumaala',
-                  //       SongCoverImage: 'assets/images/ole meledy.jpg',
-                  //       StartTimer: '0:00',
-                  //       EndTimer: '3:12',
-                  //     ),
-                  //     SongTile(
-                  //       SongTitle: 'Dard E Disco',
-                  //       SongDetails: 'Sukhwindar Singh',
-                  //       SongCoverImage: 'assets/images/dard e disco.jpg',
-                  //       StartTimer: '0:00',
-                  //       EndTimer: '3:12',
-                  //     ),
-                  //     SongTile(
-                  //       SongTitle: 'Drag Me Down',
-                  //       SongDetails: 'One Direction',
-                  //       SongCoverImage:
-                  //           'assets/images/One_Direction_-_Drag_Me_Down_(Official_Single_Cover).png',
-                  //       StartTimer: '0:00',
-                  //       EndTimer: '3:12',
-                  //     ),
-                  //     SongTile(
-                  //       SongTitle: 'Ole Melody',
-                  //       SongDetails: 'Thallumaala',
-                  //       SongCoverImage: 'assets/images/ole meledy.jpg',
-                  //       StartTimer: '0:00',
-                  //       EndTimer: '3:12',
-                  //     ),
-                  //     SongTile(
-                  //       SongTitle: 'Dard E Disco',
-                  //       SongDetails: 'Sukhwindar Singh',
-                  //       SongCoverImage: 'assets/images/dard e disco.jpg',
-                  //       StartTimer: '0:00',
-                  //       EndTimer: '3:12',
-                  //     ),
-                ],
-              ))
+              SizedBox(
+                height: 20,
+              ),
+              Expanded(
+                child: ListView(
+                  children: [
+                    ValueListenableBuilder(
+                      valueListenable: PlaylistBox.listenable(),
+                      builder: (BuildContext context, Box<List> value,
+                          Widget? child) {
+                        List<Songs> musicList =
+                            PlaylistBox.get('LikedSongs')!.toList().cast<Songs>();
+
+                        return (musicList.isEmpty)
+                            ? Center(
+                                child: Text(
+                                'No Songs Identified',
+                                style: TextStyle(color: Colors.white),
+                              ))
+                            : ListView.builder(
+                                itemCount: musicList.length,
+                                shrinkWrap: true,
+                                physics: ScrollPhysics(),
+                                itemBuilder: (context, index) {
+                                  return SongTile(
+                                    Index: index,
+                                    audioPlayer: audioPlayer,
+                                    //keys: keys,
+                                    onpressed: () {},
+                                    audioList: musicList,
+                                  );
+                                },
+                              );
+                      },
+                    ),
+                  ],
+                ),
+              ),
             ],
           ),
         ),

@@ -10,14 +10,14 @@ class Songs extends HiveObject {
   });
 
   @HiveField(0)
-  String? songPath;
+  String songPath;
 
   @HiveField(1)
-  String? songTitle;
+  String songTitle;
 
   @HiveField(2)
-  String? songArtist;
+  String songArtist;
 
   @HiveField(3)
-  int? id;
+  int id;
 }
