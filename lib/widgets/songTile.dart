@@ -107,14 +107,7 @@ class _SongTileState extends State<SongTile> {
                         height: 20,
                         width: 200,
                         child:
-                            //  Marquee(
-                            //   text: widget.SongTitle,
-                            //   style: TextStyle(
-                            //     color: Colors.white,
-                            //     fontSize: 15,
-                            //     fontWeight: FontWeight.w500,
-                            //   ),
-                            // ),
+
                             //start here
                             Text(
                           widget.audioList[widget.Index].songTitle,
@@ -151,7 +144,6 @@ class _SongTileState extends State<SongTile> {
                       PlaylistSongsClass.addSongToLiked(
                           context: context,
                           ID: widget.audioList[widget.Index].songPath);
-                          
                     },
                     icon: Icon(
                       Icons.favorite,
