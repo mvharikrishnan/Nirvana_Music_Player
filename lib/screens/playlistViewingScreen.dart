@@ -1,20 +1,28 @@
 import 'dart:ui';
-
+import 'package:assets_audio_player/assets_audio_player.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:hive/hive.dart';
+import 'package:nirvana/database/database_functions/dbFunctions.dart';
+import 'package:nirvana/database/songdb.dart';
 import 'package:nirvana/widgets/songTile.dart';
 
 class PlaylistViewingScreen extends StatelessWidget {
-  const PlaylistViewingScreen({
+   PlaylistViewingScreen({
     Key? key,
     required this.Title,
     required this.SongCount,
     required this.image,
+    required this.playlistName
   }) : super(key: key);
   final String Title;
   final String SongCount;
   final String image;
+  final String playlistName;
+  Box<List> playlistBox = getPlaylistBox();
+  final AssetsAudioPlayer audioPlayer = AssetsAudioPlayer.withId('0');
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -29,10 +37,6 @@ class PlaylistViewingScreen extends StatelessWidget {
                   bottomLeft: const Radius.circular(70),
                   bottomRight: const Radius.circular(70),
                 ),
-                // image: DecorationImage(
-                //   image: AssetImage(image),
-                //   fit: BoxFit.cover,
-                // ),
                 color: Color.fromARGB(113, 130, 78, 167)),
             child: BackdropFilter(
               filter: ImageFilter.blur(sigmaX: 1.0),
@@ -78,9 +82,9 @@ class PlaylistViewingScreen extends StatelessWidget {
                           ),
                         ],
                       ),
-                       Padding(
-                         padding: const EdgeInsets.only(left: 48),
-                         child: Row(
+                      Padding(
+                        padding: const EdgeInsets.only(left: 48),
+                        child: Row(
                           children: [
                             Text(
                               SongCount,
@@ -90,8 +94,8 @@ class PlaylistViewingScreen extends StatelessWidget {
                                   fontWeight: FontWeight.w500),
                             ),
                           ],
-                      ),
-                       )
+                        ),
+                      )
                     ],
                   ),
                 ),
@@ -101,66 +105,35 @@ class PlaylistViewingScreen extends StatelessWidget {
           //Playlist Start Here
           Padding(
             padding: const EdgeInsets.all(15.0),
-            child: Column(
+            child: ListView(
               children: [
-                // SongTile(
-                //         SongTitle: 'Story Of My Life',
-                //         SongDetails: 'One Direction',
-                //         SongCoverImage: 'assets/images/StoryOfMyLife.png',
-                //         StartTimer: '1:12',
-                //         EndTimer: '2:59',
-                //       ),
-                //       SongTile(
-                //         SongTitle: 'Whats Makes You Beautuful',
-                //         SongDetails: 'One Direction',
-                //         SongCoverImage:
-                //             'assets/images/What_Makes_You_Beautiful_Album_Cover.jpg',
-                //         StartTimer: '0:00',
-                //         EndTimer: '3.03',
-                //       ),
-                //       SongTile(
-                //         SongTitle: 'Drag Me Down',
-                //         SongDetails: 'One Direction',
-                //         SongCoverImage:
-                //             'assets/images/One_Direction_-_Drag_Me_Down_(Official_Single_Cover).png',
-                //         StartTimer: '0:00',
-                //         EndTimer: '3:12',
-                //       ),
-                //       SongTile(
-                //         SongTitle: 'Ole Melody',
-                //         SongDetails: 'Thallumaala',
-                //         SongCoverImage: 'assets/images/ole meledy.jpg',
-                //         StartTimer: '0:00',
-                //         EndTimer: '3:12',
-                //       ),
-                //       SongTile(
-                //         SongTitle: 'Dard E Disco',
-                //         SongDetails: 'Sukhwindar Singh',
-                //         SongCoverImage: 'assets/images/dard e disco.jpg',
-                //         StartTimer: '0:00',
-                //         EndTimer: '3:12',
-                //       ),
-                //       SongTile(
-                //         SongTitle: 'Kumkummamake',
-                //         SongDetails: 'Hesham Abdul Wahab',
-                //         SongCoverImage: 'assets/images/Brahmastra-1b.jpg',
-                //         StartTimer: '0:00',
-                //         EndTimer: '3:12',
-                //       ),
-                //       SongTile(
-                //         SongTitle: 'Christmas Eval',
-                //         SongDetails: 'Stray Kids',
-                //         SongCoverImage: 'assets/images/christmas.jpg',
-                //         StartTimer: '0:00',
-                //         EndTimer: '3:12',
-                //       ),
-                //       SongTile(
-                //         SongTitle: '16 Shots',
-                //         SongDetails: 'Stefflon Don',
-                //         SongCoverImage: 'assets/images/16 shots.jpg',
-                //         StartTimer: '0:00',
-                //         EndTimer: '3:12',
-                //       ),
+                ValueListenableBuilder(
+                  valueListenable: playlistBox.listenable(),
+                  builder: (context, Box<List> value, Widget? child) {
+                    List<Songs> musicList =
+                        playlistBox.get(playlistName)!.toList().cast<Songs>();
+                    return (musicList.isEmpty)
+                        ? Center(
+                            child: Text(
+                            'Playsome Music with Nirvana',
+                            style: TextStyle(color: Colors.white),
+                          ))
+                        : ListView.builder(
+                            itemCount: musicList.length,
+                            shrinkWrap: true,
+                            physics: ScrollPhysics(),
+                            itemBuilder: (context, index) {
+                              return SongTile(
+                                Index: index,
+                                audioPlayer: audioPlayer,
+                                //keys: keys,
+                                onpressed: () {},
+                                audioList: musicList,
+                              );
+                            },
+                          );
+                  },
+                ),
               ],
             ),
           )

@@ -2,18 +2,24 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:nirvana/database/songdb.dart';
 import 'package:nirvana/screens/playlistViewingScreen.dart';
 
 class PlaylistGridTile extends StatelessWidget {
-  const PlaylistGridTile({
+   PlaylistGridTile({
     Key? key,
     required this.PlaylistTitle,
     required this.PlaylistSongCount,
     required this.PlaylistBackgroundImage,
+    required this.PlayListName,
+    required this.playlistSongList,
+    
   }) : super(key: key);
   final String PlaylistTitle;
   final String PlaylistSongCount;
   final String PlaylistBackgroundImage;
+  final String PlayListName;
+  final List<Songs> playlistSongList;
 
   @override
   Widget build(BuildContext context) {
@@ -25,6 +31,7 @@ class PlaylistGridTile extends StatelessWidget {
               Title: PlaylistTitle,
               SongCount: PlaylistSongCount,
               image: PlaylistBackgroundImage,
+              playlistName: PlayListName,
             ),
           ),
         );
@@ -86,7 +93,7 @@ class PlaylistGridTile extends StatelessWidget {
                           fontWeight: FontWeight.w500),
                     ),
                     Text(
-                      PlaylistSongCount,
+                      '$PlaylistSongCount Songs',
                       style: TextStyle(
                         fontSize: 12,
                         fontWeight: FontWeight.w500,

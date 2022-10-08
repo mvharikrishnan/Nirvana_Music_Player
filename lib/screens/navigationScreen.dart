@@ -17,7 +17,7 @@ class _Screen_NavigationState extends State<Screen_Navigation> {
   final List<Widget> _screens = <Widget>[
     const HomeScreen(),
     FavoriteScreen(),
-    const PlaylistScreen(),
+    PlaylistScreen(),
     const ProfileScreen(),
   ];
   int _currentIndex = 0;
