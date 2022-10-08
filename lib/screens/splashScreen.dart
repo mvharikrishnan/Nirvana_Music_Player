@@ -32,6 +32,9 @@ class _SplashScreenState extends State<SplashScreen> {
   //list for liked songs
   List<Songs> likedSongs = [];
 
+  //List for recent Songs
+  List<Songs> RecentSongs = [];
+
   //refering the songBox
   Box<Songs> songBox = getSongBox();
 
@@ -89,11 +92,18 @@ class _SplashScreenState extends State<SplashScreen> {
       print('Song box is not empty ${songBox.length}');
     }
     accesssTheKeysForLikedSongs();
+    accessTheKeysForRecentSongs();
   }
 
   Future accesssTheKeysForLikedSongs() async {
     if (!playlistbox.keys.contains('LikedSongs')) {
       await playlistbox.put('LikedSongs', likedSongs);
+    }
+  }
+
+  Future accessTheKeysForRecentSongs() async {
+    if (!playlistbox.keys.contains('RecentSongs')) {
+      await playlistbox.put('RecentSongs', RecentSongs);
     }
   }
 

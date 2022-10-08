@@ -43,7 +43,7 @@ class PlaylistScreen extends StatelessWidget {
                 child: Expanded(
                   child: GridView.count(
                     
-                    mainAxisSpacing: 10,
+                    mainAxisSpacing: 9,
                     shrinkWrap: true,
                     crossAxisCount: 2,
                     children: [

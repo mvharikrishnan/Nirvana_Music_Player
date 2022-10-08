@@ -1,11 +1,18 @@
+import 'package:assets_audio_player/assets_audio_player.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
+// import 'package:hive/hive.dart';
+import 'package:hive_flutter/hive_flutter.dart';
+import 'package:nirvana/database/database_functions/dbFunctions.dart';
+import 'package:nirvana/database/songdb.dart';
 import 'package:nirvana/widgets/playlistRecenltyTile.dart';
+import 'package:nirvana/widgets/songTile.dart';
 
 class RecentlyPlayedScreen extends StatelessWidget {
-  const RecentlyPlayedScreen({Key? key}) : super(key: key);
-
+  RecentlyPlayedScreen({Key? key}) : super(key: key);
+  Box<List> PlaylistBox = getPlaylistBox();
+  final AssetsAudioPlayer audioPlayer = AssetsAudioPlayer.withId('0');
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -31,124 +38,43 @@ class RecentlyPlayedScreen extends StatelessWidget {
               ),
               Expanded(
                   child: NotificationListener<OverscrollIndicatorNotification>(
-                    onNotification: (overScroll) {
-                    overScroll.disallowIndicator();
-                    return true;
-                  },
-                    child: ListView(
-                                  children: [
-                    PlaylistRecentlyTile(
-                      SongTitle: 'Story Of My Life',
-                      SongDetails: 'One Direction',
-                      SongCoverImage: 'assets/images/StoryOfMyLife.png',
-                      StartTimer: '1:12',
-                      EndTimer: '2:59',
+                onNotification: (overScroll) {
+                  overScroll.disallowIndicator();
+                  return true;
+                },
+                child: ListView(
+                  children: [
+                    ValueListenableBuilder(
+                      valueListenable: PlaylistBox.listenable(),
+                      builder: (context, Box<List> value, Widget? child) {
+                        List<Songs> musicList = PlaylistBox.get('RecentSongs')!
+                            .toList()
+                            .cast<Songs>();
+                        return (musicList.isEmpty)
+                            ? Center(
+                                child: Text(
+                                'Playsome Music with Nirvana',
+                                style: TextStyle(color: Colors.white),
+                              ))
+                            : ListView.builder(
+                                itemCount: musicList.length,
+                                shrinkWrap: true,
+                                physics: ScrollPhysics(),
+                                itemBuilder: (context, index) {
+                                  return SongTile(
+                                    Index: index,
+                                    audioPlayer: audioPlayer,
+                                    //keys: keys,
+                                    onpressed: () {},
+                                    audioList: musicList,
+                                  );
+                                },
+                              );
+                      },
                     ),
-                    PlaylistRecentlyTile(
-                      SongTitle: 'Whats Makes You Beautuful',
-                      SongDetails: 'One Direction',
-                      SongCoverImage:
-                          'assets/images/What_Makes_You_Beautiful_Album_Cover.jpg',
-                      StartTimer: '0:00',
-                      EndTimer: '3.03',
-                    ),
-                    PlaylistRecentlyTile(
-                      SongTitle: 'Drag Me Down',
-                      SongDetails: 'One Direction',
-                      SongCoverImage:
-                          'assets/images/One_Direction_-_Drag_Me_Down_(Official_Single_Cover).png',
-                      StartTimer: '0:00',
-                      EndTimer: '3:12',
-                    ),
-                    PlaylistRecentlyTile(
-                      SongTitle: 'Ole Melody',
-                      SongDetails: 'Thallumaala',
-                      SongCoverImage: 'assets/images/ole meledy.jpg',
-                      StartTimer: '0:00',
-                      EndTimer: '3:12',
-                    ),
-                    PlaylistRecentlyTile(
-                      SongTitle: 'Dard E Disco',
-                      SongDetails: 'Sukhwindar Singh',
-                      SongCoverImage: 'assets/images/dard e disco.jpg',
-                      StartTimer: '0:00',
-                      EndTimer: '3:12',
-                    ),
-                    PlaylistRecentlyTile(
-                      SongTitle: 'Kumkummamake',
-                      SongDetails: 'Hesham Abdul Wahab',
-                      SongCoverImage: 'assets/images/Brahmastra-1b.jpg',
-                      StartTimer: '0:00',
-                      EndTimer: '3:12',
-                    ),
-                    PlaylistRecentlyTile(
-                      SongTitle: 'Christmas Eval',
-                      SongDetails: 'Stray Kids',
-                      SongCoverImage: 'assets/images/christmas.jpg',
-                      StartTimer: '0:00',
-                      EndTimer: '3:12',
-                    ),
-                    PlaylistRecentlyTile(
-                      SongTitle: '16 Shots',
-                      SongDetails: 'Stefflon Don',
-                      SongCoverImage: 'assets/images/16 shots.jpg',
-                      StartTimer: '0:00',
-                      EndTimer: '3:12',
-                    ),
-                      PlaylistRecentlyTile(
-                      SongTitle: 'Whats Makes You Beautuful',
-                      SongDetails: 'One Direction',
-                      SongCoverImage:
-                          'assets/images/What_Makes_You_Beautiful_Album_Cover.jpg',
-                      StartTimer: '0:00',
-                      EndTimer: '3.03',
-                    ),
-                    PlaylistRecentlyTile(
-                      SongTitle: 'Drag Me Down',
-                      SongDetails: 'One Direction',
-                      SongCoverImage:
-                          'assets/images/One_Direction_-_Drag_Me_Down_(Official_Single_Cover).png',
-                      StartTimer: '0:00',
-                      EndTimer: '3:12',
-                    ),
-                    PlaylistRecentlyTile(
-                      SongTitle: 'Ole Melody',
-                      SongDetails: 'Thallumaala',
-                      SongCoverImage: 'assets/images/ole meledy.jpg',
-                      StartTimer: '0:00',
-                      EndTimer: '3:12',
-                    ),
-                    PlaylistRecentlyTile(
-                      SongTitle: 'Dard E Disco',
-                      SongDetails: 'Sukhwindar Singh',
-                      SongCoverImage: 'assets/images/dard e disco.jpg',
-                      StartTimer: '0:00',
-                      EndTimer: '3:12',
-                    ),
-                    PlaylistRecentlyTile(
-                      SongTitle: 'Kumkummamake',
-                      SongDetails: 'Hesham Abdul Wahab',
-                      SongCoverImage: 'assets/images/Brahmastra-1b.jpg',
-                      StartTimer: '0:00',
-                      EndTimer: '3:12',
-                    ),
-                    PlaylistRecentlyTile(
-                      SongTitle: 'Christmas Eval',
-                      SongDetails: 'Stray Kids',
-                      SongCoverImage: 'assets/images/christmas.jpg',
-                      StartTimer: '0:00',
-                      EndTimer: '3:12',
-                    ),
-                    PlaylistRecentlyTile(
-                      SongTitle: '16 Shots',
-                      SongDetails: 'Stefflon Don',
-                      SongCoverImage: 'assets/images/16 shots.jpg',
-                      StartTimer: '0:00',
-                      EndTimer: '3:12',
-                    ),
-                                  ],
-                                ),
-                  ))
+                  ],
+                ),
+              ))
             ],
           ),
         ),

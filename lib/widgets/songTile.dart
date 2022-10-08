@@ -8,6 +8,7 @@ import 'package:hive_flutter/adapters.dart';
 import 'package:marquee/marquee.dart';
 import 'package:nirvana/Functions/likedSongs.dart';
 import 'package:nirvana/Functions/musicFunctions.dart';
+import 'package:nirvana/Functions/recentSongs.dart';
 import 'package:nirvana/database/songdb.dart';
 import 'package:nirvana/screens/songPlayScreen.dart';
 import 'package:on_audio_query/on_audio_query.dart';
@@ -49,6 +50,7 @@ class _SongTileState extends State<SongTile> {
         //Navigator.of(context).push(_createRoute());
         // PlaySong(songConvertedList[Index].songPath);
         // print(songConvertedList[Index].songTitle);
+        recentSongsClass.addSongtoRecent(context: context, ID: widget.audioList[widget.Index].songPath);
         showMiniPlayer(
           context: context,
           index: widget.Index,

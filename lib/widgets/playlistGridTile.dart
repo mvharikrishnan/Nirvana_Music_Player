@@ -54,7 +54,7 @@ class PlaylistGridTile extends StatelessWidget {
             ),
           ),
           Positioned(
-            bottom: 10.01,
+            bottom: 2,
             child: Container(
               height: 52,
               width: 165,
