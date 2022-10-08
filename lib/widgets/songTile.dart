@@ -144,12 +144,18 @@ class _SongTileState extends State<SongTile> {
                       PlaylistSongsClass.addSongToLiked(
                           context: context,
                           ID: widget.audioList[widget.Index].songPath);
+                      setState(() {
+                        PlaylistSongsClass.isLiked(
+                            ID: widget.audioList[widget.Index].songPath);
+                      });
                     },
                     icon: Icon(
-                      Icons.favorite,
+                      // Icons.favorite,
                       color: Color(
                         0xFFD594EE,
                       ),
+                      PlaylistSongsClass.isLiked(
+                          ID: widget.audioList[widget.Index].songPath),
                     ),
                   ),
                   // SizedBox(

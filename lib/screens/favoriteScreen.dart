@@ -9,11 +9,20 @@ import 'package:nirvana/database/songdb.dart';
 
 import '../widgets/songTile.dart';
 
-class FavoriteScreen extends StatelessWidget {
+class FavoriteScreen extends StatefulWidget {
   FavoriteScreen({Key? key}) : super(key: key);
-  final audioPlayer = new AssetsAudioPlayer.withId('0');
+
+  @override
+  State<FavoriteScreen> createState() => _FavoriteScreenState();
+}
+
+class _FavoriteScreenState extends State<FavoriteScreen> {
+  final audioPlayer = AssetsAudioPlayer.withId('0');
+
   Box<List> PlaylistBox = getPlaylistBox();
+
   Box<Songs> musicBox = getSongBox();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -55,7 +64,7 @@ class FavoriteScreen extends StatelessWidget {
                         return (musicList.isEmpty)
                             ? Center(
                                 child: Text(
-                                'No Songs Identified',
+                                'Add Your Favotite Songs',
                                 style: TextStyle(color: Colors.white),
                               ))
                             : ListView.builder(

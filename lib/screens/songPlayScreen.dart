@@ -2,6 +2,7 @@ import 'package:assets_audio_player/assets_audio_player.dart';
 import 'package:audio_video_progress_bar/audio_video_progress_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:marquee/marquee.dart';
+import 'package:nirvana/Functions/likedSongs.dart';
 import 'package:nirvana/database/songdb.dart';
 import 'package:nirvana/main.dart';
 import 'package:nirvana/screens/addPlaylist.dart';
@@ -49,7 +50,7 @@ class _SongPlayScreenState extends State<SongPlayScreen> {
     //PlaySong(widget.songList[widget.Index].songPath);
   }
 
-   Audio find(List<Audio> source, String fromPath) {
+  Audio find(List<Audio> source, String fromPath) {
     return source.firstWhere((element) {
       return element.path == fromPath;
     });
@@ -62,7 +63,8 @@ class _SongPlayScreenState extends State<SongPlayScreen> {
       body: SafeArea(
         child: widget.audioPlayer.builderCurrent(
           builder: (context, playing) {
-            final musicAuido = find(widget.songList, playing.audio.assetAudioPath);
+            final musicAuido =
+                find(widget.songList, playing.audio.assetAudioPath);
             return Padding(
               padding: const EdgeInsets.all(15.0),
               child: Column(
@@ -166,7 +168,7 @@ class _SongPlayScreenState extends State<SongPlayScreen> {
                         timeLabelTextStyle:
                             TextStyle(color: Colors.white, fontSize: 13),
                         onSeek: ((value) {
-                         widget.audioPlayer.seek(value);
+                          widget.audioPlayer.seek(value);
                         }),
                       ),
                     );
@@ -278,9 +280,23 @@ class _SongPlayScreenState extends State<SongPlayScreen> {
                               size: 30,
                             )),
                         IconButton(
-                            onPressed: () {},
-                            icon: Icon(Icons.favorite_rounded,
-                                color: Color(0xFFD933C3), size: 30)),
+                            onPressed: () {
+                              setState(() {
+                                PlaylistSongsClass.addSongToLiked(
+                                    context: context,
+                                    ID: widget.songList[widget.Index].path);
+                                PlaylistSongsClass.isLiked(
+                                    ID: widget.songList[widget.Index].path);
+                              });
+                            },
+                            icon: Icon(
+                                //
+                                PlaylistSongsClass.isLiked(
+                                    ID: widget.songList[widget.Index].path),
+                                color: Color(
+                                  0xFFD933C3,
+                                ),
+                                size: 30)),
                         IconButton(
                             onPressed: () {
                               Navigator.of(context).push(
@@ -331,6 +347,7 @@ class _SongPlayScreenState extends State<SongPlayScreen> {
   loopingOn() {
     widget.audioPlayer.play();
     widget.audioPlayer.setLoopMode(LoopMode.single);
+    PlayIcon();
     setState(() {
       isLooping = true;
     });

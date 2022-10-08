@@ -58,7 +58,7 @@ class _MiniMusicPlayerState extends State<MiniMusicPlayer> {
   }
 
   Future<void> openAudioPlayer() async {
-    convertMusic();
+    // convertMusic();
     await widget.audioPlayer.open(
       Playlist(audios: songAudio, startIndex: widget.index),
       autoStart: true,
@@ -70,6 +70,7 @@ class _MiniMusicPlayerState extends State<MiniMusicPlayer> {
   @override
   void initState() {
     // TODO: implement initState
+    convertMusic();
     openAudioPlayer();
     super.initState();
   }
@@ -148,7 +149,7 @@ class _MiniMusicPlayerState extends State<MiniMusicPlayer> {
                                       playMini();
                                     },
                                     icon: Icon(
-                                      Icons.fast_rewind,
+                                      Icons.skip_previous_rounded,
                                       color: Colors.white,
                                     ),
                                   ),
@@ -185,7 +186,7 @@ class _MiniMusicPlayerState extends State<MiniMusicPlayer> {
                                       playMini();
                                     },
                                     icon: Icon(
-                                      Icons.fast_forward,
+                                      Icons.skip_next_rounded,
                                       color: Colors.white,
                                     ),
                                   ),
@@ -201,9 +202,8 @@ class _MiniMusicPlayerState extends State<MiniMusicPlayer> {
                 ),
               ),
               Positioned(
-                
                 child: CircleAvatar(
-                   radius: 35,
+                  radius: 35,
                   // backgroundImage: AssetImage(
                   //     widget.audioPlayer.getCurrentAudioImage.toString()),
                   child: QueryArtworkWidget(
@@ -211,8 +211,10 @@ class _MiniMusicPlayerState extends State<MiniMusicPlayer> {
                     type: ArtworkType.AUDIO,
                     artworkBorder: BorderRadius.circular(10),
                     nullArtworkWidget: CircleAvatar(
+                      backgroundColor: Color(0xFFD594EE),
                       radius: 35,
-                      backgroundImage: AssetImage('assets/images/wave-sound.gif'),
+                      backgroundImage:
+                          AssetImage('assets/images/wave-sound.gif'),
                     ),
                   ),
                 ),
