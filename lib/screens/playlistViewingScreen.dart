@@ -15,12 +15,14 @@ class PlaylistViewingScreen extends StatelessWidget {
     required this.Title,
     required this.SongCount,
     required this.image,
-    required this.playlistName
+    required this.playlistName,
+    required this.songList
   }) : super(key: key);
   final String Title;
   final String SongCount;
   final String image;
   final String playlistName;
+  final List<Songs> songList;
   Box<List> playlistBox = getPlaylistBox();
   final AssetsAudioPlayer audioPlayer = AssetsAudioPlayer.withId('0');
   @override
@@ -64,7 +66,7 @@ class PlaylistViewingScreen extends StatelessWidget {
                                 ),
                               ),
                               Text(
-                                Title,
+                              playlistName,
                                 style: TextStyle(
                                     color: Colors.white,
                                     fontSize: 25,
@@ -87,7 +89,7 @@ class PlaylistViewingScreen extends StatelessWidget {
                         child: Row(
                           children: [
                             Text(
-                              SongCount,
+                              songList.length.toString(),
                               style: TextStyle(
                                   color: Color(0xFFC87DFF),
                                   fontSize: 15,
@@ -103,38 +105,45 @@ class PlaylistViewingScreen extends StatelessWidget {
             ),
           ),
           //Playlist Start Here
-          Padding(
-            padding: const EdgeInsets.all(15.0),
-            child: ListView(
-              children: [
-                ValueListenableBuilder(
-                  valueListenable: playlistBox.listenable(),
-                  builder: (context, Box<List> value, Widget? child) {
-                    List<Songs> musicList =
-                        playlistBox.get(playlistName)!.toList().cast<Songs>();
-                    return (musicList.isEmpty)
-                        ? Center(
-                            child: Text(
-                            'Playsome Music with Nirvana',
-                            style: TextStyle(color: Colors.white),
-                          ))
-                        : ListView.builder(
-                            itemCount: musicList.length,
-                            shrinkWrap: true,
-                            physics: ScrollPhysics(),
-                            itemBuilder: (context, index) {
-                              return SongTile(
-                                Index: index,
-                                audioPlayer: audioPlayer,
-                                //keys: keys,
-                                onpressed: () {},
-                                audioList: musicList,
-                              );
-                            },
-                          );
-                  },
-                ),
-              ],
+          Expanded(
+            child: Padding(
+              padding: const EdgeInsets.all(15.0),
+              child: ListView(
+                children: [
+                  ValueListenableBuilder(
+                    valueListenable: playlistBox.listenable(),
+                    builder: (context, Box<List> value, Widget? child) {
+                      List<Songs> musicList =
+                          playlistBox.get(playlistName)!.toList().cast<Songs>();
+                      return (musicList.isEmpty)
+                          ? Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Center(
+                                  child: Text(
+                                  'Playsome Music with Nirvana',
+                                  style: TextStyle(color: Colors.white),
+                                )),
+                            ],
+                          )
+                          : ListView.builder(
+                              itemCount: musicList.length,
+                              shrinkWrap: true,
+                              physics: ScrollPhysics(),
+                              itemBuilder: (context, index) {
+                                return SongTile(
+                                  Index: index,
+                                  audioPlayer: audioPlayer,
+                                  //keys: keys,
+                                  onpressed: () {},
+                                  audioList: musicList,
+                                );
+                              },
+                            );
+                    },
+                  ),
+                ],
+              ),
             ),
           )
         ],

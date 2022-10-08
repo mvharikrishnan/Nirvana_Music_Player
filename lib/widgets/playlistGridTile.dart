@@ -6,14 +6,13 @@ import 'package:nirvana/database/songdb.dart';
 import 'package:nirvana/screens/playlistViewingScreen.dart';
 
 class PlaylistGridTile extends StatelessWidget {
-   PlaylistGridTile({
+  PlaylistGridTile({
     Key? key,
     required this.PlaylistTitle,
     required this.PlaylistSongCount,
     required this.PlaylistBackgroundImage,
     required this.PlayListName,
     required this.playlistSongList,
-    
   }) : super(key: key);
   final String PlaylistTitle;
   final String PlaylistSongCount;
@@ -32,6 +31,7 @@ class PlaylistGridTile extends StatelessWidget {
               SongCount: PlaylistSongCount,
               image: PlaylistBackgroundImage,
               playlistName: PlayListName,
+              songList: playlistSongList,
             ),
           ),
         );
