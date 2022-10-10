@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:hive/hive.dart';
+import 'package:nirvana/Functions/mostPlayedSong.dart';
 import 'package:nirvana/database/database_functions/dbFunctions.dart';
 import 'package:nirvana/database/songdb.dart';
 
@@ -12,7 +13,10 @@ class recentSongsClass {
         playlistBox.get('RecentSongs')!.toList().cast<Songs>();
     final Songs recentSong =
         allSongs.firstWhere((song) => song.songPath.contains(ID));
-        
+        int count = recentSong.flag;
+        recentSong.flag=count+1;
+        //function to add the most song to db
+        MostPlayedSongsClass.addSongtoMostPlayed(context: context, ID: ID);
         if(recentSongList.length >=15){
           recentSongList.removeLast();
         }
