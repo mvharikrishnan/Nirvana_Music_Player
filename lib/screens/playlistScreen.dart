@@ -55,10 +55,11 @@ class PlaylistScreen extends StatelessWidget {
                         List Keys = playlistBox.keys.toList();
                         Keys.removeWhere((element) => element =='LikedSongs');
                         Keys.removeWhere((element) => element == 'RecentSongs');
+                        Keys.removeWhere((element) => element == 'MostPlayed');
                         return (Keys.isEmpty)
                             ? Center(
                                 child: Text(
-                                    'Save your music collections in playlist'),
+                                    'Save your music collections in playlist',style: TextStyle(color: Colors.white),),
                               )
                             : GridView.builder(
                                 itemCount: Keys.length,
