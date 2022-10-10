@@ -175,7 +175,9 @@ class _SongTileState extends State<SongTile> {
                               children: [
                                 TextButton(
                                   autofocus: false,
-                                  onPressed: () {},
+                                  onPressed: () {
+                                    
+                                  },
                                   child: Text(
                                     'ADD TO PLAYLIST',
                                     style: TextStyle(color: Colors.white),

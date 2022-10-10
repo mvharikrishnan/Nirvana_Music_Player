@@ -1,12 +1,12 @@
 import 'package:assets_audio_player/assets_audio_player.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/framework.dart';
+// import 'package:flutter/src/foundation/key.dart';
+// import 'package:flutter/src/widgets/framework.dart';
 // import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:nirvana/database/database_functions/dbFunctions.dart';
 import 'package:nirvana/database/songdb.dart';
-import 'package:nirvana/widgets/playlistRecenltyTile.dart';
+// import 'package:nirvana/widgets/playlistRecenltyTile.dart';
 import 'package:nirvana/widgets/songTile.dart';
 
 class RecentlyPlayedScreen extends StatelessWidget {
@@ -47,7 +47,7 @@ class RecentlyPlayedScreen extends StatelessWidget {
                     ValueListenableBuilder(
                       valueListenable: PlaylistBox.listenable(),
                       builder: (context, Box<List> value, Widget? child) {
-                        List<Songs> musicList = PlaylistBox.get('RecentSongs')!
+                        List<Songs> musicList = PlaylistBox.get('RecentSongs')!.reversed
                             .toList()
                             .cast<Songs>();
                         return (musicList.isEmpty)

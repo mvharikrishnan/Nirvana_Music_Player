@@ -54,14 +54,60 @@ playlistCreateAlertBox({required BuildContext context}) {
                 onPressed: () {
                   Navigator.pop(context);
                 },
-                child: Text('Cancel',style: TextStyle(color: Colors.red))),
-                TextButton(onPressed: ()async{
+                child: Text('Cancel', style: TextStyle(color: Colors.red))),
+            TextButton(
+                onPressed: () async {
                   //function for creating playlist
                   await createNewPlaylist();
                   Navigator.pop(context);
-                }, child: Text('Confirm',style: TextStyle(color: Colors.green),)),
+                },
+                child: Text(
+                  'Confirm',
+                  style: TextStyle(color: Colors.green),
+                )),
           ],
         ),
+      );
+    },
+  );
+}
+
+PlaylistDeleteFuntion({required BuildContext context,required String Playlistname}) {
+
+  //
+  Box<List> playlistBox = getPlaylistBox();
+
+  //
+  Future<void> deletePlaylist({required String PlaylistName})async{
+    playlistBox.delete(PlaylistName);
+     Navigator.pop(context);
+  }
+  return showDialog(
+    context: context,
+    builder: (context) {
+      return AlertDialog(
+        title: Text('Do you want to delete the playlist?'),
+        actions: [
+          ElevatedButton(
+            onPressed: () {
+              Navigator.pop(context);
+            },
+            child: Text('Cancel'),
+            style: ButtonStyle(
+              backgroundColor: MaterialStateProperty.all(Colors.red),
+            ),
+          ),
+          ElevatedButton(
+            onPressed: () {
+              //function to delete playlist
+              deletePlaylist(PlaylistName: Playlistname);
+            },
+            child: Text('Confirm'),
+            style: ButtonStyle(
+              backgroundColor: MaterialStateProperty.all(Colors.green),
+            ),
+          ),
+        ],
       );
     },
   );

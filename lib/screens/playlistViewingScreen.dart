@@ -89,7 +89,7 @@ class PlaylistViewingScreen extends StatelessWidget {
                         child: Row(
                           children: [
                             Text(
-                              songList.length.toString(),
+                            ' ${songList.length.toString()} Songs',
                               style: TextStyle(
                                   color: Color(0xFFC87DFF),
                                   fontSize: 15,
@@ -121,7 +121,7 @@ class PlaylistViewingScreen extends StatelessWidget {
                             children: [
                               Center(
                                   child: Text(
-                                  'Playsome Music with Nirvana',
+                                  'Add some songs to $playlistName ',
                                   style: TextStyle(color: Colors.white),
                                 )),
                             ],

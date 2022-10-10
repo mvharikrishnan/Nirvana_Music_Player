@@ -1,8 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-AddtoPlayListTILE(String CreatorsName,
-    {required String ImagePathAddToProfile, required String PlaylistTitle}) {
+AddtoPlayListTILE(
+  String CreatorsName, {
+  required String ImagePathAddToProfile,
+  required String PlaylistTitle,
+}) {
   return Container(
     child: Padding(
       padding: const EdgeInsets.only(bottom: 10),
@@ -22,6 +25,7 @@ AddtoPlayListTILE(String CreatorsName,
           Padding(
             padding: const EdgeInsets.only(left: 10),
             child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 Text(
@@ -43,7 +47,6 @@ AddtoPlayListTILE(String CreatorsName,
               ],
             ),
           ),
-          
         ],
       ),
     ),

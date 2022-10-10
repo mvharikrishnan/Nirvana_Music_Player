@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:nirvana/Functions/usingFunctions.dart';
 import 'package:nirvana/database/songdb.dart';
 import 'package:nirvana/screens/playlistViewingScreen.dart';
 
@@ -52,7 +53,11 @@ class PlaylistGridTile extends StatelessWidget {
           Positioned(
             right: 20,
             child: IconButton(
-              onPressed: () {},
+              onPressed: () {
+                //function to delete the playlist
+                PlaylistDeleteFuntion(
+                    context: context, Playlistname: PlayListName);
+              },
               icon: Icon(
                 Icons.more_vert,
                 size: 30,
