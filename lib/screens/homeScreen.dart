@@ -32,10 +32,10 @@ class _HomeScreenState extends State<HomeScreen> {
   void initState() {
     // TODO: implement initState
     final List<int> Keys = songBox.keys.toList().cast<int>();
-    for( var key in Keys){
-     audioList.add(songBox.get(key)!);
+    for (var key in Keys) {
+      audioList.add(songBox.get(key)!);
     }
-      super.initState();
+    super.initState();
     //requestPermission();
   }
 
@@ -43,7 +43,7 @@ class _HomeScreenState extends State<HomeScreen> {
   //   Permission.storage.request();
   // }
   //accessig the songBOx
-  
+
   @override
   Widget build(BuildContext context) {
     //var songSearchController;
@@ -145,24 +145,27 @@ class _HomeScreenState extends State<HomeScreen> {
                           child: ListView(
                             scrollDirection: Axis.horizontal,
                             children: [
-                              PlaylistHomeScreenTile(
-                                PlaylistCoverIMGPath:
-                                    'assets/images/ArtisticIMage.jpg',
-                                PlaylistName: 'My Favorite Music',
-                                songsCountInPlaylist: '50',
-                              ),
+                              // PlaylistHomeScreenTile(
+                              //   PlaylistCoverIMGPath:
+                              //       'assets/images/ArtisticIMage.jpg',
+                              //   PlaylistName: 'My Favorite Music',
+                              //   songsCountInPlaylist: '50',
+                              //   playlistKeyTITLE: '',
+                              // ),
                               PlaylistHomeScreenTile(
                                 PlaylistCoverIMGPath:
                                     'assets/images/PlaylistImage2.jpg',
-                                PlaylistName: 'Liked Songs',
+                                PlaylistName: 'Most Played Songs',
                                 songsCountInPlaylist: '8',
+                                playlistKeyTITLE: 'MostPlayed',
                               ),
-                              PlaylistHomeScreenTile(
-                                PlaylistCoverIMGPath:
-                                    'assets/images/PlaylistImage3.jpg',
-                                PlaylistName: 'English Songs',
-                                songsCountInPlaylist: '30',
-                              ),
+                              // PlaylistHomeScreenTile(
+                              //   PlaylistCoverIMGPath:
+                              //       'assets/images/PlaylistImage3.jpg',
+                              //   PlaylistName: 'English Songs',
+                              //   songsCountInPlaylist: '30',
+                              //   playlistKeyTITLE: '',
+                              // ),
                             ],
                           ),
                         ),
@@ -188,7 +191,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         ValueListenableBuilder(
                           valueListenable: songBox.listenable(),
                           builder: (context, Box<Songs> Songs, Widget? child) {
-                           // final keys = Songs.keys.toList();
+                            // final keys = Songs.keys.toList();
                             if (Songs.values == null) {
                               return Center(
                                 child: CircularProgressIndicator(),
@@ -211,7 +214,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                   audioPlayer: audioPlayer,
                                   //keys: keys,
                                   onpressed: () {},
-                                   audioList:audioList ,
+                                  audioList: audioList,
                                 );
                               },
                             );

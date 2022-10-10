@@ -7,6 +7,7 @@ class Songs extends HiveObject {
     required this.songTitle,
     required this.songArtist,
     required this.id,
+    this.flag=0,
   });
 
   @HiveField(0)
@@ -20,4 +21,7 @@ class Songs extends HiveObject {
 
   @HiveField(3)
   int id;
+
+  @HiveField(4)
+  int flag;
 }

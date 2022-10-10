@@ -301,7 +301,11 @@ class _SongPlayScreenState extends State<SongPlayScreen> {
                             onPressed: () {
                               Navigator.of(context).push(
                                 MaterialPageRoute(
-                                  builder: (ctx) => AddToPlaylist(),
+                                  builder: (ctx) => AddToPlaylist(
+                                    Index:widget.songList[widget.Index].path,
+                                    audioPlayer:widget.audioPlayer ,
+                                    songList: widget.songList,
+                                  ),
                                 ),
                               );
                             },

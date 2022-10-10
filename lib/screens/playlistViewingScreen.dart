@@ -14,13 +14,13 @@ class PlaylistViewingScreen extends StatelessWidget {
     Key? key,
     required this.Title,
     required this.SongCount,
-    required this.image,
+    
     required this.playlistName,
     required this.songList
   }) : super(key: key);
   final String Title;
   final String SongCount;
-  final String image;
+  
   final String playlistName;
   final List<Songs> songList;
   Box<List> playlistBox = getPlaylistBox();
@@ -114,7 +114,7 @@ class PlaylistViewingScreen extends StatelessWidget {
                     valueListenable: playlistBox.listenable(),
                     builder: (context, Box<List> value, Widget? child) {
                       List<Songs> musicList =
-                          playlistBox.get(playlistName)!.toList().cast<Songs>();
+                          playlistBox.get(playlistName)!.reversed.toList().cast<Songs>();
                       return (musicList.isEmpty)
                           ? Column(
                             mainAxisAlignment: MainAxisAlignment.center,

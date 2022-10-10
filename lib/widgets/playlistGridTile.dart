@@ -30,7 +30,6 @@ class PlaylistGridTile extends StatelessWidget {
             builder: (ctx) => PlaylistViewingScreen(
               Title: PlaylistTitle,
               SongCount: PlaylistSongCount,
-              image: PlaylistBackgroundImage,
               playlistName: PlayListName,
               songList: playlistSongList,
             ),

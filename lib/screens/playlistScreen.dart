@@ -53,6 +53,8 @@ class PlaylistScreen extends StatelessWidget {
                       valueListenable: playlistBox.listenable(),
                       builder: (context, value, child) {
                         List Keys = playlistBox.keys.toList();
+                        Keys.removeWhere((element) => element =='LikedSongs');
+                        Keys.removeWhere((element) => element == 'RecentSongs');
                         return (Keys.isEmpty)
                             ? Center(
                                 child: Text(

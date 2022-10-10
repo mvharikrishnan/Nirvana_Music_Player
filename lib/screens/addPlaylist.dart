@@ -1,3 +1,4 @@
+import 'package:assets_audio_player/assets_audio_player.dart';
 import 'package:flutter/material.dart';
 // import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
@@ -8,8 +9,15 @@ import 'package:nirvana/widgets/addtoplaylistTile.dart';
 import 'package:nirvana/widgets/textFormField.dart';
 
 class AddToPlaylist extends StatefulWidget {
-  const AddToPlaylist({Key? key}) : super(key: key);
-
+  const AddToPlaylist(
+      {Key? key,
+      required this.Index,
+      required this.audioPlayer,
+      required this.songList})
+      : super(key: key);
+  final String Index;
+  final List<Audio> songList;
+  final AssetsAudioPlayer audioPlayer;
   @override
   State<AddToPlaylist> createState() => _AddToPlaylistState();
 }
@@ -38,17 +46,17 @@ class _AddToPlaylistState extends State<AddToPlaylist> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Container(
-                    height: 42,
-                    width: 145,
-                    decoration: BoxDecoration(
-                        color: Color(0xFFD933C3),
-                        borderRadius: BorderRadius.circular(20)),
-                    child: Center(
-                      child: InkWell(
-                        onTap: () {
-                          playlistCreateAlertBox(context: context);
-                        },
+                  InkWell(
+                    onTap: () {
+                      playlistCreateAlertBox(context: context);
+                    },
+                    child: Container(
+                      height: 42,
+                      width: 145,
+                      decoration: BoxDecoration(
+                          color: Color(0xFFD933C3),
+                          borderRadius: BorderRadius.circular(20)),
+                      child: Center(
                         child: Text(
                           'New Playlist',
                           style: TextStyle(
@@ -93,6 +101,10 @@ class _AddToPlaylistState extends State<AddToPlaylist> {
                                       ImagePathAddToProfile:
                                           'assets/images/Art.jpg',
                                       PlaylistTitle: playlistcontent[index],
+                                      Index: widget.Index,
+                                      audioPlayer: widget.audioPlayer,
+                                      songList: [],
+                                      context: context,
                                     );
                                   },
                                 );

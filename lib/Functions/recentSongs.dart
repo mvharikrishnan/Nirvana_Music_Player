@@ -12,6 +12,7 @@ class recentSongsClass {
         playlistBox.get('RecentSongs')!.toList().cast<Songs>();
     final Songs recentSong =
         allSongs.firstWhere((song) => song.songPath.contains(ID));
+        
         if(recentSongList.length >=15){
           recentSongList.removeLast();
         }

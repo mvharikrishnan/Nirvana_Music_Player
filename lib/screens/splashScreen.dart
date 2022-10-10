@@ -35,6 +35,9 @@ class _SplashScreenState extends State<SplashScreen> {
   //List for recent Songs
   List<Songs> RecentSongs = [];
 
+  //lsit for mostPlayed songs
+  List<Songs> MostPlayed = [];
+
   //refering the songBox
   Box<Songs> songBox = getSongBox();
 
@@ -93,6 +96,7 @@ class _SplashScreenState extends State<SplashScreen> {
     }
     accesssTheKeysForLikedSongs();
     accessTheKeysForRecentSongs();
+    accessTheKeysForMostPlayedSongs();
   }
 
   Future accesssTheKeysForLikedSongs() async {
@@ -104,6 +108,12 @@ class _SplashScreenState extends State<SplashScreen> {
   Future accessTheKeysForRecentSongs() async {
     if (!playlistbox.keys.contains('RecentSongs')) {
       await playlistbox.put('RecentSongs', RecentSongs);
+    }
+  }
+
+  Future accessTheKeysForMostPlayedSongs() async {
+    if (!playlistbox.keys.contains('MostPlayed')) {
+      await playlistbox.put('MostPlayed', MostPlayed);
     }
   }
 

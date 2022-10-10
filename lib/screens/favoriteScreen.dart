@@ -59,7 +59,7 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
                       builder: (BuildContext context, Box<List> value,
                           Widget? child) {
                         List<Songs> musicList =
-                            PlaylistBox.get('LikedSongs')!.toList().cast<Songs>();
+                            PlaylistBox.get('LikedSongs')!.reversed.toList().cast<Songs>();
 
                         return (musicList.isEmpty)
                             ? Center(
