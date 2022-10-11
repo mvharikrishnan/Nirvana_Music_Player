@@ -1,17 +1,17 @@
 import 'package:assets_audio_player/assets_audio_player.dart';
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
-import 'package:nirvana/database/database_functions/dbFunctions.dart';
+// import 'package:nirvana/database/database_functions/dbFunctions.dart';
 import 'package:nirvana/database/songdb.dart';
-import 'package:nirvana/screens/profieScreen.dart';
+// import 'package:nirvana/screens/profieScreen.dart';
 import 'package:nirvana/screens/recentlyPlayedScreen.dart';
-import 'package:nirvana/widgets/miniMusicPlayer.dart';
+// import 'package:nirvana/widgets/miniMusicPlayer.dart';
 import 'package:nirvana/widgets/playlistTileHomeScreen.dart';
 import 'package:nirvana/widgets/songTile.dart';
 
 import 'package:nirvana/widgets/textFormField.dart';
 import 'package:on_audio_query/on_audio_query.dart';
-import 'package:permission_handler/permission_handler.dart';
+// import 'package:permission_handler/permission_handler.dart';
 
 // ignore_for_file: prefer_const_constructors
 class HomeScreen extends StatefulWidget {
@@ -28,6 +28,7 @@ class _HomeScreenState extends State<HomeScreen> {
   Box<Songs> songBox = Hive.box<Songs>('Songs');
 
   List<Songs> audioList = [];
+  List<Songs> _foundSongs = [];
   @override
   void initState() {
     // TODO: implement initState
@@ -35,6 +36,7 @@ class _HomeScreenState extends State<HomeScreen> {
     for (var key in Keys) {
       audioList.add(songBox.get(key)!);
     }
+    _foundSongs = audioList;
     super.initState();
     //requestPermission();
   }
@@ -43,6 +45,22 @@ class _HomeScreenState extends State<HomeScreen> {
   //   Permission.storage.request();
   // }
   //accessig the songBOx
+  void searchSongs(String enteredKeyword) {
+    List<Songs> results = [];
+    if (enteredKeyword.isEmpty) {
+      results = audioList;
+    } else {
+      results = audioList
+          .where((element) => element.songTitle
+              .toString()
+              .toLowerCase()
+              .contains(enteredKeyword.toLowerCase()))
+          .toList();
+    }
+    setState(() {
+      _foundSongs=results;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -108,9 +126,23 @@ class _HomeScreenState extends State<HomeScreen> {
               SizedBox(
                 height: 15,
               ),
-              textFormField(
-                  hinttext: 'Song or artist',
-                  textEditController: searchController),
+              // textFormField(
+              //     hinttext: 'Song or artist',
+              //     textEditController: searchController),
+              TextField(
+                onChanged: (value) => searchSongs(value),
+                controller: searchController,
+                decoration: InputDecoration(
+                  prefixIconColor: Colors.white,
+                  hintStyle: TextStyle(color: Colors.white),
+                  border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(20)),
+                  fillColor: Color.fromARGB(99, 201, 125, 255),
+                  filled: true,
+                  prefixIcon: Icon(Icons.search),
+                  hintText: 'Song or artist',
+                ),
+              ),
               SizedBox(
                 height: 15,
               ),
@@ -205,7 +237,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               ));
                             }
                             return ListView.builder(
-                              itemCount: Songs.length,
+                              itemCount:_foundSongs.length,
                               shrinkWrap: true,
                               physics: ScrollPhysics(),
                               itemBuilder: (context, index) {
@@ -214,7 +246,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                   audioPlayer: audioPlayer,
                                   //keys: keys,
                                   onpressed: () {},
-                                  audioList: audioList,
+                                  audioList: _foundSongs,
                                 );
                               },
                             );

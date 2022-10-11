@@ -84,9 +84,12 @@ class _AddToPlaylistState extends State<AddToPlaylist> {
                         valueListenable: playlistBox.listenable(),
                         builder: (context, Box<List> value, child) {
                           List playlistcontent = playlistBox.keys.toList();
-                          playlistcontent.removeWhere((element) => element == 'MostPlayed');
-                          playlistcontent.removeWhere((element) => element == 'LikedSongs');
-                          playlistcontent.removeWhere((element) => element == 'RecentSongs');
+                          playlistcontent.removeWhere(
+                              (element) => element == 'MostPlayed');
+                          playlistcontent.removeWhere(
+                              (element) => element == 'LikedSongs');
+                          playlistcontent.removeWhere(
+                              (element) => element == 'RecentSongs');
                           // String playlist = playlistcontent[]
                           return (playlistBox.isEmpty)
                               ? Center(

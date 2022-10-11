@@ -1,14 +1,14 @@
 
 import 'package:assets_audio_player/assets_audio_player.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
+// import 'package:flutter/services.dart';
 import 'package:hive_flutter/adapters.dart';
-import 'package:marquee/marquee.dart';
+// import 'package:marquee/marquee.dart';
 import 'package:nirvana/Functions/likedSongs.dart';
 import 'package:nirvana/Functions/musicFunctions.dart';
 import 'package:nirvana/Functions/recentSongs.dart';
 import 'package:nirvana/database/songdb.dart';
-import 'package:nirvana/screens/songPlayScreen.dart';
+// import 'package:nirvana/screens/songPlayScreen.dart';
 import 'package:on_audio_query/on_audio_query.dart';
 
 class SongTile extends StatefulWidget {

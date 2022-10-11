@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/framework.dart';
+// import 'package:flutter/src/foundation/key.dart';
+// import 'package:flutter/src/widgets/framework.dart';
 // import 'package:hive_flutter.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:nirvana/Functions/usingFunctions.dart';
@@ -53,13 +53,15 @@ class PlaylistScreen extends StatelessWidget {
                       valueListenable: playlistBox.listenable(),
                       builder: (context, value, child) {
                         List Keys = playlistBox.keys.toList();
-                        Keys.removeWhere((element) => element =='LikedSongs');
+                        Keys.removeWhere((element) => element == 'LikedSongs');
                         Keys.removeWhere((element) => element == 'RecentSongs');
                         Keys.removeWhere((element) => element == 'MostPlayed');
                         return (Keys.isEmpty)
                             ? Center(
                                 child: Text(
-                                    'Save your music collections in playlist',style: TextStyle(color: Colors.white),),
+                                  'Save your music collections in playlist',
+                                  style: TextStyle(color: Colors.white),
+                                ),
                               )
                             : GridView.builder(
                                 itemCount: Keys.length,
@@ -74,10 +76,11 @@ class PlaylistScreen extends StatelessWidget {
                                 ),
                                 itemBuilder: (context, index) {
                                   final String playlistName = Keys[index];
-                                  final List<Songs> playlistSongList = playlistBox
-                                      .get(playlistName)!
-                                      .toList()
-                                      .cast<Songs>();
+                                  final List<Songs> playlistSongList =
+                                      playlistBox
+                                          .get(playlistName)!
+                                          .toList()
+                                          .cast<Songs>();
                                   final String playlistSongCount =
                                       playlistSongList.length.toString();
                                   return PlaylistGridTile(
