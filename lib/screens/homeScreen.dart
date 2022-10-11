@@ -26,6 +26,7 @@ class _HomeScreenState extends State<HomeScreen> {
   final audioPlayer = new AssetsAudioPlayer();
   TextEditingController searchController = new TextEditingController();
   Box<Songs> songBox = Hive.box<Songs>('Songs');
+  bool isVisibile =true;
 
   List<Songs> audioList = [];
   List<Songs> _foundSongs = [];
@@ -41,9 +42,6 @@ class _HomeScreenState extends State<HomeScreen> {
     //requestPermission();
   }
 
-  // void requestPermission() {
-  //   Permission.storage.request();
-  // }
   //accessig the songBOx
   void searchSongs(String enteredKeyword) {
     List<Songs> results = [];
@@ -58,7 +56,7 @@ class _HomeScreenState extends State<HomeScreen> {
           .toList();
     }
     setState(() {
-      _foundSongs=results;
+      _foundSongs = results;
     });
   }
 
@@ -130,6 +128,16 @@ class _HomeScreenState extends State<HomeScreen> {
               //     hinttext: 'Song or artist',
               //     textEditController: searchController),
               TextField(
+                onEditingComplete: () {
+                  setState(() {
+                    isVisibile = true;
+                  });
+                },
+                onTap: () {
+                  setState(() {
+                    isVisibile=false;
+                  });
+                },
                 onChanged: (value) => searchSongs(value),
                 controller: searchController,
                 decoration: InputDecoration(
@@ -158,46 +166,39 @@ class _HomeScreenState extends State<HomeScreen> {
                     padding: const EdgeInsets.only(bottom: 6),
                     child: ListView(
                       children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            Text(
-                              'Playlist',
-                              style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 20,
-                                  fontWeight: FontWeight.w500),
-                            ),
-                          ],
-                        ),
-                        Container(
-                          margin: EdgeInsets.only(top: 10.0),
-                          height: 268,
-                          width: double.infinity,
-                          child: ListView(
-                            scrollDirection: Axis.horizontal,
+                        Visibility(
+                          visible: isVisibile,
+                          child: Column(
                             children: [
-                              // PlaylistHomeScreenTile(
-                              //   PlaylistCoverIMGPath:
-                              //       'assets/images/ArtisticIMage.jpg',
-                              //   PlaylistName: 'My Favorite Music',
-                              //   songsCountInPlaylist: '50',
-                              //   playlistKeyTITLE: '',
-                              // ),
-                              PlaylistHomeScreenTile(
-                                PlaylistCoverIMGPath:
-                                    'assets/images/PlaylistImage2.jpg',
-                                PlaylistName: 'Most Played Songs',
-                                songsCountInPlaylist: '8',
-                                playlistKeyTITLE: 'MostPlayed',
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    'Playlist',
+                                    style: TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 20,
+                                        fontWeight: FontWeight.w500),
+                                  ),
+                                ],
                               ),
-                              // PlaylistHomeScreenTile(
-                              //   PlaylistCoverIMGPath:
-                              //       'assets/images/PlaylistImage3.jpg',
-                              //   PlaylistName: 'English Songs',
-                              //   songsCountInPlaylist: '30',
-                              //   playlistKeyTITLE: '',
-                              // ),
+                              Container(
+                                margin: EdgeInsets.only(top: 10.0),
+                                height: 268,
+                                width: double.infinity,
+                                child: ListView(
+                                  scrollDirection: Axis.horizontal,
+                                  children: [
+                                    PlaylistHomeScreenTile(
+                                      PlaylistCoverIMGPath:
+                                          'assets/images/PlaylistImage2.jpg',
+                                      PlaylistName: 'Most Played Songs',
+                                      songsCountInPlaylist: '8',
+                                      playlistKeyTITLE: 'MostPlayed',
+                                    ),
+                                  ],
+                                ),
+                              ),
                             ],
                           ),
                         ),
@@ -237,7 +238,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               ));
                             }
                             return ListView.builder(
-                              itemCount:_foundSongs.length,
+                              itemCount: _foundSongs.length,
                               shrinkWrap: true,
                               physics: ScrollPhysics(),
                               itemBuilder: (context, index) {
