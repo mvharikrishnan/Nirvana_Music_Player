@@ -109,15 +109,16 @@ class _AddToPlaylistState extends State<AddToPlaylist> {
                 onChanged: (value) {
                   searchPlaylist(value);
                 },
+                style: TextStyle(color: Colors.white),
                 controller: editingController,
                 decoration: InputDecoration(
                   prefixIconColor: Colors.white,
-                  hintStyle: TextStyle(color: Colors.white),
+                  hintStyle: TextStyle(color: Color.fromARGB(144, 255, 255, 255)),
                   border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(20)),
                   fillColor: Color.fromARGB(99, 201, 125, 255),
                   filled: true,
-                  prefixIcon: Icon(Icons.search),
+                  prefixIcon: Icon(Icons.search,color: Colors.white,),
                   hintText: 'Find Playlist',
                 ),
               ),
