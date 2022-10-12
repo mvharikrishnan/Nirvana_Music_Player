@@ -113,12 +113,16 @@ class _AddToPlaylistState extends State<AddToPlaylist> {
                 controller: editingController,
                 decoration: InputDecoration(
                   prefixIconColor: Colors.white,
-                  hintStyle: TextStyle(color: Color.fromARGB(144, 255, 255, 255)),
+                  hintStyle:
+                      TextStyle(color: Color.fromARGB(144, 255, 255, 255)),
                   border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(20)),
                   fillColor: Color.fromARGB(99, 201, 125, 255),
                   filled: true,
-                  prefixIcon: Icon(Icons.search,color: Colors.white,),
+                  prefixIcon: Icon(
+                    Icons.search,
+                    color: Colors.white,
+                  ),
                   hintText: 'Find Playlist',
                 ),
               ),

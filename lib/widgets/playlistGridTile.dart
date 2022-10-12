@@ -77,6 +77,11 @@ class PlaylistGridTile extends StatelessWidget {
                   child: TextButton(
                     onPressed: () {
                       //function to edit playlist
+                      PlaylistEditFunction(
+                        context: context,
+                        songs: playlistSongList,
+                        playlistName: PlayListName,
+                      );
                     },
                     child: Text('Edit Playlist',
                         style: TextStyle(color: Colors.white)),

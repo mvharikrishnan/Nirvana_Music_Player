@@ -4,6 +4,7 @@ import 'package:hive/hive.dart';
 import 'package:nirvana/database/database_functions/dbFunctions.dart';
 import 'package:nirvana/database/songdb.dart';
 import 'package:nirvana/widgets/searching.dart';
+import 'package:nirvana/widgets/textFormField.dart';
 
 playlistCreateAlertBox({required BuildContext context}) {
   TextEditingController textEditingController = TextEditingController();
@@ -72,16 +73,17 @@ playlistCreateAlertBox({required BuildContext context}) {
   );
 }
 
-PlaylistDeleteFuntion({required BuildContext context,required String Playlistname}) {
-
+PlaylistDeleteFuntion(
+    {required BuildContext context, required String Playlistname}) {
   //
   Box<List> playlistBox = getPlaylistBox();
 
   //
-  Future<void> deletePlaylist({required String PlaylistName})async{
+  Future<void> deletePlaylist({required String PlaylistName}) async {
     playlistBox.delete(PlaylistName);
-     Navigator.pop(context);
+    Navigator.pop(context);
   }
+
   return showDialog(
     context: context,
     builder: (context) {
@@ -101,6 +103,68 @@ PlaylistDeleteFuntion({required BuildContext context,required String Playlistnam
             onPressed: () {
               //function to delete playlist
               deletePlaylist(PlaylistName: Playlistname);
+            },
+            child: Text('Confirm'),
+            style: ButtonStyle(
+              backgroundColor: MaterialStateProperty.all(Colors.green),
+            ),
+          ),
+        ],
+      );
+    },
+  );
+}
+
+PlaylistEditFunction(
+    {required BuildContext context,
+    required List<Songs> songs,
+    required String playlistName}) {
+  TextEditingController editcontroller = TextEditingController();
+  Box<List> playlistBox = getPlaylistBox();
+  Future editPlaylist(
+      {required String playlistName,
+      required List<Songs> playlistSongList,
+      required String oldPlaylistName}) async {
+    playlistBox.put(playlistName, playlistSongList);
+    playlistBox.delete(oldPlaylistName);
+     Navigator.pop(context);
+  }
+
+  return showDialog(
+    context: context,
+    builder: (context) {
+      return AlertDialog(
+        title: Text('Edit Playlist'),
+        content: TextFormField(
+          controller: editcontroller,
+          keyboardType: TextInputType.name,
+          textInputAction: TextInputAction.done,
+          decoration: InputDecoration(
+            border: OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
+            hintText: playlistName,
+            prefixIcon: Icon(
+              Icons.edit,
+              size: 25,
+            ),
+          ),
+        ),
+        actions: [
+          ElevatedButton(
+            onPressed: () {
+              Navigator.pop(context);
+            },
+            child: Text('Cancel'),
+            style: ButtonStyle(
+              backgroundColor: MaterialStateProperty.all(Colors.red),
+            ),
+          ),
+          ElevatedButton(
+            onPressed: () {
+              //function to delete playlist
+              editPlaylist(
+                  playlistName: editcontroller.text.trim(),
+                  playlistSongList: songs,
+                  oldPlaylistName: playlistName);
             },
             child: Text('Confirm'),
             style: ButtonStyle(
