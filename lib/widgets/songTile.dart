@@ -8,6 +8,7 @@ import 'package:nirvana/Functions/likedSongs.dart';
 import 'package:nirvana/Functions/musicFunctions.dart';
 import 'package:nirvana/Functions/recentSongs.dart';
 import 'package:nirvana/database/songdb.dart';
+import 'package:nirvana/screens/addPlaylist.dart';
 // import 'package:nirvana/screens/songPlayScreen.dart';
 import 'package:on_audio_query/on_audio_query.dart';
 
@@ -176,7 +177,15 @@ class _SongTileState extends State<SongTile> {
                                 TextButton(
                                   autofocus: false,
                                   onPressed: () {
-                                    
+                                     Navigator.of(context).push(
+                                MaterialPageRoute(
+                                  builder: (ctx) => AddToPlaylist(
+                                    Index: widget.audioList[widget.Index].songPath,
+                                    audioPlayer: widget.audioPlayer,
+                                    songList: widget.audioList.cast<Audio>(),
+                                  ),
+                                ),
+                              );
                                   },
                                   child: Text(
                                     'ADD TO PLAYLIST',

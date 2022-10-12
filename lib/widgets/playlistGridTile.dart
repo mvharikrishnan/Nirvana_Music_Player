@@ -50,19 +50,52 @@ class PlaylistGridTile extends StatelessWidget {
             ),
           ),
           Positioned(
-            right: 20,
-            child: IconButton(
-              onPressed: () {
-                //function to delete the playlist
-                PlaylistDeleteFuntion(
-                    context: context, Playlistname: PlayListName);
-              },
+            right: 10,
+            child: PopupMenuButton(
+              color: Color.fromARGB(255, 100, 46, 141),
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(20)),
               icon: Icon(
                 Icons.more_vert,
                 size: 30,
                 color: Colors.white,
               ),
+              itemBuilder: (context) => [
+                PopupMenuItem(
+                  child: TextButton(
+                    onPressed: () {
+                      PlaylistDeleteFuntion(
+                          context: context, Playlistname: PlayListName);
+                    },
+                    child: Text(
+                      'Delete Playlist',
+                      style: TextStyle(color: Colors.white),
+                    ),
+                  ),
+                ),
+                PopupMenuItem(
+                  child: TextButton(
+                    onPressed: () {
+                      //function to edit playlist
+                    },
+                    child: Text('Edit Playlist',
+                        style: TextStyle(color: Colors.white)),
+                  ),
+                ),
+              ],
             ),
+            // IconButton(
+            //   onPressed: () {
+            //     //function to delete the playlist
+            //     // PlaylistDeleteFuntion(
+            //     //     context: context, Playlistname: PlayListName);
+            //   },
+            //   icon: Icon(
+            //     Icons.more_vert,
+            //     size: 30,
+            //     color: Colors.white,
+            //   ),
+            // ),
           ),
           Positioned(
             bottom: 2,

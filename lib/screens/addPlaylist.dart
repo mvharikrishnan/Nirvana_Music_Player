@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:nirvana/Functions/usingFunctions.dart';
 import 'package:nirvana/database/database_functions/dbFunctions.dart';
+import 'package:nirvana/database/songdb.dart';
 
 import 'package:nirvana/widgets/addtoplaylistTile.dart';
 import 'package:nirvana/widgets/textFormField.dart';
@@ -23,7 +24,36 @@ class AddToPlaylist extends StatefulWidget {
 }
 
 class _AddToPlaylistState extends State<AddToPlaylist> {
+  TextEditingController editingController = TextEditingController();
   Box<List> playlistBox = getPlaylistBox();
+  List playlistcontent = [];
+  List _foundedPlaylist = [];
+  @override
+  void initState() {
+    // TODO: implement initState
+    playlistcontent = List.from(playlistBox.keys.toList());
+    _foundedPlaylist = playlistcontent;
+    super.initState();
+  }
+
+  void searchPlaylist(String enteredKeyword) {
+    List results = [];
+    if (enteredKeyword.isEmpty) {
+      results = playlistcontent;
+    } else {
+      results = playlistBox.keys
+          .where((element) => element
+              .toString()
+              .toLowerCase()
+              .contains(enteredKeyword.toLowerCase()))
+          .toList()
+          .cast();
+    }
+    setState(() {
+      _foundedPlaylist = results;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     TextEditingController? playlistcontroler;
@@ -72,9 +102,25 @@ class _AddToPlaylistState extends State<AddToPlaylist> {
               SizedBox(
                 height: 15,
               ),
-              textFormField(
-                  hinttext: 'Find Playlist',
-                  textEditController: playlistcontroler),
+              // textFormField(
+              //     hinttext: 'Find Playlist',
+              //     textEditController: playlistcontroler),
+              TextField(
+                onChanged: (value) {
+                  searchPlaylist(value);
+                },
+                controller: editingController,
+                decoration: InputDecoration(
+                  prefixIconColor: Colors.white,
+                  hintStyle: TextStyle(color: Colors.white),
+                  border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(20)),
+                  fillColor: Color.fromARGB(99, 201, 125, 255),
+                  filled: true,
+                  prefixIcon: Icon(Icons.search),
+                  hintText: 'Find Playlist',
+                ),
+              ),
               Expanded(
                 child: Padding(
                   padding: const EdgeInsets.all(15.0),
@@ -83,7 +129,6 @@ class _AddToPlaylistState extends State<AddToPlaylist> {
                       ValueListenableBuilder(
                         valueListenable: playlistBox.listenable(),
                         builder: (context, Box<List> value, child) {
-                          List playlistcontent = playlistBox.keys.toList();
                           playlistcontent.removeWhere(
                               (element) => element == 'MostPlayed');
                           playlistcontent.removeWhere(
@@ -100,13 +145,13 @@ class _AddToPlaylistState extends State<AddToPlaylist> {
                               : ListView.builder(
                                   shrinkWrap: true,
                                   physics: ScrollPhysics(),
-                                  itemCount: playlistcontent.length,
+                                  itemCount: _foundedPlaylist.length,
                                   itemBuilder: (context, index) {
                                     return AddtoPlayListTILE(
                                       'Owners Name',
                                       ImagePathAddToProfile:
                                           'assets/images/Art.jpg',
-                                      PlaylistTitle: playlistcontent[index],
+                                      PlaylistTitle: _foundedPlaylist[index],
                                       Index: widget.Index,
                                       audioPlayer: widget.audioPlayer,
                                       songList: [],

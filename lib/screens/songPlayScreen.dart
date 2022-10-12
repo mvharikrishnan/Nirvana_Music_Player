@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:assets_audio_player/assets_audio_player.dart';
 import 'package:audio_video_progress_bar/audio_video_progress_bar.dart';
+
 import 'package:flutter/material.dart';
 import 'package:marquee/marquee.dart';
 // import 'package:nirvana/Functions/audioShare.dart';
@@ -9,7 +10,7 @@ import 'package:nirvana/Functions/likedSongs.dart';
 
 import 'package:nirvana/screens/addPlaylist.dart';
 import 'package:on_audio_query/on_audio_query.dart';
-import 'package:path_provider/path_provider.dart';
+// import 'package:path_provider/path_provider.dart';-
 import 'package:share_plus/share_plus.dart';
 
 class SongPlayScreen extends StatefulWidget {
@@ -277,11 +278,10 @@ class _SongPlayScreenState extends State<SongPlayScreen> {
                       children: [
                         IconButton(
                             onPressed: () async {
+                            
+                              await Share.share(musicAuido.metas.title!);
+
                               //functon to share audio here////
-                              await Share.share(
-                                musicAuido.metas.title.toString(),
-                              );
-                              
                             },
                             icon: Icon(
                               Icons.share,

@@ -138,16 +138,18 @@ class _HomeScreenState extends State<HomeScreen> {
                     isVisibile=false;
                   });
                 },
+                enableSuggestions: true,
+                style: TextStyle(color: Colors.white),
                 onChanged: (value) => searchSongs(value),
                 controller: searchController,
                 decoration: InputDecoration(
                   prefixIconColor: Colors.white,
-                  hintStyle: TextStyle(color: Colors.white),
+                  hintStyle: TextStyle(color: Color.fromARGB(155, 255, 255, 255)),
                   border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(20)),
                   fillColor: Color.fromARGB(99, 201, 125, 255),
                   filled: true,
-                  prefixIcon: Icon(Icons.search),
+                  prefixIcon: Icon(Icons.search,color: Colors.white,),
                   hintText: 'Song or artist',
                 ),
               ),
