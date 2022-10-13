@@ -73,7 +73,7 @@ class _SplashScreenState extends State<SplashScreen> {
 
     //for adding the songs to the sorted list
     for (var song in accescessedSongs) {
-      if (song.fileExtension == 'mp3') {
+      if (song.fileExtension == 'mp3'||song.fileExtension == 'm4a') {
         sortedSongs.add(song);
       }
       print('Accessed Songs = ${accescessedSongs.length}');

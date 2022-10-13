@@ -2,6 +2,8 @@ import 'dart:io';
 
 import 'package:assets_audio_player/assets_audio_player.dart';
 import 'package:audio_video_progress_bar/audio_video_progress_bar.dart';
+import 'package:file_picker/file_picker.dart';
+import 'package:flutter/foundation.dart';
 
 import 'package:flutter/material.dart';
 import 'package:marquee/marquee.dart';
@@ -277,31 +279,47 @@ class _SongPlayScreenState extends State<SongPlayScreen> {
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
                         IconButton(
-                            onPressed: () async {
-                            
-                              await Share.share(musicAuido.metas.title!);
+                          onPressed: () async {
+                            //     print(
+                            //         'Music Audio path: ${widget.songList[widget.Index].path}');
+                            // //  String file =  widget.songList[widget.Index].path;
+                            //     await Share.shareFiles(['${file}'],
+                            //         text:
+                            //             '${widget.audioPlayer.getCurrentAudioTitle}');
 
-                              //functon to share audio here////
-                            },
-                            icon: Icon(
-                              Icons.share,
-                              color: Colors.white,
-                              size: 30,
-                            )),
+                            //     //functon to share audio here////
+
+                            //original function
+                            // final result = await FilePicker.platform.pickFiles(
+                            //     initialDirectory:
+                            //         widget.songList[widget.Index].path);
+                            // List<String>? files = result?.files
+                            //     .map((e) => e.path)
+                            //     .cast<String>()
+                            //     .toList();
+                            // if (files == null)
+                            //   return await Share.shareFiles(files);
+                          },
+                          icon: Icon(
+                            Icons.share,
+                            color: Colors.white,
+                            size: 30,
+                          ),
+                        ),
                         IconButton(
                             onPressed: () {
                               setState(() {
                                 PlaylistSongsClass.addSongToLiked(
                                     context: context,
-                                    ID: widget.songList[widget.Index].path);
+                                    ID: musicAuido.metas.id!);
                                 PlaylistSongsClass.isLiked(
-                                    ID: widget.songList[widget.Index].path);
+                                    ID: musicAuido.metas.id!);
                               });
                             },
                             icon: Icon(
                                 //
                                 PlaylistSongsClass.isLiked(
-                                    ID: widget.songList[widget.Index].path),
+                                    ID: musicAuido.metas.id!),
                                 color: Color(
                                   0xFFD933C3,
                                 ),
@@ -311,7 +329,7 @@ class _SongPlayScreenState extends State<SongPlayScreen> {
                               Navigator.of(context).push(
                                 MaterialPageRoute(
                                   builder: (ctx) => AddToPlaylist(
-                                    Index: widget.songList[widget.Index].path,
+                                    Index: musicAuido.metas.id!,
                                     audioPlayer: widget.audioPlayer,
                                     songList: widget.songList,
                                   ),
