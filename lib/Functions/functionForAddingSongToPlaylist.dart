@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 import 'package:nirvana/database/database_functions/dbFunctions.dart';
@@ -10,16 +9,17 @@ class SongsToPlaylistClass {
   static final Box<Songs> songBox = getSongBox();
 
   static addSongToPlaylist(
-      {required BuildContext context, required String ID,required String PlaylistName}) async {
+      {required BuildContext context,
+      required String ID,
+      required String PlaylistName}) async {
     final List<Songs> songsList = songBox.values.toList().cast();
     final List<Songs> PlaylistNameList =
         LikedSongBox.get(PlaylistName)!.toList().cast<Songs>();
     final Songs likedMusicRef =
         songsList.firstWhere((song) => song.songPath.contains(ID));
 
-    if (PlaylistNameList
-        .where((Songs) => Songs.songPath == likedMusicRef.songPath)
-        .isEmpty) {
+    if (PlaylistNameList.where(
+        (Songs) => Songs.songPath == likedMusicRef.songPath).isEmpty) {
       PlaylistNameList.add(likedMusicRef);
       await LikedSongBox.put(PlaylistName, PlaylistNameList);
 
@@ -41,6 +41,7 @@ class SongsToPlaylistClass {
       );
     }
   }
+
   static ShowSnackBar({
     required BuildContext context,
     required String songName,

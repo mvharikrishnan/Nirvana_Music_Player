@@ -5,20 +5,20 @@ import 'package:flutter/material.dart';
 
 import 'package:nirvana/database/database_functions/dbFunctions.dart';
 import 'package:nirvana/database/songdb.dart';
+import 'package:nirvana/widgets/bottomModelSheetAddSongs.dart';
 import 'package:nirvana/widgets/songTile.dart';
 
 class PlaylistViewingScreen extends StatelessWidget {
-   PlaylistViewingScreen({
-    Key? key,
-    required this.Title,
-    required this.SongCount,
-    
-    required this.playlistName,
-    required this.songList
-  }) : super(key: key);
+  PlaylistViewingScreen(
+      {Key? key,
+      required this.Title,
+      required this.SongCount,
+      required this.playlistName,
+      required this.songList})
+      : super(key: key);
   final String Title;
   final String SongCount;
-  
+
   final String playlistName;
   final List<Songs> songList;
   Box<List> playlistBox = getPlaylistBox();
@@ -56,7 +56,7 @@ class PlaylistViewingScreen extends StatelessWidget {
                                 ),
                               ),
                               Text(
-                              playlistName,
+                                playlistName,
                                 style: TextStyle(
                                     color: Colors.white,
                                     fontSize: 30,
@@ -65,9 +65,15 @@ class PlaylistViewingScreen extends StatelessWidget {
                             ],
                           ),
                           IconButton(
-                            onPressed: () {},
+                            onPressed: () {
+                              BottomModelSheet
+                                  .ShowBottomModelSheetAddSongTOPlaylsit(
+                                PlaylistName: playlistName,
+                                context: context,
+                              );
+                            },
                             icon: Icon(
-                              Icons.more_vert,
+                              Icons.add_box_rounded,
                               color: Colors.white,
                               size: 30,
                             ),
@@ -79,7 +85,7 @@ class PlaylistViewingScreen extends StatelessWidget {
                         child: Row(
                           children: [
                             Text(
-                            ' ${songList.length.toString()} Songs',
+                              ' ${songList.length.toString()} Songs',
                               style: TextStyle(
                                   color: Color(0xFFC87DFF),
                                   fontSize: 15,
@@ -102,19 +108,22 @@ class PlaylistViewingScreen extends StatelessWidget {
                     ValueListenableBuilder(
                       valueListenable: playlistBox.listenable(),
                       builder: (context, Box<List> value, Widget? child) {
-                        List<Songs> musicList =
-                            playlistBox.get(playlistName)!.reversed.toList().cast<Songs>();
+                        List<Songs> musicList = playlistBox
+                            .get(playlistName)!
+                            .reversed
+                            .toList()
+                            .cast<Songs>();
                         return (musicList.isEmpty)
                             ? Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Center(
-                                    child: Text(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Center(
+                                      child: Text(
                                     'Add some songs to $playlistName ',
                                     style: TextStyle(color: Colors.white),
                                   )),
-                              ],
-                            )
+                                ],
+                              )
                             : ListView.builder(
                                 itemCount: musicList.length,
                                 shrinkWrap: true,

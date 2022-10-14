@@ -82,7 +82,7 @@ class _SongPlayScreenState extends State<SongPlayScreen> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Container(
+                      SizedBox(
                         height: 297,
                         width: 297,
                         child: QueryArtworkWidget(
