@@ -27,18 +27,10 @@ class PlaylistViewingScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Color(0xFF3B1F50),
-      body: Column(
-        children: [
-          Container(
-            height: 128,
-            width: double.infinity,
-            decoration: BoxDecoration(
-                borderRadius: BorderRadius.only(
-                  bottomLeft: const Radius.circular(70),
-                  bottomRight: const Radius.circular(70),
-                ),
-                color: Color.fromARGB(113, 130, 78, 167)),
-            child: BackdropFilter(
+      body: SafeArea(
+        child: Column(
+          children: [
+            BackdropFilter(
               filter: ImageFilter.blur(sigmaX: 1.0),
               child: Container(
                 decoration: BoxDecoration(color: Colors.white.withOpacity(0.0)),
@@ -67,7 +59,7 @@ class PlaylistViewingScreen extends StatelessWidget {
                               playlistName,
                                 style: TextStyle(
                                     color: Colors.white,
-                                    fontSize: 25,
+                                    fontSize: 30,
                                     fontWeight: FontWeight.w500),
                               ),
                             ],
@@ -101,50 +93,50 @@ class PlaylistViewingScreen extends StatelessWidget {
                 ),
               ),
             ),
-          ),
-          //Playlist Start Here
-          Expanded(
-            child: Padding(
-              padding: const EdgeInsets.all(15.0),
-              child: ListView(
-                children: [
-                  ValueListenableBuilder(
-                    valueListenable: playlistBox.listenable(),
-                    builder: (context, Box<List> value, Widget? child) {
-                      List<Songs> musicList =
-                          playlistBox.get(playlistName)!.reversed.toList().cast<Songs>();
-                      return (musicList.isEmpty)
-                          ? Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Center(
-                                  child: Text(
-                                  'Add some songs to $playlistName ',
-                                  style: TextStyle(color: Colors.white),
-                                )),
-                            ],
-                          )
-                          : ListView.builder(
-                              itemCount: musicList.length,
-                              shrinkWrap: true,
-                              physics: ScrollPhysics(),
-                              itemBuilder: (context, index) {
-                                return SongTile(
-                                  Index: index,
-                                  audioPlayer: audioPlayer,
-                                  //keys: keys,
-                                  onpressed: () {},
-                                  audioList: musicList,
-                                );
-                              },
-                            );
-                    },
-                  ),
-                ],
+            //Playlist Start Here
+            Expanded(
+              child: Padding(
+                padding: const EdgeInsets.all(15.0),
+                child: ListView(
+                  children: [
+                    ValueListenableBuilder(
+                      valueListenable: playlistBox.listenable(),
+                      builder: (context, Box<List> value, Widget? child) {
+                        List<Songs> musicList =
+                            playlistBox.get(playlistName)!.reversed.toList().cast<Songs>();
+                        return (musicList.isEmpty)
+                            ? Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Center(
+                                    child: Text(
+                                    'Add some songs to $playlistName ',
+                                    style: TextStyle(color: Colors.white),
+                                  )),
+                              ],
+                            )
+                            : ListView.builder(
+                                itemCount: musicList.length,
+                                shrinkWrap: true,
+                                physics: ScrollPhysics(),
+                                itemBuilder: (context, index) {
+                                  return SongTile(
+                                    Index: index,
+                                    audioPlayer: audioPlayer,
+                                    //keys: keys,
+                                    onpressed: () {},
+                                    audioList: musicList,
+                                  );
+                                },
+                              );
+                      },
+                    ),
+                  ],
+                ),
               ),
-            ),
-          )
-        ],
+            )
+          ],
+        ),
       ),
     );
   }

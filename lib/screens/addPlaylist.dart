@@ -28,13 +28,13 @@ class _AddToPlaylistState extends State<AddToPlaylist> {
   Box<List> playlistBox = getPlaylistBox();
   List playlistcontent = [];
   List _foundedPlaylist = [];
- 
+
   @override
   void initState() {
     // TODO: implement initState
     playlistcontent = List.from(playlistBox.keys.toList());
     _foundedPlaylist = playlistcontent;
-    
+
     super.initState();
   }
 
@@ -136,14 +136,11 @@ class _AddToPlaylistState extends State<AddToPlaylist> {
                       ValueListenableBuilder(
                         valueListenable: playlistBox.listenable(),
                         builder: (context, Box<List> value, child) {
-                          playlistcontent =
-                              List.from(playlistBox.keys.toList());
-
-                          playlistcontent.removeWhere(
+                          _foundedPlaylist.removeWhere(
                               (element) => element == 'MostPlayed');
-                          playlistcontent.removeWhere(
+                          _foundedPlaylist.removeWhere(
                               (element) => element == 'LikedSongs');
-                          playlistcontent.removeWhere(
+                          _foundedPlaylist.removeWhere(
                               (element) => element == 'RecentSongs');
                           // String playlist = playlistcontent[]
                           return (playlistBox.isEmpty)

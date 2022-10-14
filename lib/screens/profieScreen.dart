@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 // import 'package:flutter/src/foundation/key.dart';
 // import 'package:flutter/src/widgets/framework.dart';
@@ -38,7 +37,8 @@ class ProfileScreen extends StatelessWidget {
                   IconButton(
                     onPressed: () {
                       //navigate to settings screen
-                      Navigator.of(context).push(MaterialPageRoute(builder: (ctx)=>SettingsScreen()));
+                      Navigator.of(context).push(MaterialPageRoute(
+                          builder: (ctx) => SettingsScreen()));
                     },
                     icon: Icon(
                       Icons.settings,

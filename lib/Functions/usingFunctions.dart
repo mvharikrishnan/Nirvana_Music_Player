@@ -42,7 +42,7 @@ playlistCreateAlertBox({required BuildContext context}) {
             validator: (value) {
               final keys = getPlaylistBox().keys.toList();
               if (value == null || value.isEmpty) {
-                return 'Please enter ';
+                return 'Please enter Playlist Name';
               }
               if (keys.contains(value)) {
                 return '$value already exits';
@@ -59,8 +59,11 @@ playlistCreateAlertBox({required BuildContext context}) {
             TextButton(
                 onPressed: () async {
                   //function for creating playlist
-                  await createNewPlaylist();
-                  Navigator.pop(context);
+
+                  if (formKey.currentState!.validate()) {
+                    await createNewPlaylist();
+                    Navigator.pop(context);
+                  }
                 },
                 child: Text(
                   'Confirm',
@@ -127,7 +130,7 @@ PlaylistEditFunction(
       required String oldPlaylistName}) async {
     playlistBox.put(playlistName, playlistSongList);
     playlistBox.delete(oldPlaylistName);
-     Navigator.pop(context);
+    Navigator.pop(context);
   }
 
   return showDialog(

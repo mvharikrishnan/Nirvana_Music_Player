@@ -1,39 +1,22 @@
-import 'dart:io';
-
 import 'package:assets_audio_player/assets_audio_player.dart';
 import 'package:audio_video_progress_bar/audio_video_progress_bar.dart';
-import 'package:file_picker/file_picker.dart';
-import 'package:flutter/foundation.dart';
 
 import 'package:flutter/material.dart';
 import 'package:marquee/marquee.dart';
-// import 'package:nirvana/Functions/audioShare.dart';
+
 import 'package:nirvana/Functions/likedSongs.dart';
 
 import 'package:nirvana/screens/addPlaylist.dart';
 import 'package:on_audio_query/on_audio_query.dart';
-// import 'package:path_provider/path_provider.dart';-
-import 'package:share_plus/share_plus.dart';
 
 class SongPlayScreen extends StatefulWidget {
   SongPlayScreen({
     Key? key,
-    // required this.SongTitle,
-    // required this.songDetails,
-    // required this.SongImagePath,
-    // required this.Start,
-    // required this.end,
-    // required this.SongUri,
     required this.Index,
     required this.audioPlayer,
     required this.songList,
   }) : super(key: key);
-  // final String SongTitle;
-  // final String SongImagePath;
-  // final String songDetails;
-  // final String Start;
-  // final String end;
-  // final String SongUri;
+
   final int Index;
   final List<Audio> songList;
   final AssetsAudioPlayer audioPlayer;
@@ -129,6 +112,7 @@ class _SongPlayScreenState extends State<SongPlayScreen> {
                       height: 30,
                       width: double.infinity,
                       child: Marquee(
+                        startAfter: Duration(seconds: 5),
                         text: widget.audioPlayer.getCurrentAudioTitle,
                         style: TextStyle(
                             color: Colors.white,
@@ -310,8 +294,7 @@ class _SongPlayScreenState extends State<SongPlayScreen> {
                             onPressed: () {
                               setState(() {
                                 PlaylistSongsClass.addSongToLiked(
-                                    context: context,
-                                    ID: musicAuido.metas.id!);
+                                    context: context, ID: musicAuido.metas.id!);
                                 PlaylistSongsClass.isLiked(
                                     ID: musicAuido.metas.id!);
                               });
