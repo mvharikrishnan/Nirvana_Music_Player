@@ -36,6 +36,9 @@ dependencies:
         sdk: flutter
     hive: ^2.2.3
     hive_flutter: ^1.1.0
+    http: ^0.13.5
+    json_annotation: ^4.7.0
+    json_serializable: ^6.5.1
     marquee: ^2.2.3
     on_audio_query: ^2.6.1
     path_provider: ^2.0.11

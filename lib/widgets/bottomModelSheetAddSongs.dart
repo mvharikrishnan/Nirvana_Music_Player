@@ -21,7 +21,7 @@ class BottomModelSheet {
     // List<Songs> ToBeAddedSongs = [];
     showModalBottomSheet(
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-      backgroundColor: Color.fromARGB(93, 72, 5, 82),
+      backgroundColor: Color.fromARGB(255, 51, 3, 58),
       context: context,
       builder: (context) {
         return ListView.builder(

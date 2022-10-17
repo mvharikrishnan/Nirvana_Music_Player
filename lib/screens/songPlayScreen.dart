@@ -7,6 +7,7 @@ import 'package:marquee/marquee.dart';
 import 'package:nirvana/Functions/likedSongs.dart';
 
 import 'package:nirvana/screens/addPlaylist.dart';
+import 'package:nirvana/screens/screenLyrics.dart';
 import 'package:on_audio_query/on_audio_query.dart';
 
 class SongPlayScreen extends StatefulWidget {
@@ -264,25 +265,15 @@ class _SongPlayScreenState extends State<SongPlayScreen> {
                       children: [
                         IconButton(
                           onPressed: () async {
-                            //     print(
-                            //         'Music Audio path: ${widget.songList[widget.Index].path}');
-                            // //  String file =  widget.songList[widget.Index].path;
-                            //     await Share.shareFiles(['${file}'],
-                            //         text:
-                            //             '${widget.audioPlayer.getCurrentAudioTitle}');
-
-                            //     //functon to share audio here////
-
-                            //original function
-                            // final result = await FilePicker.platform.pickFiles(
-                            //     initialDirectory:
-                            //         widget.songList[widget.Index].path);
-                            // List<String>? files = result?.files
-                            //     .map((e) => e.path)
-                            //     .cast<String>()
-                            //     .toList();
-                            // if (files == null)
-                            //   return await Share.shareFiles(files);
+                            //function fot lyrics
+                            Navigator.of(context).push(
+                              MaterialPageRoute(
+                                builder: (ctx) => Screen_Lyrics(
+                                  SongTitile: musicAuido.metas.title!,
+                                  SongArtist: musicAuido.metas.artist!,
+                                ),
+                              ),
+                            );
                           },
                           icon: Icon(
                             Icons.share,

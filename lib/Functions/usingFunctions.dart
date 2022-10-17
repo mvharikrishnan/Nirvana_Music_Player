@@ -37,7 +37,7 @@ playlistCreateAlertBox({required BuildContext context}) {
           ),
           content: textFieldForSearchAndCreatePlaylist(
             HintText: 'Playlist Name',
-            SearchIcon: Icons.search_off_outlined,
+            SearchIcon: Icons.search_rounded,
             textController: textEditingController,
             validator: (value) {
               final keys = getPlaylistBox().keys.toList();
