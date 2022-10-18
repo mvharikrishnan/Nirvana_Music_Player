@@ -44,7 +44,7 @@ AddtoPlayListTILE(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   Text(
-                    ' $PlaylistTitle',
+                    '$PlaylistTitle',
                     style: TextStyle(
                       color: Colors.white,
                       fontSize: 20,

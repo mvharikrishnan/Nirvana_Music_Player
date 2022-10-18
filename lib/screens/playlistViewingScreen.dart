@@ -64,20 +64,21 @@ class PlaylistViewingScreen extends StatelessWidget {
                               ),
                             ],
                           ),
-                          IconButton(
-                            onPressed: () {
-                              BottomModelSheet
-                                  .ShowBottomModelSheetAddSongTOPlaylsit(
-                                PlaylistName: playlistName,
-                                context: context,
-                              );
-                            },
-                            icon: Icon(
-                              Icons.add_box_rounded,
-                              color: Colors.white,
-                              size: 30,
+                          if (playlistName != 'MostPlayed')
+                            IconButton(
+                              onPressed: () {
+                                BottomModelSheet
+                                    .ShowBottomModelSheetAddSongTOPlaylsit(
+                                  PlaylistName: playlistName,
+                                  context: context,
+                                );
+                              },
+                              icon: Icon(
+                                Icons.add_box_outlined,
+                                color: Colors.white,
+                                size: 30,
+                              ),
                             ),
-                          ),
                         ],
                       ),
                       Padding(

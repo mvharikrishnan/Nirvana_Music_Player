@@ -157,7 +157,7 @@ class _AddToPlaylistState extends State<AddToPlaylist> {
                                     return AddtoPlayListTILE(
                                       'Owners Name',
                                       ImagePathAddToProfile:
-                                          'assets/images/Art.jpg',
+                                          'assets/images/PlaylistImage3.jpg',
                                       PlaylistTitle: _foundedPlaylist[index],
                                       Index: widget.Index,
                                       audioPlayer: widget.audioPlayer,

@@ -56,8 +56,9 @@ class _Screen_LyricsState extends State<Screen_Lyrics> {
                   height: 42,
                   width: 145,
                   decoration: BoxDecoration(
-                      color: Color(0xFFD933C3),
-                      borderRadius: BorderRadius.circular(20)),
+                    color: Color(0xFFD933C3),
+                    borderRadius: BorderRadius.circular(20),
+                   ),
                   child: Center(
                     child: Text(
                       'Get Lyrics',

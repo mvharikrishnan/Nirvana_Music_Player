@@ -223,7 +223,6 @@ class _SongPlayScreenState extends State<SongPlayScreen> {
                       GestureDetector(
                         onTap: () {
                           widget.audioPlayer.playOrPause();
-
                           setState(() {
                             playorpauseIcon ? pauseIcons() : PlayIcon();
                           });
@@ -233,24 +232,28 @@ class _SongPlayScreenState extends State<SongPlayScreen> {
                           width: 60,
                           decoration: BoxDecoration(
                               shape: BoxShape.circle, color: Color(0xFFD933C3)),
-                          child: playorpauseIcon
-                              ? Icon(
-                                  Icons.pause_rounded,
-                                  color: Colors.white,
-                                  size: 40,
-                                )
-                              : Icon(
-                                  Icons.play_arrow_rounded,
-                                  color: Colors.white,
-                                  size: 40,
-                                ),
+                          child: PlayerBuilder.isPlaying(
+                            player: widget.audioPlayer,
+                            builder: (context, isPlaying) {
+                              return isPlaying
+                                  ? Icon(
+                                      Icons.pause_rounded,
+                                      color: Colors.white,
+                                      size: 40,
+                                    )
+                                  : Icon(
+                                      Icons.play_arrow_rounded,
+                                      color: Colors.white,
+                                      size: 40,
+                                    );
+                            },
+                          ),
                         ),
                       ),
                       IconButton(
                           onPressed: () async {
                             //_audioPlayer.next();
                             await widget.audioPlayer.next();
-                            PlayIcon();
                           },
                           icon: Icon(
                             Icons.fast_forward,

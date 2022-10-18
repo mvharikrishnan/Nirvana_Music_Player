@@ -163,22 +163,28 @@ class _MiniMusicPlayerState extends State<MiniMusicPlayer> {
                                       });
                                     },
                                     child: Container(
-                                        height: 50,
-                                        width: 50,
-                                        decoration: BoxDecoration(
-                                            shape: BoxShape.circle,
-                                            color: Color(0xFFD933C3)),
-                                        child: playbuttonMini
-                                            ? Icon(
-                                                Icons.pause_rounded,
-                                                color: Colors.white,
-                                                size: 40,
-                                              )
-                                            : Icon(
-                                                Icons.play_arrow_rounded,
-                                                color: Colors.white,
-                                                size: 40,
-                                              )),
+                                      height: 50,
+                                      width: 50,
+                                      decoration: BoxDecoration(
+                                          shape: BoxShape.circle,
+                                          color: Color(0xFFD933C3)),
+                                      child: PlayerBuilder.isPlaying(
+                                        player: widget.audioPlayer,
+                                        builder: (context, isPlaying) {
+                                          return isPlaying
+                                              ? Icon(
+                                                  Icons.pause_rounded,
+                                                  color: Colors.white,
+                                                  size: 40,
+                                                )
+                                              : Icon(
+                                                  Icons.play_arrow_rounded,
+                                                  color: Colors.white,
+                                                  size: 40,
+                                                );
+                                        },
+                                      ),
+                                    ),
                                   ),
                                   IconButton(
                                     onPressed: () {
@@ -197,18 +203,16 @@ class _MiniMusicPlayerState extends State<MiniMusicPlayer> {
                         ],
                       ),
                     ),
-                    //child: ,
                   ),
                 ),
               ),
               Positioned(
                 child: CircleAvatar(
                   radius: 35,
-                  // backgroundImage: AssetImage(
-                  //     widget.audioPlayer.getCurrentAudioImage.toString()),
+                  backgroundColor: Colors.white,
                   child: QueryArtworkWidget(
-                    artworkWidth: 70,
-                    artworkHeight: 70,
+                    artworkWidth: 60,
+                    artworkHeight: 60,
                     id: int.parse(musicAudio.metas.id!),
                     type: ArtworkType.AUDIO,
                     artworkBorder: BorderRadius.circular(40),
