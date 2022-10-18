@@ -207,9 +207,11 @@ class _MiniMusicPlayerState extends State<MiniMusicPlayer> {
                   // backgroundImage: AssetImage(
                   //     widget.audioPlayer.getCurrentAudioImage.toString()),
                   child: QueryArtworkWidget(
+                    artworkWidth: 70,
+                    artworkHeight: 70,
                     id: int.parse(musicAudio.metas.id!),
                     type: ArtworkType.AUDIO,
-                    artworkBorder: BorderRadius.circular(10),
+                    artworkBorder: BorderRadius.circular(40),
                     nullArtworkWidget: CircleAvatar(
                       backgroundColor: Color(0xFFD594EE),
                       radius: 35,

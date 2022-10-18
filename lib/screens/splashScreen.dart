@@ -52,9 +52,7 @@ class _SplashScreenState extends State<SplashScreen> {
   //functions for requseting the songs from the storage
   Future<void> requestPermission() async {
     await Permission.storage.request();
-    // print(songBox.length);
-    // print(accescessedSongs.length);
-  }
+     }
 
   //function for accescessing the songs form the storage
   Future<void> accessSongs() async {
@@ -73,7 +71,7 @@ class _SplashScreenState extends State<SplashScreen> {
 
     //for adding the songs to the sorted list
     for (var song in accescessedSongs) {
-      if (song.fileExtension == 'mp3'||song.fileExtension == 'm4a') {
+      if (song.fileExtension == 'mp3' || song.fileExtension == 'm4a') {
         sortedSongs.add(song);
       }
       print('Accessed Songs = ${accescessedSongs.length}');

@@ -11,7 +11,7 @@ Future<LyricModel> getLyrics(
  
   log('URI Fecthed');
   log(URI.toString());
-
+//https://lyrics-finder1.p.rapidapi.com/system-of-a-down/aerials
   final response = await http.get(URI, headers: {
     'X-RapidAPI-Key': '5d44647df4msh3582e5d92c23e5ap13e29ejsn84cddc7b0350',
     'X-RapidAPI-Host': 'lyrics-plus.p.rapidapi.com'

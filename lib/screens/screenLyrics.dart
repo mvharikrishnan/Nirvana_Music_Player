@@ -26,7 +26,7 @@ class _Screen_LyricsState extends State<Screen_Lyrics> {
         backgroundColor: Color(0xFF3B1F50),
         elevation: 0,
         title: Text(
-          'Lyrics',
+          widget.SongTitile,
           style: TextStyle(color: Colors.white, fontSize: 20),
         ),
       ),

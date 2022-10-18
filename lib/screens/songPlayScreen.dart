@@ -113,6 +113,7 @@ class _SongPlayScreenState extends State<SongPlayScreen> {
                       height: 30,
                       width: double.infinity,
                       child: Marquee(
+                        blankSpace: 70,
                         startAfter: Duration(seconds: 5),
                         text: widget.audioPlayer.getCurrentAudioTitle,
                         style: TextStyle(
@@ -164,6 +165,30 @@ class _SongPlayScreenState extends State<SongPlayScreen> {
                       ),
                     );
                   }),
+                  // SizedBox(
+                  //   height: 50,
+                  // ),
+                  // Row(
+                  //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  //   children: [
+                  //     IconButton(
+                  //       onPressed: () {},
+                  //       icon: Icon(
+                  //         Icons.shuffle,
+                  //         size: 30,
+                  //         color: Colors.white,
+                  //       ),
+                  //     ),
+                  //     IconButton(
+                  //       onPressed: () {},
+                  //       icon: Icon(
+                  //         Icons.share,
+                  //         size: 30,
+                  //         color: Colors.white,
+                  //       ),
+                  //     ),
+                  //   ],
+                  // ),
                   SizedBox(
                     height: 150,
                   ),
@@ -265,7 +290,6 @@ class _SongPlayScreenState extends State<SongPlayScreen> {
                       children: [
                         IconButton(
                           onPressed: () async {
-                            //function fot lyrics
                             Navigator.of(context).push(
                               MaterialPageRoute(
                                 builder: (ctx) => Screen_Lyrics(
@@ -276,7 +300,7 @@ class _SongPlayScreenState extends State<SongPlayScreen> {
                             );
                           },
                           icon: Icon(
-                            Icons.share,
+                            Icons.lyrics,
                             color: Colors.white,
                             size: 30,
                           ),
@@ -291,7 +315,6 @@ class _SongPlayScreenState extends State<SongPlayScreen> {
                               });
                             },
                             icon: Icon(
-                                //
                                 PlaylistSongsClass.isLiked(
                                     ID: musicAuido.metas.id!),
                                 color: Color(
