@@ -161,7 +161,7 @@ class _SplashScreenState extends State<SplashScreen> {
 }
 
 Future<void> gotoScreenHome(BuildContext context) async {
-  await Future.delayed(const Duration(seconds: 7));
+  await Future.delayed(const Duration(seconds: 5));
   // ignore: use_build_context_synchronously
   Navigator.pushReplacement(
     context,

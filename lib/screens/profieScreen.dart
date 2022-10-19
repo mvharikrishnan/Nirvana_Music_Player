@@ -3,10 +3,30 @@ import 'package:flutter/material.dart';
 // import 'package:flutter/src/widgets/framework.dart';
 import 'package:nirvana/screens/settingsScreen.dart';
 import 'package:nirvana/widgets/profileScreenPlaylistTIle.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
-class ProfileScreen extends StatelessWidget {
+class ProfileScreen extends StatefulWidget {
   const ProfileScreen({Key? key}) : super(key: key);
 
+  @override
+  State<ProfileScreen> createState() => _ProfileScreenState();
+}
+
+class _ProfileScreenState extends State<ProfileScreen> {
+   String ProfileNameUser ='Guest';
+  getUnsernaemFromSP() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    final String Username = prefs.getString('userNamekey').toString();
+    setState(() {
+      ProfileNameUser=Username;
+    });
+  }
+@override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    getUnsernaemFromSP();
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -50,8 +70,8 @@ class ProfileScreen extends StatelessWidget {
               ),
               Column(
                 children: [
-                  const Text(
-                    'Harikrishnan Mv',
+                   Text(
+                    ProfileNameUser,
                     style: TextStyle(
                         fontSize: 38,
                         fontWeight: FontWeight.bold,

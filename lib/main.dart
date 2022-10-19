@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:hive_flutter/adapters.dart';
 import 'package:nirvana/database/songdb.dart';
+import 'package:nirvana/screens/introScreen.dart';
 // import 'package:nirvana/screens/homeScreen.dart';
 // import 'package:nirvana/screens/navigationScreen.dart';
 import 'package:nirvana/screens/splashScreen.dart';
@@ -25,7 +26,8 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: SplashScreen(),
+      home: IntroScreen(),
+      //SplashScreen(),
     );
   }
 }
