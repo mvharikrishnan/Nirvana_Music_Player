@@ -35,7 +35,8 @@ class PlaylistViewingScreen extends StatelessWidget {
               BackdropFilter(
                 filter: ImageFilter.blur(sigmaX: 1.0),
                 child: Container(
-                  decoration: BoxDecoration(color: Colors.white.withOpacity(0.0)),
+                  decoration:
+                      BoxDecoration(color: Colors.white.withOpacity(0.0)),
                   child: Padding(
                     padding: const EdgeInsets.only(bottom: 20),
                     child: Column(
@@ -138,6 +139,8 @@ class PlaylistViewingScreen extends StatelessWidget {
                                       //keys: keys,
                                       onpressed: () {},
                                       audioList: musicList,
+                                      homeScreen: true,
+                                      PlaylistName: playlistName,
                                     );
                                   },
                                 );

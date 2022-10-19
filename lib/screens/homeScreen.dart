@@ -26,7 +26,7 @@ class _HomeScreenState extends State<HomeScreen> {
   final audioPlayer = new AssetsAudioPlayer();
   TextEditingController searchController = new TextEditingController();
   Box<Songs> songBox = Hive.box<Songs>('Songs');
-  bool isVisibile =true;
+  bool isVisibile = true;
 
   List<Songs> audioList = [];
   List<Songs> _foundSongs = [];
@@ -135,7 +135,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 },
                 onTap: () {
                   setState(() {
-                    isVisibile=false;
+                    isVisibile = false;
                   });
                 },
                 enableSuggestions: true,
@@ -144,12 +144,16 @@ class _HomeScreenState extends State<HomeScreen> {
                 controller: searchController,
                 decoration: InputDecoration(
                   prefixIconColor: Colors.white,
-                  hintStyle: TextStyle(color: Color.fromARGB(155, 255, 255, 255)),
+                  hintStyle:
+                      TextStyle(color: Color.fromARGB(155, 255, 255, 255)),
                   border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(20)),
                   fillColor: Color.fromARGB(99, 201, 125, 255),
                   filled: true,
-                  prefixIcon: Icon(Icons.search,color: Colors.white,),
+                  prefixIcon: Icon(
+                    Icons.search,
+                    color: Colors.white,
+                  ),
                   hintText: 'Song or artist',
                 ),
               ),
@@ -250,6 +254,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                   //keys: keys,
                                   onpressed: () {},
                                   audioList: _foundSongs,
+                                  homeScreen: false,
+                                  PlaylistName: 'MostPlayed',
                                 );
                               },
                             );

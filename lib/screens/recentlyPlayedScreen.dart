@@ -47,7 +47,8 @@ class RecentlyPlayedScreen extends StatelessWidget {
                     ValueListenableBuilder(
                       valueListenable: PlaylistBox.listenable(),
                       builder: (context, Box<List> value, Widget? child) {
-                        List<Songs> musicList = PlaylistBox.get('RecentSongs')!.reversed
+                        List<Songs> musicList = PlaylistBox.get('RecentSongs')!
+                            .reversed
                             .toList()
                             .cast<Songs>();
                         return (musicList.isEmpty)
@@ -64,9 +65,10 @@ class RecentlyPlayedScreen extends StatelessWidget {
                                   return SongTile(
                                     Index: index,
                                     audioPlayer: audioPlayer,
-                                    //keys: keys,
                                     onpressed: () {},
                                     audioList: musicList,
+                                    homeScreen: true,
+                                    PlaylistName: 'RecentSongs',
                                   );
                                 },
                               );

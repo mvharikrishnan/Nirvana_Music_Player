@@ -58,8 +58,10 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
                       valueListenable: PlaylistBox.listenable(),
                       builder: (BuildContext context, Box<List> value,
                           Widget? child) {
-                        List<Songs> musicList =
-                            PlaylistBox.get('LikedSongs')!.reversed.toList().cast<Songs>();
+                        List<Songs> musicList = PlaylistBox.get('LikedSongs')!
+                            .reversed
+                            .toList()
+                            .cast<Songs>();
 
                         return (musicList.isEmpty)
                             ? Center(
@@ -78,6 +80,8 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
                                     //keys: keys,
                                     onpressed: () {},
                                     audioList: musicList,
+                                    homeScreen: true,
+                                    PlaylistName: 'LikedSongs',
                                   );
                                 },
                               );

@@ -1,8 +1,8 @@
-
 import 'package:assets_audio_player/assets_audio_player.dart';
 import 'package:flutter/material.dart';
 // import 'package:flutter/services.dart';
 import 'package:hive_flutter/adapters.dart';
+import 'package:nirvana/Functions/functionForAddingSongToPlaylist.dart';
 // import 'package:marquee/marquee.dart';
 import 'package:nirvana/Functions/likedSongs.dart';
 import 'package:nirvana/Functions/musicFunctions.dart';
@@ -20,6 +20,8 @@ class SongTile extends StatefulWidget {
     // required this.keys,
     required this.onpressed,
     required this.audioList,
+    required this.homeScreen,
+    required this.PlaylistName,
   }) : super(key: key);
 
   //final dynamic keys;
@@ -27,6 +29,8 @@ class SongTile extends StatefulWidget {
   final AssetsAudioPlayer audioPlayer;
   final void Function()? onpressed;
   final List<Songs> audioList;
+  final bool homeScreen;
+  final String PlaylistName;
 
   @override
   State<SongTile> createState() => _SongTileState();
@@ -49,7 +53,8 @@ class _SongTileState extends State<SongTile> {
         //Navigator.of(context).push(_createRoute());
         // PlaySong(songConvertedList[Index].songPath);
         // print(songConvertedList[Index].songTitle);
-        recentSongsClass.addSongtoRecent(context: context, ID: widget.audioList[widget.Index].songPath);
+        recentSongsClass.addSongtoRecent(
+            context: context, ID: widget.audioList[widget.Index].songPath);
         showMiniPlayer(
           context: context,
           index: widget.Index,
@@ -163,38 +168,56 @@ class _SongTileState extends State<SongTile> {
                   //   width: 5,
                   // ),
                   PopupMenuButton(
-                      color: Color.fromARGB(250, 59, 31, 80),
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(20)),
-                      icon: Icon(
-                        Icons.more_vert_outlined,
-                        color: Colors.white,
+                    color: Color.fromARGB(250, 59, 31, 80),
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(20)),
+                    icon: Icon(
+                      Icons.more_vert_outlined,
+                      color: Colors.white,
+                    ),
+                    itemBuilder: (context) => [
+                      PopupMenuItem(
+                        child: Column(
+                          children: [
+                            TextButton(
+                              autofocus: false,
+                              onPressed: () {
+                                Navigator.of(context).push(
+                                  MaterialPageRoute(
+                                    builder: (ctx) => AddToPlaylist(
+                                      Index: widget
+                                          .audioList[widget.Index].songPath,
+                                      audioPlayer: widget.audioPlayer,
+                                      songList: widget.audioList.cast<Audio>(),
+                                    ),
+                                  ),
+                                );
+                              },
+                              child: Text(
+                                'ADD TO PLAYLIST',
+                                style: TextStyle(color: Colors.white),
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
-                      itemBuilder: (context) => [
-                            PopupMenuItem(
-                                child: Column(
-                              children: [
-                                TextButton(
-                                  autofocus: false,
-                                  onPressed: () {
-                                     Navigator.of(context).push(
-                                MaterialPageRoute(
-                                  builder: (ctx) => AddToPlaylist(
-                                    Index: widget.audioList[widget.Index].songPath,
-                                    audioPlayer: widget.audioPlayer,
-                                    songList: widget.audioList.cast<Audio>(),
-                                  ),
-                                ),
-                              );
-                                  },
-                                  child: Text(
-                                    'ADD TO PLAYLIST',
-                                    style: TextStyle(color: Colors.white),
-                                  ),
-                                ),
-                              ],
-                            ))
-                          ])
+                      PopupMenuItem(
+                        enabled: widget.homeScreen,
+                        onTap: () {
+                          SongsToPlaylistClass.DeleteSongFromPlaylist(
+                            context: context,
+                            ID: widget.audioList[widget.Index].id.toString(),
+                            PlaylistName: widget.PlaylistName,
+                          );
+                        },
+                        child: Visibility(
+                          visible: widget.homeScreen,
+                          child: Text('REMOVE',
+                              style: TextStyle(color: Colors.white)),
+                        ),
+                      ),
+                    ],
+                  ),
                 ],
               ),
             ],
