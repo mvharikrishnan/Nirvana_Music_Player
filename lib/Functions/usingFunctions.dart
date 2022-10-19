@@ -118,7 +118,7 @@ PlaylistDeleteFuntion(
   );
 }
 
-PlaylistEditFunction(
+ PlaylistEditFunction(
     {required BuildContext context,
     required List<Songs> songs,
     required String playlistName}) {
@@ -137,6 +137,7 @@ PlaylistEditFunction(
     context: context,
     builder: (context) {
       return AlertDialog(
+        backgroundColor: Color.fromARGB(255, 188, 140, 224),
         title: Text('Edit Playlist'),
         content: TextFormField(
           controller: editcontroller,

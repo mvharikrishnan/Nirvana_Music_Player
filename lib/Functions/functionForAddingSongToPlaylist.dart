@@ -92,16 +92,5 @@ class SongsToPlaylistClass {
         message: 'Removed From $PlaylistName',
       );
     }
-    //  else {
-    //   // PlaylistNameList
-    //   //     .removeWhere((Songs) => Songs.songPath == likedMusicRef.songPath);
-    //   // await LikedSongBox.put(PlaylistName, PlaylistNameList);
-    //   //show the snakbar
-    //   ShowSnackBar(
-    //     context: context,
-    //     songName: likedMusicRef.songTitle,
-    //     message: 'Already Exit in $PlaylistName ',
-    //   );
-    // }
   }
 }

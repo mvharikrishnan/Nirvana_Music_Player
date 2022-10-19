@@ -67,7 +67,10 @@ class BottomModelSheet {
                   );
                 },
                 icon: Icon(
-                  Icons.add_rounded,
+                  isSongThereInPlaylist(
+                    ID: audioList[index].id.toString(),
+                    Playlistname: PlaylistName,
+                  ),
                   color: Colors.green,
                 ),
               ),
@@ -76,5 +79,17 @@ class BottomModelSheet {
         );
       },
     );
+  }
+
+  static IconData isSongThereInPlaylist(
+      {required String ID, required String Playlistname}) {
+    final List<Songs> storageSongs = songBox.values.toList().cast();
+    List<Songs> PlaylistSongCheckList = playlistBox.get(Playlistname)!.toList().cast();
+    Songs songRef =
+        storageSongs.firstWhere((song) => song.songPath.contains(ID));
+    return PlaylistSongCheckList.where(
+            (song) => song.songPath == songRef.songPath).isEmpty
+        ? Icons.add_rounded
+        : Icons.remove_circle_outline;
   }
 }

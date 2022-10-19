@@ -48,54 +48,52 @@ class PlaylistScreen extends StatelessWidget {
                 ),
                 Padding(
                   padding: const EdgeInsets.all(8.0),
-                  child: Expanded(
-                    child: ValueListenableBuilder(
-                      valueListenable: playlistBox.listenable(),
-                      builder: (context, value, child) {
-                        List Keys = playlistBox.keys.toList();
-                        Keys.removeWhere((element) => element == 'LikedSongs');
-                        Keys.removeWhere((element) => element == 'RecentSongs');
-                        Keys.removeWhere((element) => element == 'MostPlayed');
-                        return (Keys.isEmpty)
-                            ? Center(
-                                child: Text(
-                                  'Save your music collections in playlist',
-                                  style: TextStyle(color: Colors.white),
-                                ),
-                              )
-                            : GridView.builder(
-                                itemCount: Keys.length,
-                                shrinkWrap: true,
-                                physics: ScrollPhysics(),
-                                gridDelegate:
-                                    SliverGridDelegateWithFixedCrossAxisCount(
-                                  crossAxisCount: 2,
-                                  mainAxisSpacing: 15,
-                                  crossAxisSpacing: 15,
-                                  childAspectRatio: 1,
-                                ),
-                                itemBuilder: (context, index) {
-                                  final String playlistName = Keys[index];
-                                  final List<Songs> playlistSongList =
-                                      playlistBox
-                                          .get(playlistName)!
-                                          .toList()
-                                          .cast<Songs>();
-                                  final String playlistSongCount =
-                                      playlistSongList.length.toString();
-                                  return PlaylistGridTile(
-                                    PlaylistTitle: playlistName,
-                                    PlaylistSongCount: playlistSongCount,
-                                    PlaylistBackgroundImage: index % 3 == 0
-                                        ? 'assets/images/PlaylistImage2.jpg'
-                                        : 'assets/images/PlaylistImage3.jpg',
-                                    PlayListName: playlistName,
-                                    playlistSongList: playlistSongList,
-                                  );
-                                },
-                              );
-                      },
-                    ),
+                  child: ValueListenableBuilder(
+                    valueListenable: playlistBox.listenable(),
+                    builder: (context, value, child) {
+                      List Keys = playlistBox.keys.toList();
+                      Keys.removeWhere((element) => element == 'LikedSongs');
+                      Keys.removeWhere((element) => element == 'RecentSongs');
+                      Keys.removeWhere((element) => element == 'MostPlayed');
+                      return (Keys.isEmpty)
+                          ? Center(
+                              child: Text(
+                                'Save your music collections in playlist',
+                                style: TextStyle(color: Colors.white),
+                              ),
+                            )
+                          : GridView.builder(
+                              itemCount: Keys.length,
+                              shrinkWrap: true,
+                              physics: ScrollPhysics(),
+                              gridDelegate:
+                                SliverGridDelegateWithFixedCrossAxisCount(
+                                crossAxisCount: 2,
+                                mainAxisSpacing: 15,
+                                crossAxisSpacing: 15,
+                                childAspectRatio: 1,
+                              ),
+                              itemBuilder: (context, index) {
+                                final String playlistName = Keys[index];
+                                final List<Songs> playlistSongList =
+                                    playlistBox
+                                        .get(playlistName)!.reversed
+                                        .toList()
+                                        .cast<Songs>();
+                                final String playlistSongCount =
+                                    playlistSongList.length.toString();
+                                return PlaylistGridTile(
+                                  PlaylistTitle: playlistName,
+                                  PlaylistSongCount: playlistSongCount,
+                                  PlaylistBackgroundImage: index % 3 == 0
+                                      ? 'assets/images/PlaylistImage2.jpg'
+                                      : 'assets/images/PlaylistImage3.jpg',
+                                  PlayListName: playlistName,
+                                  playlistSongList: playlistSongList,
+                                );
+                              },
+                            );
+                    },
                   ),
                 )
               ],
