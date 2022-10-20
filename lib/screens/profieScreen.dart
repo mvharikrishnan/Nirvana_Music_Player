@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_launcher_icons/xml_templates.dart';
 // import 'package:flutter/src/foundation/key.dart';
 // import 'package:flutter/src/widgets/framework.dart';
 import 'package:nirvana/screens/settingsScreen.dart';
@@ -20,6 +21,22 @@ class _ProfileScreenState extends State<ProfileScreen> {
     setState(() {
       ProfileNameUser = Username;
     });
+  }
+
+//switch
+  bool isSwitched = false;
+  void toogleSwitch(bool value) {
+    if (isSwitched == false) {
+      //notification function to set the notification true
+      setState(() {
+        isSwitched = true;
+      });
+    } else {
+      //notification function to set the notification false
+      setState(() {
+        isSwitched = false;
+      });
+    }
   }
 
   @override
@@ -56,18 +73,18 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       ),
                     ],
                   ),
-                  IconButton(
-                    onPressed: () {
-                      //navigate to settings screen
-                      Navigator.of(context).push(MaterialPageRoute(
-                          builder: (ctx) => SettingsScreen()));
-                    },
-                    icon: Icon(
-                      Icons.settings,
-                      size: 32,
-                      color: Colors.white,
-                    ),
-                  ),
+                  // IconButton(
+                  //   onPressed: () {
+                  //     //navigate to settings screen
+                  //     Navigator.of(context).push(MaterialPageRoute(
+                  //         builder: (ctx) => SettingsScreen()));
+                  //   },
+                  //   icon: Icon(
+                  //     Icons.settings,
+                  //     size: 32,
+                  //     color: Colors.white,
+                  //   ),
+                  // ),
                 ],
               ),
               Column(
@@ -126,25 +143,52 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   ),
                 ],
               ),
-              //playlist
-              Text(
-                'Playlist',
-                style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 20,
-                    fontWeight: FontWeight.w500),
-              ),
               SizedBox(
-                height: 15,
+                height: 30,
               ),
-              ProfileSceenPlaylistTile(
-                PlaylistCoverImage: 'assets/images/Art.jpg',
-                PlaylistTitie: 'My Favorite Songs',
-              ),
-              ProfileSceenPlaylistTile(
-                PlaylistCoverImage: 'assets/images/ArtisticIMage.jpg',
-                PlaylistTitie: 'Malayalam Songs',
-              ),
+              Column(
+                children: [
+                  ListTile(
+                    title: Text(
+                      'Notification',
+                      style: TextStyle(
+                          fontSize: 20,
+                          color: Colors.white,
+                          fontWeight: FontWeight.w700),
+                    ),
+                    trailing: Switch(
+                      activeColor: Color(0xFFD933C3),
+                      value: isSwitched,
+                      onChanged: toogleSwitch,
+                    ),
+                  ),
+                  ListTile(
+                    title: Text(
+                      'Terms And Conditions',
+                      style: TextStyle(
+                          fontSize: 20,
+                          color: Colors.white,
+                          fontWeight: FontWeight.w700),
+                    ),
+                    trailing: Icon(
+                      Icons.chevron_right,
+                      color: Colors.white,
+                      size: 30,
+                    ),
+                  ),
+                  ListTile(
+                    title: Text(
+                      'Privacy Policy',
+                      style: TextStyle(
+                          fontSize: 20,
+                          color: Colors.white,
+                          fontWeight: FontWeight.w700),
+                    ),
+                    trailing: Icon(Icons.chevron_right,
+                        color: Colors.white, size: 30),
+                  ),
+                ],
+              )
             ],
           ),
         ),
