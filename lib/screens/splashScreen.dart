@@ -5,9 +5,11 @@ import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 import 'package:nirvana/database/database_functions/dbFunctions.dart';
 import 'package:nirvana/database/songdb.dart';
+import 'package:nirvana/screens/introScreen.dart';
 import 'package:nirvana/screens/navigationScreen.dart';
 import 'package:on_audio_query/on_audio_query.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({Key? key}) : super(key: key);
@@ -114,7 +116,7 @@ class _SplashScreenState extends State<SplashScreen> {
       await playlistbox.put('MostPlayed', MostPlayed);
     }
   }
-
+   bool SaveLogKey = false;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -161,7 +163,18 @@ class _SplashScreenState extends State<SplashScreen> {
 }
 
 Future<void> gotoScreenHome(BuildContext context) async {
-  await Future.delayed(const Duration(seconds: 5));
+  final _sharedPrefs = await SharedPreferences.getInstance();
+  final SaveLogKey=_sharedPrefs.getBool('SaveLogKey');
+  if(SaveLogKey==null||SaveLogKey==false){
+    //navigate to intro screen
+     Navigator.pushReplacement(
+    context,
+    MaterialPageRoute(
+      builder: (ctx) =>  IntroScreen(),
+    ),
+  );
+  }else{
+    await Future.delayed(const Duration(seconds: 5));
   // ignore: use_build_context_synchronously
   Navigator.pushReplacement(
     context,
@@ -169,4 +182,6 @@ Future<void> gotoScreenHome(BuildContext context) async {
       builder: (ctx) => const Screen_Navigation(),
     ),
   );
+  }
 }
+

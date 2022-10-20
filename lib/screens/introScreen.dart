@@ -1,5 +1,6 @@
 import 'package:action_slider/action_slider.dart';
 import 'package:flutter/material.dart';
+import 'package:nirvana/screens/homeScreen.dart';
 import 'package:nirvana/screens/splashScreen.dart';
 import 'package:nirvana/widgets/textFormField.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -86,12 +87,12 @@ class IntroScreen extends StatelessWidget {
                       addNameToSF(UserName: 'Guest');
                       await Future.delayed(const Duration(seconds: 3));
                       controller.success();
-                      Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (ctx)=>SplashScreen()), (route) => false);
+                      Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (ctx)=>HomeScreen()), (route) => false);
                     } else {
                       addNameToSF(UserName: editingController.text.toString());
                       await Future.delayed(const Duration(seconds: 3));
                       controller.success();
-                       Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (ctx)=>SplashScreen()), (route) => false);
+                       Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (ctx)=>HomeScreen()), (route) => false);
                     }
                     //starts success animation
                     // await Future.delayed(const Duration(seconds: 1));
@@ -109,5 +110,6 @@ class IntroScreen extends StatelessWidget {
   addNameToSF({required String UserName}) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.setString('userNamekey', UserName);
+    prefs.setBool('SaveLogKey', true);
   }
 }
