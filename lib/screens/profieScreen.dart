@@ -54,41 +54,20 @@ class _ProfileScreenState extends State<ProfileScreen> {
         child: Padding(
           padding: const EdgeInsets.all(15.0),
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      const Text(
-                        'Hey,',
-                        style: TextStyle(
-                            color: Color(
-                              0xFFD933C3,
-                            ),
-                            fontSize: 32,
-                            fontWeight: FontWeight.bold),
-                      ),
-                    ],
-                  ),
-                  // IconButton(
-                  //   onPressed: () {
-                  //     //navigate to settings screen
-                  //     Navigator.of(context).push(MaterialPageRoute(
-                  //         builder: (ctx) => SettingsScreen()));
-                  //   },
-                  //   icon: Icon(
-                  //     Icons.settings,
-                  //     size: 32,
-                  //     color: Colors.white,
-                  //   ),
-                  // ),
-                ],
-              ),
               Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
+                  const Text(
+                    'Hey,',
+                    style: TextStyle(
+                        color: Color(
+                          0xFFD933C3,
+                        ),
+                        fontSize: 32,
+                        fontWeight: FontWeight.bold),
+                  ),
                   Text(
                     ProfileNameUser,
                     style: TextStyle(
@@ -96,99 +75,148 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         fontWeight: FontWeight.bold,
                         color: Colors.white),
                   ),
-                ],
-              ),
-              SizedBox(
-                height: 12,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  CircleAvatar(
-                    radius: 100,
-                    backgroundImage:
-                        AssetImage('assets/images/Profile_Avatar.png'),
-                  )
-                ],
-              ),
-              SizedBox(
-                height: 12,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  InkWell(
-                    child: Container(
-                      height: 31,
-                      width: 117,
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(20),
-                          color: Color.fromARGB(102, 124, 75, 162)),
-                      child: InkWell(
-                        onTap: (() {
-                          //Function to Edit Profile
-                          ProfileEditFunction(context: context);
-                        }),
-                        child: Center(
-                          child: Text(
-                            'Edit Profile',
-                            style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 12,
-                                fontWeight: FontWeight.w500),
+                  SizedBox(
+                    height: 12,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      CircleAvatar(
+                        radius: 100,
+                        backgroundImage:
+                            AssetImage('assets/images/profileScreen.png'),
+                      )
+                    ],
+                  ),
+                  SizedBox(
+                    height: 12,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      InkWell(
+                        child: Container(
+                          height: 31,
+                          width: 117,
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(20),
+                              color: Color.fromARGB(102, 124, 75, 162)),
+                          child: InkWell(
+                            onTap: (() {
+                              //Function to Edit Profile
+                              ProfileEditFunction(context: context);
+                            }),
+                            child: Center(
+                              child: Text(
+                                'Edit Profile',
+                                style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 12,
+                                    fontWeight: FontWeight.w500),
+                              ),
+                            ),
                           ),
                         ),
                       ),
-                    ),
+                    ],
                   ),
+                  SizedBox(
+                    height: 30,
+                  ),
+                  Column(
+                    children: [
+                      ListTile(
+                        title: Text(
+                          'Notification',
+                          style: TextStyle(
+                              fontSize: 20,
+                              color: Colors.white,
+                              fontWeight: FontWeight.w700),
+                        ),
+                        trailing: Switch(
+                          activeColor: Color(0xFFD933C3),
+                          value: isSwitched,
+                          onChanged: toogleSwitch,
+                        ),
+                      ),
+                      ListTile(
+                        title: Text(
+                          'Terms And Conditions',
+                          style: TextStyle(
+                              fontSize: 20,
+                              color: Colors.white,
+                              fontWeight: FontWeight.w700),
+                        ),
+                        trailing: Icon(
+                          Icons.chevron_right,
+                          color: Colors.white,
+                          size: 30,
+                        ),
+                      ),
+                      ListTile(
+                        title: Text(
+                          'Privacy Policy',
+                          style: TextStyle(
+                              fontSize: 20,
+                              color: Colors.white,
+                              fontWeight: FontWeight.w700),
+                        ),
+                        trailing: Icon(Icons.chevron_right,
+                            color: Colors.white, size: 30),
+                      ),
+                    ],
+                  )
                 ],
-              ),
-              SizedBox(
-                height: 30,
               ),
               Column(
                 children: [
-                  ListTile(
-                    title: Text(
-                      'Notification',
-                      style: TextStyle(
-                          fontSize: 20,
-                          color: Colors.white,
-                          fontWeight: FontWeight.w700),
-                    ),
-                    trailing: Switch(
-                      activeColor: Color(0xFFD933C3),
-                      value: isSwitched,
-                      onChanged: toogleSwitch,
-                    ),
+                  Text(
+                    'Connect With Us',
+                    style: TextStyle(color: Color(0xFFD933C3), fontSize: 20),
                   ),
-                  ListTile(
-                    title: Text(
-                      'Terms And Conditions',
-                      style: TextStyle(
-                          fontSize: 20,
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      IconButton(
+                        onPressed: () {},
+                        icon: Icon(
+                          Icons.facebook_outlined,
+                          size: 48,
                           color: Colors.white,
-                          fontWeight: FontWeight.w700),
-                    ),
-                    trailing: Icon(
-                      Icons.chevron_right,
-                      color: Colors.white,
-                      size: 30,
-                    ),
-                  ),
-                  ListTile(
-                    title: Text(
-                      'Privacy Policy',
-                      style: TextStyle(
-                          fontSize: 20,
+                        ),
+                      ),
+                      SizedBox(
+                        width: 10,
+                      ),
+                      IconButton(
+                        onPressed: () {},
+                        icon: Icon(
+                          Icons.email,
+                          size: 48,
                           color: Colors.white,
-                          fontWeight: FontWeight.w700),
-                    ),
-                    trailing: Icon(Icons.chevron_right,
-                        color: Colors.white, size: 30),
+                        ),
+                      ),
+                    ],
                   ),
+                  SizedBox(
+                    height: 20,
+                  ),
+                  Column(
+                    children: [
+                      Text(
+                        'App Version',
+                        style:
+                            TextStyle(color: Color(0xFFD594EE), fontSize: 15),
+                      ),
+                      Text(
+                        '1.0.0',
+                        style:
+                            TextStyle(color: Color(0xFFD594EE), fontSize: 15),
+                      ),
+                    ],
+                  )
                 ],
-              )
+              ),
             ],
           ),
         ),
