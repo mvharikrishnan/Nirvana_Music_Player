@@ -13,20 +13,22 @@ class ProfileScreen extends StatefulWidget {
 }
 
 class _ProfileScreenState extends State<ProfileScreen> {
-   String ProfileNameUser ='Guest';
+  String ProfileNameUser = 'Guest';
   getUnsernaemFromSP() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     final String Username = prefs.getString('userNamekey').toString();
     setState(() {
-      ProfileNameUser=Username;
+      ProfileNameUser = Username;
     });
   }
-@override
+
+  @override
   void initState() {
     // TODO: implement initState
     super.initState();
     getUnsernaemFromSP();
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -70,7 +72,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
               ),
               Column(
                 children: [
-                   Text(
+                  Text(
                     ProfileNameUser,
                     style: TextStyle(
                         fontSize: 38,
@@ -108,6 +110,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       child: InkWell(
                         onTap: (() {
                           //Function to Edit Profile
+                          ProfileEditFunction(context: context);
                         }),
                         child: Center(
                           child: Text(
@@ -146,6 +149,66 @@ class _ProfileScreenState extends State<ProfileScreen> {
           ),
         ),
       ),
+    );
+  }
+
+  //profile edit function
+  ProfileEditFunction({required BuildContext context}) async {
+    TextEditingController editcontroller = TextEditingController();
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    final String oldusername = prefs.getString('userNamekey').toString();
+    Future editPlaylist() async {
+      Navigator.pop(context);
+    }
+
+    return showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          backgroundColor: Color.fromARGB(255, 188, 140, 224),
+          title: Text('EDIT YOUR NAME'),
+          content: TextFormField(
+            controller: editcontroller,
+            keyboardType: TextInputType.name,
+            textInputAction: TextInputAction.done,
+            decoration: InputDecoration(
+              border:
+                  OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
+              hintText: oldusername,
+              prefixIcon: Icon(
+                Icons.edit,
+                size: 25,
+              ),
+            ),
+          ),
+          actions: [
+            ElevatedButton(
+              onPressed: () {
+                Navigator.pop(context);
+              },
+              child: Text('Cancel'),
+              style: ButtonStyle(
+                backgroundColor: MaterialStateProperty.all(Colors.red),
+              ),
+            ),
+            ElevatedButton(
+              onPressed: () async {
+                //function to edit Profile
+                setState(() {
+                  prefs.setString(
+                      'userNamekey', editcontroller.text.toString());
+                  ProfileNameUser = prefs.getString('userNamekey').toString();
+                });
+                Navigator.pop(context);
+              },
+              child: Text('Confirm'),
+              style: ButtonStyle(
+                backgroundColor: MaterialStateProperty.all(Colors.green),
+              ),
+            ),
+          ],
+        );
+      },
     );
   }
 }
