@@ -60,7 +60,7 @@ class BottomModelSheet {
               ),
               trailing: IconButton(
                 onPressed: () {
-                  SongsToPlaylistClass.addSongToPlaylist(
+                  SongsToPlaylistClass.AddFromSnackBar(
                     context: context,
                     ID: audioList[index].songPath,
                     PlaylistName: PlaylistName,
@@ -84,7 +84,8 @@ class BottomModelSheet {
   static IconData isSongThereInPlaylist(
       {required String ID, required String Playlistname}) {
     final List<Songs> storageSongs = songBox.values.toList().cast();
-    List<Songs> PlaylistSongCheckList = playlistBox.get(Playlistname)!.toList().cast();
+    List<Songs> PlaylistSongCheckList =
+        playlistBox.get(Playlistname)!.toList().cast();
     Songs songRef =
         storageSongs.firstWhere((song) => song.songPath.contains(ID));
     return PlaylistSongCheckList.where(

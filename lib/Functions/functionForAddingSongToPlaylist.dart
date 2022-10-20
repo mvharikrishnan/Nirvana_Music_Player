@@ -41,6 +41,36 @@ class SongsToPlaylistClass {
       );
     }
   }
+  static AddFromSnackBar({required BuildContext context,required String ID,required String PlaylistName})async{
+    final List<Songs>songsList= songBox.values.toList().cast();
+     final List<Songs> PlaylistNameList =
+        LikedSongBox.get(PlaylistName)!.toList().cast<Songs>();
+    final Songs MusicRef =
+        songsList.firstWhere((song) => song.songPath.contains(ID));
+         if (PlaylistNameList.where(
+        (Songs) => Songs.songPath == MusicRef.songPath).isEmpty) {
+      PlaylistNameList.add(MusicRef);
+      await LikedSongBox.put(PlaylistName, PlaylistNameList);
+
+      //snackbarfunctionhere
+      ShowSnackBar(
+        context: context,
+        songName: MusicRef.songTitle,
+        message: 'Added to $PlaylistName Songs',
+      );
+    }else {
+      PlaylistNameList
+          .removeWhere((Songs) => Songs.songPath == MusicRef.songPath);
+      await LikedSongBox.put(PlaylistName, PlaylistNameList);
+      //show the snakbar
+      ShowSnackBar(
+        context: context,
+        songName: MusicRef.songTitle,
+        message: 'Removed From $PlaylistName ',
+      );
+    }
+
+  }
 
   static ShowSnackBar({
     required BuildContext context,
