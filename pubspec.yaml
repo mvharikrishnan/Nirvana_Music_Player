@@ -35,7 +35,7 @@ dependencies:
     file_picker: ^5.2.1
     flutter:
         sdk: flutter
-    flutter_launcher_icons: ^0.10.0
+
     hive: ^2.2.3
     hive_flutter: ^1.1.0
     http: ^0.13.5
@@ -52,6 +52,7 @@ dependencies:
 
 dev_dependencies:
     build_runner: ^2.2.1
+    flutter_launcher_icons: ^0.10.0
     flutter_lints: ^2.0.0
     flutter_test:
         sdk: flutter
@@ -59,7 +60,7 @@ dev_dependencies:
 flutter_icons:
     android: true
 
-    image_path: "assets/images/NirvanaLogo.png"
+    image_path: "assets/images/AppLogo.jpg"
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
 # The following section is specific to Flutter packages.

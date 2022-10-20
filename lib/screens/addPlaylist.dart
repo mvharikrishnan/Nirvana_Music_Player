@@ -8,6 +8,7 @@ import 'package:nirvana/database/songdb.dart';
 
 import 'package:nirvana/widgets/addtoplaylistTile.dart';
 import 'package:nirvana/widgets/textFormField.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class AddToPlaylist extends StatefulWidget {
   const AddToPlaylist(
@@ -28,13 +29,21 @@ class _AddToPlaylistState extends State<AddToPlaylist> {
   Box<List> playlistBox = getPlaylistBox();
   List playlistcontent = [];
   List _foundedPlaylist = [];
-
+  
+  String proflieUserName='Guest';
+  getUserName()async{
+  final _sharedPrefs = await SharedPreferences.getInstance();
+  final String username = _sharedPrefs.getString('userNamekey').toString();
+  setState(() {
+    proflieUserName=username;
+  });
+  }
   @override
   void initState() {
     // TODO: implement initState
     playlistcontent = List.from(playlistBox.keys.toList());
     _foundedPlaylist = playlistcontent;
-
+    getUserName();
     super.initState();
   }
 
@@ -155,7 +164,7 @@ class _AddToPlaylistState extends State<AddToPlaylist> {
                                   itemCount: _foundedPlaylist.length,
                                   itemBuilder: (context, index) {
                                     return AddtoPlayListTILE(
-                                      'Owners Name',
+                                      proflieUserName,
                                       ImagePathAddToProfile:
                                           'assets/images/PlaylistImage3.jpg',
                                       PlaylistTitle: _foundedPlaylist[index],
