@@ -62,179 +62,197 @@ class _ProfileScreenState extends State<ProfileScreen> {
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.all(15.0),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const Text(
-                    'Hey,',
-                    style: TextStyle(
-                        color: Color(
-                          0xFFD933C3,
-                        ),
-                        fontSize: 32,
-                        fontWeight: FontWeight.bold),
-                  ),
-                  Text(
-                    ProfileNameUser ?? 'Guest',
-                    style: TextStyle(
-                        fontSize: 38,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.white),
-                  ),
-                  SizedBox(
-                    height: 12,
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      CircleAvatar(
-                        radius: 100,
-                        backgroundImage:
-                            AssetImage('assets/images/profileScreen.png'),
-                      )
-                    ],
-                  ),
-                  SizedBox(
-                    height: 12,
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      InkWell(
-                        child: Container(
-                          height: 31,
-                          width: 117,
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(20),
-                              color: Color.fromARGB(102, 124, 75, 162)),
-                          child: InkWell(
-                            onTap: (() {
-                              //Function to Edit Profile
-                              ProfileEditFunction(context: context);
-                            }),
-                            child: Center(
-                              child: Text(
-                                'Edit Profile',
-                                style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 12,
-                                    fontWeight: FontWeight.w500),
+          child: SingleChildScrollView(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const Text(
+                      'Hey,',
+                      style: TextStyle(
+                          color: Color(
+                            0xFFD933C3,
+                          ),
+                          fontSize: 32,
+                          fontWeight: FontWeight.bold),
+                    ),
+                    Text(
+                      ProfileNameUser ?? 'Guest',
+                      style: TextStyle(
+                          fontSize: 38,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.white),
+                    ),
+                    SizedBox(
+                      height: 12,
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        CircleAvatar(
+                          radius: 100,
+                          backgroundImage:
+                              AssetImage('assets/images/profileScreen.png'),
+                        )
+                      ],
+                    ),
+                    SizedBox(
+                      height: 12,
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        InkWell(
+                          child: Container(
+                            height: 31,
+                            width: 117,
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(20),
+                                color: Color.fromARGB(102, 124, 75, 162)),
+                            child: InkWell(
+                              onTap: (() {
+                                //Function to Edit Profile
+                                ProfileEditFunction(context: context);
+                              }),
+                              child: Center(
+                                child: Text(
+                                  'Edit Profile',
+                                  style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 12,
+                                      fontWeight: FontWeight.w500),
+                                ),
                               ),
                             ),
                           ),
                         ),
-                      ),
-                    ],
-                  ),
-                  SizedBox(
-                    height: 30,
-                  ),
-                  Column(
-                    children: [
-                      ListTile(
-                        title: Text(
-                          'Notification',
-                          style: TextStyle(
-                              fontSize: 20,
-                              color: Colors.white,
-                              fontWeight: FontWeight.w700),
+                      ],
+                    ),
+                    SizedBox(
+                      height: 30,
+                    ),
+                    Column(
+                      children: [
+                        ListTile(
+                          title: Text(
+                            'Notification',
+                            style: TextStyle(
+                                fontSize: 20,
+                                color: Colors.white,
+                                fontWeight: FontWeight.w700),
+                          ),
+                          trailing: Switch(
+                            activeColor: Color(0xFFD933C3),
+                            value: isSwitched,
+                            onChanged: toogleSwitch,
+                          ),
                         ),
-                        trailing: Switch(
-                          activeColor: Color(0xFFD933C3),
-                          value: isSwitched,
-                          onChanged: toogleSwitch,
+                        ListTile(
+                          onTap: () {
+                            Navigator.of(context).push(MaterialPageRoute(
+                                builder: (ctx) => TermsAndConditionScreen()));
+                          },
+                          title: Text(
+                            'Terms And Conditions',
+                            style: TextStyle(
+                                fontSize: 20,
+                                color: Colors.white,
+                                fontWeight: FontWeight.w700),
+                          ),
+                          trailing: Icon(
+                            Icons.chevron_right,
+                            color: Colors.white,
+                            size: 30,
+                          ),
                         ),
-                      ),
-                      ListTile(
-                        onTap: () {
-                          Navigator.of(context).push(MaterialPageRoute(builder: (ctx)=>TermsAndConditionScreen()));
-                        },
-                        title: Text(
-                          'Terms And Conditions',
-                          style: TextStyle(
-                              fontSize: 20,
-                              color: Colors.white,
-                              fontWeight: FontWeight.w700),
+                        ListTile(
+                          onTap: () {
+                            Navigator.of(context).push(MaterialPageRoute(
+                                builder: (ctx) => PrivacyPolicyScreen()));
+                          },
+                          title: Text(
+                            'Privacy Policy',
+                            style: TextStyle(
+                                fontSize: 20,
+                                color: Colors.white,
+                                fontWeight: FontWeight.w700),
+                          ),
+                          trailing: Icon(Icons.chevron_right,
+                              color: Colors.white, size: 30),
                         ),
-                        trailing: Icon(
-                          Icons.chevron_right,
-                          color: Colors.white,
-                          size: 30,
+                        ListTile(
+                          onTap: () {},
+                          title: Text(
+                            'About Us',
+                            style: TextStyle(
+                                fontSize: 20,
+                                color: Colors.white,
+                                fontWeight: FontWeight.w700),
+                          ),
+                          trailing: Icon(Icons.chevron_right,
+                              color: Colors.white, size: 30),
                         ),
-                      ),
-                      ListTile(
-                        onTap: () {
-                          Navigator.of(context).push(MaterialPageRoute(builder: (ctx)=>PrivacyPolicyScreen()));
-                        },
-                        title: Text(
-                          'Privacy Policy',
-                          style: TextStyle(
-                              fontSize: 20,
-                              color: Colors.white,
-                              fontWeight: FontWeight.w700),
-                        ),
-                        trailing: Icon(Icons.chevron_right,
-                            color: Colors.white, size: 30),
-                      ),
-                    ],
-                  )
-                ],
-              ),
-              Column(
-                children: [
-                  //THIS IS FOR ADDING SOCIAL MEDIA LINKS IN THE APPLICATION
-                  // Text(
-                  //   'Connect With Us',
-                  //   style: TextStyle(color: Color(0xFFD933C3), fontSize: 20),
-                  // ),
+                      ],
+                    )
+                  ],
+                ),
+                Column(
+                  children: [
+                    //THIS IS FOR ADDING SOCIAL MEDIA LINKS IN THE APPLICATION
+                    // Text(
+                    //   'Connect With Us',
+                    //   style: TextStyle(color: Color(0xFFD933C3), fontSize: 20),
+                    // ),
 
-                  // Row(
-                  //   mainAxisAlignment: MainAxisAlignment.center,
-                  //   children: [
-                  //     IconButton(
-                  //       onPressed: () {},
-                  //       icon: Icon(
-                  //         Icons.
-                  //         size: 48,
-                  //         color: Colors.white,
-                  //       ),
-                  //     ),
-                  //     SizedBox(
-                  //       width: 10,
-                  //     ),
-                  //     IconButton(
-                  //       onPressed: () {},
-                  //       icon: Icon(
-                  //         Icons.email,
-                  //         size: 48,
-                  //         color: Colors.white,
-                  //       ),
-                  //     ),
-                  //   ],
-                  // ),
-                  SizedBox(
-                    height: 20,
-                  ),
-                  Column(
-                    children: [
-                      Text(
-                        'App Version',
-                        style:
-                            TextStyle(color: Color(0xFFD594EE), fontSize: 15),
-                      ),
-                      Text(
-                        '1.0.0',
-                        style:
-                            TextStyle(color: Color(0xFFD594EE), fontSize: 15),
-                      ),
-                    ],
-                  )
-                ],
-              ),
-            ],
+                    // Row(
+                    //   mainAxisAlignment: MainAxisAlignment.center,
+                    //   children: [
+                    //     IconButton(
+                    //       onPressed: () {},
+                    //       icon: Icon(
+                    //         Icons.
+                    //         size: 48,
+                    //         color: Colors.white,
+                    //       ),
+                    //     ),
+                    //     SizedBox(
+                    //       width: 10,
+                    //     ),
+                    //     IconButton(
+                    //       onPressed: () {},
+                    //       icon: Icon(
+                    //         Icons.email,
+                    //         size: 48,
+                    //         color: Colors.white,
+                    //       ),
+                    //     ),
+                    //   ],
+                    // ),
+                    SizedBox(
+                      height: 20,
+                    ),
+                    Column(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        SizedBox(height: 120,),
+                        Text(
+                          'App Version',
+                          style:
+                              TextStyle(color: Color(0xFFD594EE), fontSize: 15),
+                        ),
+                        Text(
+                          '1.0.0',
+                          style:
+                              TextStyle(color: Color(0xFFD594EE), fontSize: 15),
+                        ),
+                      ],
+                    )
+                  ],
+                ),
+              ],
+            ),
           ),
         ),
       ),
