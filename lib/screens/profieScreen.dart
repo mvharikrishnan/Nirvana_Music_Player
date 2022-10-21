@@ -150,7 +150,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       ),
                       ListTile(
                         onTap: () {
-                          Navigator.of(context).push(MaterialPageRoute(builder: (ctx)=>PrivacyPolicyScreen()));
+                          Navigator.of(context).push(MaterialPageRoute(builder: (ctx)=>TermsAndConditionScreen()));
                         },
                         title: Text(
                           'Terms And Conditions',
@@ -167,7 +167,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       ),
                       ListTile(
                         onTap: () {
-                          Navigator.of(context).push(MaterialPageRoute(builder: (ctx)=>TermsAndConditionScreen()));
+                          Navigator.of(context).push(MaterialPageRoute(builder: (ctx)=>PrivacyPolicyScreen()));
                         },
                         title: Text(
                           'Privacy Policy',
