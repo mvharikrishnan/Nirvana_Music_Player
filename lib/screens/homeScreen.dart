@@ -100,23 +100,24 @@ class _HomeScreenState extends State<HomeScreen> {
                         width: 12,
                       ),
                       //change this to make onpressed for circle avatar
-                      InkWell(
-                        onTap: (() {
-                          // Navigator.of(context).push(
-                          //   MaterialPageRoute(
-                          //     builder: (ctx) => ProfileScreen(),
-                          //   ),
-                          // );
-                        }),
-                        child: CircleAvatar(
-                          radius: 20,
-                          backgroundImage:
-                              AssetImage('assets/images/Profile_Avatar.png'),
-                        ),
-                      ),
-                      SizedBox(
-                        width: 10,
-                      ),
+                      // InkWell(
+                      //   onTap: (() {
+                      //     // Navigator.of(context).push(
+                      //     //   MaterialPageRoute(
+                      //     //     builder: (ctx) => ProfileScreen(),
+                      //     //   ),
+                      //     // );
+                      //   }),
+                      //THis is for future adding of profile in application
+                      //   child: CircleAvatar(
+                      //     radius: 20,
+                      //     backgroundImage:
+                      //         AssetImage('assets/images/Profile_Avatar.png'),
+                      //   ),
+                      // ),
+                      // SizedBox(
+                      //   width: 10,
+                      // ),
                     ],
                   ),
                 ],

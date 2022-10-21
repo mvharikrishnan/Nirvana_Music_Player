@@ -83,14 +83,8 @@ class IntroScreen extends StatelessWidget {
                   ),
                   action: (controller) async {
                     controller.loading();
-                    if (editingController.text.toString() == null) {
-                      addNameToSF(UserName: 'Guest');
-                      await Future.delayed(const Duration(seconds: 3));
-                      controller.success();
-                      Navigator.of(context).pushAndRemoveUntil(
-                          MaterialPageRoute(builder: (ctx) => HomeScreen()),
-                          (route) => false);
-                    } else {
+
+                    {
                       addNameToSF(UserName: editingController.text.toString());
                       await Future.delayed(const Duration(seconds: 3));
                       controller.success();

@@ -14,13 +14,20 @@ class ProfileScreen extends StatefulWidget {
 }
 
 class _ProfileScreenState extends State<ProfileScreen> {
-  String ProfileNameUser = 'Guest';
+  String? ProfileNameUser;
   getUnsernaemFromSP() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     final String Username = prefs.getString('userNamekey').toString();
     setState(() {
       ProfileNameUser = Username;
     });
+    if (ProfileNameUser == null) {
+      ProfileNameUser = 'Guest';
+    } else {
+      setState(() {
+        ProfileNameUser = Username;
+      });
+    }
   }
 
 //switch
@@ -69,7 +76,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         fontWeight: FontWeight.bold),
                   ),
                   Text(
-                    ProfileNameUser,
+                    ProfileNameUser ?? 'Guest',
                     style: TextStyle(
                         fontSize: 38,
                         fontWeight: FontWeight.bold,
@@ -170,34 +177,36 @@ class _ProfileScreenState extends State<ProfileScreen> {
               ),
               Column(
                 children: [
-                  Text(
-                    'Connect With Us',
-                    style: TextStyle(color: Color(0xFFD933C3), fontSize: 20),
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      IconButton(
-                        onPressed: () {},
-                        icon: Icon(
-                          Icons.facebook_outlined,
-                          size: 48,
-                          color: Colors.white,
-                        ),
-                      ),
-                      SizedBox(
-                        width: 10,
-                      ),
-                      IconButton(
-                        onPressed: () {},
-                        icon: Icon(
-                          Icons.email,
-                          size: 48,
-                          color: Colors.white,
-                        ),
-                      ),
-                    ],
-                  ),
+                  //THIS IS FOR ADDING SOCIAL MEDIA LINKS IN THE APPLICATION
+                  // Text(
+                  //   'Connect With Us',
+                  //   style: TextStyle(color: Color(0xFFD933C3), fontSize: 20),
+                  // ),
+
+                  // Row(
+                  //   mainAxisAlignment: MainAxisAlignment.center,
+                  //   children: [
+                  //     IconButton(
+                  //       onPressed: () {},
+                  //       icon: Icon(
+                  //         Icons.
+                  //         size: 48,
+                  //         color: Colors.white,
+                  //       ),
+                  //     ),
+                  //     SizedBox(
+                  //       width: 10,
+                  //     ),
+                  //     IconButton(
+                  //       onPressed: () {},
+                  //       icon: Icon(
+                  //         Icons.email,
+                  //         size: 48,
+                  //         color: Colors.white,
+                  //       ),
+                  //     ),
+                  //   ],
+                  // ),
                   SizedBox(
                     height: 20,
                   ),
@@ -240,6 +249,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
           backgroundColor: Color.fromARGB(255, 188, 140, 224),
           title: Text('EDIT YOUR NAME'),
           content: TextFormField(
+            //initialValue: oldusername,
             controller: editcontroller,
             keyboardType: TextInputType.name,
             textInputAction: TextInputAction.done,
