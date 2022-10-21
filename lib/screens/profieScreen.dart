@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_launcher_icons/xml_templates.dart';
+import 'package:nirvana/screens/Privacy%20Policies/termsAndConditions.dart';
+import 'package:nirvana/screens/privacyScreen.dart';
 // import 'package:flutter/src/foundation/key.dart';
 // import 'package:flutter/src/widgets/framework.dart';
 import 'package:nirvana/screens/settingsScreen.dart';
@@ -147,6 +149,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         ),
                       ),
                       ListTile(
+                        onTap: () {
+                          Navigator.of(context).push(MaterialPageRoute(builder: (ctx)=>PrivacyPolicyScreen()));
+                        },
                         title: Text(
                           'Terms And Conditions',
                           style: TextStyle(
@@ -161,6 +166,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         ),
                       ),
                       ListTile(
+                        onTap: () {
+                          Navigator.of(context).push(MaterialPageRoute(builder: (ctx)=>TermsAndConditionScreen()));
+                        },
                         title: Text(
                           'Privacy Policy',
                           style: TextStyle(
