@@ -118,11 +118,12 @@ PlaylistDeleteFuntion(
   );
 }
 
- PlaylistEditFunction(
+PlaylistEditFunction(
     {required BuildContext context,
     required List<Songs> songs,
     required String playlistName}) {
-  TextEditingController editcontroller = TextEditingController();
+  TextEditingController editcontroller = TextEditingController()
+    ..text = playlistName;
   Box<List> playlistBox = getPlaylistBox();
   Future editPlaylist(
       {required String playlistName,
@@ -145,7 +146,6 @@ PlaylistDeleteFuntion(
           textInputAction: TextInputAction.done,
           decoration: InputDecoration(
             border: OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
-            hintText: playlistName,
             prefixIcon: Icon(
               Icons.edit,
               size: 25,

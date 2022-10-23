@@ -1,3 +1,4 @@
+import 'package:assets_audio_player/assets_audio_player.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_launcher_icons/xml_templates.dart';
 import 'package:nirvana/screens/Privacy%20Policies/termsAndConditions.dart';
@@ -16,12 +17,17 @@ class ProfileScreen extends StatefulWidget {
 }
 
 class _ProfileScreenState extends State<ProfileScreen> {
+  AssetsAudioPlayer audioPlayer = AssetsAudioPlayer();
+  String oldNameStored = 'Enter Your Name';
+  bool showNotification = true;
   String? ProfileNameUser;
   getUnsernaemFromSP() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     final String Username = prefs.getString('userNamekey').toString();
+
     setState(() {
       ProfileNameUser = Username;
+      oldNameStored = prefs.getString('userNamekey').toString();
     });
     if (ProfileNameUser == null) {
       ProfileNameUser = 'Guest';
@@ -33,12 +39,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
   }
 
 //switch
-  bool isSwitched = false;
+  bool isSwitched = true;
   void toogleSwitch(bool value) {
     if (isSwitched == false) {
       //notification function to set the notification true
       setState(() {
         isSwitched = true;
+        //audioPlayer.open(showNotification: showNotification);
       });
     } else {
       //notification function to set the notification false
@@ -236,7 +243,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     Column(
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: [
-                        SizedBox(height: 120,),
+                        SizedBox(
+                          height: 120,
+                        ),
                         Text(
                           'App Version',
                           style:
@@ -261,7 +270,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
   //profile edit function
   ProfileEditFunction({required BuildContext context}) async {
-    TextEditingController editcontroller = TextEditingController();
+    TextEditingController editcontroller = TextEditingController()
+      ..text = oldNameStored;
     SharedPreferences prefs = await SharedPreferences.getInstance();
     final String oldusername = prefs.getString('userNamekey').toString();
     Future editPlaylist() async {
@@ -275,14 +285,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
           backgroundColor: Color.fromARGB(255, 188, 140, 224),
           title: Text('EDIT YOUR NAME'),
           content: TextFormField(
-            //initialValue: oldusername,
-            controller: editcontroller,
+            controller: editcontroller..text = oldNameStored,
             keyboardType: TextInputType.name,
             textInputAction: TextInputAction.done,
             decoration: InputDecoration(
               border:
                   OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
-              hintText: oldusername,
               prefixIcon: Icon(
                 Icons.edit,
                 size: 25,
