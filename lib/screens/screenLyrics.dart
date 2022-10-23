@@ -16,7 +16,26 @@ class Screen_Lyrics extends StatefulWidget {
 }
 
 class _Screen_LyricsState extends State<Screen_Lyrics> {
-  String Lyrics = 'Click To get the lyrics';
+  @override
+  void initState() {
+    // TODO: implement initState
+    lyicsFunction();
+    super.initState();
+  }
+  String Lyrics = 'Loading.... ';
+  lyicsFunction()async{
+     log('Await Start');
+                  var _result = await getLyrics(
+                      name: widget.SongTitile, artist: widget.SongArtist);
+                  log('Await finish');
+                  print(_result.name);
+                  print(
+                      '<<<<<<<<<<<<<<<<<<<<<<<<>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>');
+                  print(_result.lyrics);
+                  setState(() {
+                    Lyrics = _result.lyrics!;
+                  });
+  }
   @override
   Widget build(BuildContext context) {
     log('Buiding');
@@ -34,44 +53,44 @@ class _Screen_LyricsState extends State<Screen_Lyrics> {
       body: SafeArea(
           child: Column(
         children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              InkWell(
-                onTap: () async {
-                  //Function to get lyrics
-                  log('Await Start');
-                  var _result = await getLyrics(
-                      name: widget.SongTitile, artist: widget.SongArtist);
-                  log('Await finish');
-                  print(_result.name);
-                  print(
-                      '<<<<<<<<<<<<<<<<<<<<<<<<>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>');
-                  print(_result.lyrics);
-                  setState(() {
-                    Lyrics = _result.lyrics!;
-                  });
-                },
-                child: Container(
-                  height: 42,
-                  width: 145,
-                  decoration: BoxDecoration(
-                    color: Color(0xFFD933C3),
-                    borderRadius: BorderRadius.circular(20),
-                   ),
-                  child: Center(
-                    child: Text(
-                      'Get Lyrics',
-                      style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 15,
-                          fontWeight: FontWeight.w500),
-                    ),
-                  ),
-                ),
-              ),
-            ],
-          ),
+          // Row(
+          //   mainAxisAlignment: MainAxisAlignment.center,
+          //   children: [
+          //     InkWell(
+          //       onTap: () async {
+          //         //Function to get lyrics
+          //         log('Await Start');
+          //         var _result = await getLyrics(
+          //             name: widget.SongTitile, artist: widget.SongArtist);
+          //         log('Await finish');
+          //         print(_result.name);
+          //         print(
+          //             '<<<<<<<<<<<<<<<<<<<<<<<<>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>');
+          //         print(_result.lyrics);
+          //         setState(() {
+          //           Lyrics = _result.lyrics!;
+          //         });
+          //       },
+          //       child: Container(
+          //         height: 42,
+          //         width: 145,
+          //         decoration: BoxDecoration(
+          //           color: Color(0xFFD933C3),
+          //           borderRadius: BorderRadius.circular(20),
+          //          ),
+          //         child: Center(
+          //           child: Text(
+          //             'Get Lyrics',
+          //             style: TextStyle(
+          //                 color: Colors.white,
+          //                 fontSize: 15,
+          //                 fontWeight: FontWeight.w500),
+          //           ),
+          //         ),
+          //       ),
+          //     ),
+          //   ],
+          // ),
           Padding(
             padding: const EdgeInsets.all(15.0),
             child: Container(

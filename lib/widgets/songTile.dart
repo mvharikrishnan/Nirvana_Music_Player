@@ -47,6 +47,8 @@ class _SongTileState extends State<SongTile> {
   // required this.SongTitle,
   @override
   Widget build(BuildContext context) {
+    final Height = MediaQuery.of(context).size.height;
+    final Width = MediaQuery.of(context).size.width;
   //convertSong();
     return GestureDetector(
       onTap: () async {
@@ -72,156 +74,160 @@ class _SongTileState extends State<SongTile> {
           borderRadius: BorderRadius.circular(20),
           color: Color.fromARGB(35, 201, 125, 255),
         ),
-        child: Padding(
-          padding: const EdgeInsets.all(10.0),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Row(
+        child: Column(
+          children: [
+            Padding(
+              padding: const EdgeInsets.all(10.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Container(
-                    margin: EdgeInsets.only(left: 10),
-                    height: 40,
-                    width: 40,
-                    child: QueryArtworkWidget(
-                      artworkFit: BoxFit.cover,
-                      artworkBorder: BorderRadius.circular(8),
-                      artworkHeight: 200.0,
-                      id: int.parse(
-                          widget.audioList[widget.Index].id.toString()),
-                      type: ArtworkType.AUDIO,
-                      nullArtworkWidget: Container(
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(8),
-                          image: DecorationImage(
-                            fit: BoxFit.cover,
-                            image:
-                                AssetImage('assets/images/songTileDummy.jpg'),
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                  SizedBox(
-                    width: 15,
-                  ),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.center,
+                  Row(
                     children: [
-                      SizedBox(
-                        height: 20,
-                        width: 200,
-                        child:
-
-                            //start here
-                            Text(
-                          widget.audioList[widget.Index].songTitle,
-                          overflow: TextOverflow.ellipsis,
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 15,
-                            fontWeight: FontWeight.w500,
-                          ),
-                        ),
-                        //end here
-                      ),
-                      SizedBox(
-                        width: 150,
-                        height: 20,
-                        child: Text(
-                          widget.audioList[widget.Index].songArtist,
-                          overflow: TextOverflow.ellipsis,
-                          style: TextStyle(
-                            color: Color(0xFFD594EE),
-                            fontSize: 15,
-                            fontWeight: FontWeight.w500,
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-              Row(
-                children: [
-                  IconButton(
-                    onPressed: () {
-                      PlaylistSongsClass.addSongToLiked(
-                          context: context,
-                          ID: widget.audioList[widget.Index].songPath);
-                      setState(() {
-                        PlaylistSongsClass.isLiked(
-                            ID: widget.audioList[widget.Index].songPath);
-                      });
-                    },
-                    icon: Icon(
-                      // Icons.favorite,
-                      color: Color(
-                        0xFFD594EE,
-                      ),
-                      PlaylistSongsClass.isLiked(
-                          ID: widget.audioList[widget.Index].songPath),
-                    ),
-                  ),
-                  // SizedBox(
-                  //   width: 5,
-                  // ),
-                  PopupMenuButton(
-                    color: Color.fromARGB(250, 59, 31, 80),
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(20)),
-                    icon: Icon(
-                      Icons.more_vert_outlined,
-                      color: Colors.white,
-                    ),
-                    itemBuilder: (context) => [
-                      PopupMenuItem(
-                        child: Column(
-                          children: [
-                            TextButton(
-                              autofocus: false,
-                              onPressed: () {
-                                Navigator.of(context).push(
-                                  MaterialPageRoute(
-                                    builder: (ctx) => AddToPlaylist(
-                                      Index: widget
-                                          .audioList[widget.Index].songPath,
-                                      audioPlayer: widget.audioPlayer,
-                                      songList: widget.audioList.cast<Audio>(),
-                                    ),
-                                  ),
-                                );
-                              },
-                              child: Text(
-                                'ADD TO PLAYLIST',
-                                style: TextStyle(color: Colors.white),
+                      Container(
+                        margin: EdgeInsets.only(left: 10),
+                        height: 40,
+                        width: 40,
+                        child: QueryArtworkWidget(
+                          artworkFit: BoxFit.cover,
+                          artworkBorder: BorderRadius.circular(8),
+                          artworkHeight: 200.0,
+                          id: int.parse(
+                              widget.audioList[widget.Index].id.toString()),
+                          type: ArtworkType.AUDIO,
+                          nullArtworkWidget: Container(
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(8),
+                              image: DecorationImage(
+                                fit: BoxFit.cover,
+                                image:
+                                    AssetImage('assets/images/songTileDummy.jpg'),
                               ),
                             ),
-                          ],
+                          ),
                         ),
                       ),
-                      PopupMenuItem(
-                        enabled: widget.homeScreen,
-                        onTap: () {
-                          SongsToPlaylistClass.DeleteSongFromPlaylist(
-                            context: context,
-                            ID: widget.audioList[widget.Index].id.toString(),
-                            PlaylistName: widget.PlaylistName,
-                          );
+                      SizedBox(
+                        width: 15,
+                      ),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          SizedBox(
+                            height: 20,
+                            width: Width/3,
+                            child:
+
+                                //start here
+                                Text(
+                              widget.audioList[widget.Index].songTitle,
+                              overflow: TextOverflow.ellipsis,
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 15,
+                                fontWeight: FontWeight.w500,
+                              ),
+                            ),
+                            //end here
+                          ),
+                          SizedBox(
+                            width: Width * 0.4,
+                            height: 20,
+                            child: Text(
+                              widget.audioList[widget.Index].songArtist,
+                              overflow: TextOverflow.ellipsis,
+                              style: TextStyle(
+                                color: Color(0xFFD594EE),
+                                fontSize: 15,
+                                fontWeight: FontWeight.w500,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                  Row(
+                    children: [
+                      IconButton(
+                        onPressed: () {
+                          PlaylistSongsClass.addSongToLiked(
+                              context: context,
+                              ID: widget.audioList[widget.Index].songPath);
+                          setState(() {
+                            PlaylistSongsClass.isLiked(
+                                ID: widget.audioList[widget.Index].songPath);
+                          });
                         },
-                        child: Visibility(
-                          visible: widget.homeScreen,
-                          child: Text('REMOVE',
-                              style: TextStyle(color: Colors.white)),
+                        icon: Icon(
+                          // Icons.favorite,
+                          color: Color(
+                            0xFFD594EE,
+                          ),
+                          PlaylistSongsClass.isLiked(
+                              ID: widget.audioList[widget.Index].songPath),
                         ),
+                      ),
+                      // SizedBox(
+                      //   width: 5,
+                      // ),
+                      PopupMenuButton(
+                        color: Color.fromARGB(250, 59, 31, 80),
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(20)),
+                        icon: Icon(
+                          Icons.more_vert_outlined,
+                          color: Colors.white,
+                        ),
+                        itemBuilder: (context) => [
+                          PopupMenuItem(
+                            child: Column(
+                              children: [
+                                TextButton(
+                                  autofocus: false,
+                                  onPressed: () {
+                                    Navigator.of(context).push(
+                                      MaterialPageRoute(
+                                        builder: (ctx) => AddToPlaylist(
+                                          Index: widget
+                                              .audioList[widget.Index].songPath,
+                                          audioPlayer: widget.audioPlayer,
+                                          songList: widget.audioList.cast<Audio>(),
+                                        ),
+                                      ),
+                                    );
+                                  },
+                                  child: Text(
+                                    'ADD TO PLAYLIST',
+                                    style: TextStyle(color: Colors.white),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                          PopupMenuItem(
+                            enabled: widget.homeScreen,
+                            onTap: () {
+                              SongsToPlaylistClass.DeleteSongFromPlaylist(
+                                context: context,
+                                ID: widget.audioList[widget.Index].id.toString(),
+                                PlaylistName: widget.PlaylistName,
+                              );
+                            },
+                            child: Visibility(
+                              visible: widget.homeScreen,
+                              child: Text('REMOVE',
+                                  style: TextStyle(color: Colors.white)),
+                            ),
+                          ),
+                        ],
                       ),
                     ],
                   ),
                 ],
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );

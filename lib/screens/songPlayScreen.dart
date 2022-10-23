@@ -48,6 +48,8 @@ class _SongPlayScreenState extends State<SongPlayScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final Height = MediaQuery.of(context).size.height;
+    final Width = MediaQuery.of(context).size.width;
     return Scaffold(
       backgroundColor: Color(0xFF3B1F50),
       body: SafeArea(
@@ -58,89 +60,95 @@ class _SongPlayScreenState extends State<SongPlayScreen> {
             return Padding(
               padding: const EdgeInsets.all(15.0),
               child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
+                  Column(
                     children: [
-                      GestureDetector(
-                        onPanDown: (details) {
-                          Navigator.of(context).pop();
-                          widget.audioPlayer.stop();
-                        },
-                        child: Container(
-                          height: 13,
-                          width: 62,
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(25),
-                              color: Color.fromARGB(121, 212, 148, 238)),
-                        ),
-                      )
-                    ],
-                  ),
-                  SizedBox(
-                    height: 20,
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          GestureDetector(
+                            onPanDown: (details) {
+                              Navigator.of(context).pop();
+                              widget.audioPlayer.stop();
+                            },
+                            child: Container(
+                              height: 13,
+                              width: 62,
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(25),
+                                  color: Color.fromARGB(121, 212, 148, 238)),
+                            ),
+                          )
+                        ],
+                      ),
                       SizedBox(
-                        height: 297,
-                        width: 297,
-                        child: QueryArtworkWidget(
-                          artworkBorder: BorderRadius.circular(10),
-                          id: int.parse(musicAuido.metas.id!),
-                          type: ArtworkType.AUDIO,
-                          nullArtworkWidget: Container(
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(10),
-                              image: DecorationImage(
-                                fit: BoxFit.cover,
-                                image:
-                                    AssetImage('assets/images/concreteGIF.gif'),
+                        height: Height / 30,
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          SizedBox(
+                            height: Height * 0.3,
+                            width: Width * 0.7,
+                            child: QueryArtworkWidget(
+                              artworkBorder: BorderRadius.circular(10),
+                              id: int.parse(musicAuido.metas.id!),
+                              type: ArtworkType.AUDIO,
+                              nullArtworkWidget: Container(
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(10),
+                                  image: DecorationImage(
+                                    fit: BoxFit.cover,
+                                    image: AssetImage(
+                                        'assets/images/concreteGIF.gif'),
+                                  ),
+                                ),
                               ),
                             ),
                           ),
+                        ],
+                      ),
+                      SizedBox(
+                        height: Height / 30,
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(left: 20, right: 20),
+                        child: SizedBox(
+                          height: Height / 20,
+                          width: double.infinity,
+                          child: Marquee(
+                            blankSpace: 70,
+                            startAfter: Duration(seconds: 5),
+                            text: widget.audioPlayer.getCurrentAudioTitle,
+                            style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 24,
+                                fontWeight: FontWeight.bold),
+                          ),
                         ),
                       ),
-                    ],
-                  ),
-                  SizedBox(
-                    height: 20,
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(left: 20, right: 20),
-                    child: SizedBox(
-                      height: 30,
-                      width: double.infinity,
-                      child: Marquee(
-                        blankSpace: 70,
-                        startAfter: Duration(seconds: 5),
-                        text: widget.audioPlayer.getCurrentAudioTitle,
-                        style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 24,
-                            fontWeight: FontWeight.bold),
+                      SizedBox(
+                        height: Height / 50,
                       ),
-                    ),
-                  ),
-                  SizedBox(
-                    height: 20,
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(
-                        widget.audioPlayer.getCurrentAudioArtist,
-                        style: TextStyle(
-                            color: Color(0xFFC87DFF),
-                            fontSize: 15,
-                            fontWeight: FontWeight.w500),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(
+                            widget.audioPlayer.getCurrentAudioArtist,
+                            style: TextStyle(
+                                color: Color(0xFFC87DFF),
+                                fontSize: 15,
+                                fontWeight: FontWeight.w500),
+                          ),
+                        ],
                       ),
                     ],
                   ),
                   SizedBox(
-                    height: 50,
+                    height: Height / 20,
                   ),
+                  //blank
                   widget.audioPlayer.builderRealtimePlayingInfos(
                       builder: (context, info) {
                     final duration = info.current!.audio.duration;
@@ -189,97 +197,104 @@ class _SongPlayScreenState extends State<SongPlayScreen> {
                   //     ),
                   //   ],
                   // ),
-                  SizedBox(
-                    height: 150,
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
+                  // SizedBox(
+                  //   height: Height/5,
+                  // ),
+                  //blank
+
+                  Column(
                     children: [
-                      IconButton(
-                        onPressed: () {
-                          isLooping ? loopingOff() : loopingOn();
-                        },
-                        icon: isLooping
-                            ? Icon(
-                                Icons.loop,
-                                size: 30,
-                                color: Color(0xFFD933C3),
-                              )
-                            : Icon(
-                                Icons.loop,
-                                size: 30,
-                                color: Colors.white,
-                              ),
-                      ),
-                      IconButton(
-                          onPressed: () {
-                            widget.audioPlayer.previous();
-                          },
-                          icon: Icon(
-                            Icons.fast_rewind,
-                            size: 30,
-                            color: Colors.white,
-                          )),
-                      GestureDetector(
-                        onTap: () {
-                          widget.audioPlayer.playOrPause();
-                          setState(() {
-                            playorpauseIcon ? pauseIcons() : PlayIcon();
-                          });
-                        },
-                        child: Container(
-                          height: 60,
-                          width: 60,
-                          decoration: BoxDecoration(
-                              shape: BoxShape.circle, color: Color(0xFFD933C3)),
-                          child: PlayerBuilder.isPlaying(
-                            player: widget.audioPlayer,
-                            builder: (context, isPlaying) {
-                              return isPlaying
-                                  ? Icon(
-                                      Icons.pause_rounded,
-                                      color: Colors.white,
-                                      size: 40,
-                                    )
-                                  : Icon(
-                                      Icons.play_arrow_rounded,
-                                      color: Colors.white,
-                                      size: 40,
-                                    );
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          IconButton(
+                            onPressed: () {
+                              isLooping ? loopingOff() : loopingOn();
                             },
+                            icon: isLooping
+                                ? Icon(
+                                    Icons.loop,
+                                    size: 30,
+                                    color: Color(0xFFD933C3),
+                                  )
+                                : Icon(
+                                    Icons.loop,
+                                    size: 30,
+                                    color: Colors.white,
+                                  ),
                           ),
-                        ),
-                      ),
-                      IconButton(
-                          onPressed: () async {
-                            //_audioPlayer.next();
-                            await widget.audioPlayer.next();
-                          },
-                          icon: Icon(
-                            Icons.fast_forward,
-                            size: 30,
-                            color: Colors.white,
-                          )),
-                      IconButton(
-                        onPressed: () {
-                          isSound ? soundOff() : soundOn();
-                        },
-                        icon: isSound
-                            ? Icon(
-                                Icons.music_note_outlined,
+                          IconButton(
+                              onPressed: () {
+                                widget.audioPlayer.previous();
+                              },
+                              icon: Icon(
+                                Icons.fast_rewind,
                                 size: 30,
                                 color: Colors.white,
-                              )
-                            : Icon(
-                                Icons.music_off_outlined,
-                                size: 30,
-                                color: Color(0xFFD933C3),
+                              )),
+                          GestureDetector(
+                            onTap: () {
+                              widget.audioPlayer.playOrPause();
+                              setState(() {
+                                playorpauseIcon ? pauseIcons() : PlayIcon();
+                              });
+                            },
+                            child: Container(
+                              height: 60,
+                              width: 60,
+                              decoration: BoxDecoration(
+                                  shape: BoxShape.circle,
+                                  color: Color(0xFFD933C3)),
+                              child: PlayerBuilder.isPlaying(
+                                player: widget.audioPlayer,
+                                builder: (context, isPlaying) {
+                                  return isPlaying
+                                      ? Icon(
+                                          Icons.pause_rounded,
+                                          color: Colors.white,
+                                          size: 40,
+                                        )
+                                      : Icon(
+                                          Icons.play_arrow_rounded,
+                                          color: Colors.white,
+                                          size: 40,
+                                        );
+                                },
                               ),
+                            ),
+                          ),
+                          IconButton(
+                              onPressed: () async {
+                                //_audioPlayer.next();
+                                await widget.audioPlayer.next();
+                              },
+                              icon: Icon(
+                                Icons.fast_forward,
+                                size: 30,
+                                color: Colors.white,
+                              )),
+                          IconButton(
+                            onPressed: () {
+                              isSound ? soundOff() : soundOn();
+                            },
+                            icon: isSound
+                                ? Icon(
+                                    Icons.music_note_outlined,
+                                    size: 30,
+                                    color: Colors.white,
+                                  )
+                                : Icon(
+                                    Icons.music_off_outlined,
+                                    size: 30,
+                                    color: Color(0xFFD933C3),
+                                  ),
+                          ),
+                        ],
                       ),
                     ],
                   ),
                   SizedBox(
-                    height: 20,
+                    height: Height / 30,
                   ),
                   Container(
                     height: 63,
@@ -325,19 +340,20 @@ class _SongPlayScreenState extends State<SongPlayScreen> {
                                 ),
                                 size: 30)),
                         IconButton(
-                            onPressed: () {
-                              Navigator.of(context).push(
-                                MaterialPageRoute(
-                                  builder: (ctx) => AddToPlaylist(
-                                    Index: musicAuido.metas.id!,
-                                    audioPlayer: widget.audioPlayer,
-                                    songList: widget.songList,
-                                  ),
+                          onPressed: () {
+                            Navigator.of(context).push(
+                              MaterialPageRoute(
+                                builder: (ctx) => AddToPlaylist(
+                                  Index: musicAuido.metas.id!,
+                                  audioPlayer: widget.audioPlayer,
+                                  songList: widget.songList,
                                 ),
-                              );
-                            },
-                            icon: Icon(Icons.playlist_play,
-                                color: Colors.white, size: 30)),
+                              ),
+                            );
+                          },
+                          icon: Icon(Icons.playlist_play,
+                              color: Colors.white, size: 30),
+                        ),
                       ],
                     ),
                   ),

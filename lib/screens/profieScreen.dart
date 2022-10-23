@@ -190,7 +190,33 @@ class _ProfileScreenState extends State<ProfileScreen> {
                               color: Colors.white, size: 30),
                         ),
                         ListTile(
-                          onTap: () {},
+                          onTap: () {
+                            showDialog(
+                              context: context,
+                              builder: (context) {
+                                return AlertDialog(
+                                  icon: Icon(
+                                    Icons.crisis_alert_sharp,
+                                    color: Colors.white,
+                                  ),
+                                  title: Text(
+                                    "NIRVANA",
+                                    style: TextStyle(color: Colors.white),
+                                  ),
+                                  backgroundColor:
+                                      Color.fromARGB(255, 188, 140, 224),
+                                  actions: [
+                                    Text(
+                                        'Nirvana is an advanced music player where you can get the lyrics of the song that you are playling along with the feature of a  music player.',
+                                        style: TextStyle(color: Colors.white,fontSize: 20)),
+                                        SizedBox(height: 20),
+                                    Text('Created by: Harikrishnan MV',
+                                        style: TextStyle(color: Color.fromARGB(255, 42, 42, 42)))
+                                  ],
+                                );
+                              },
+                            );
+                          },
                           title: Text(
                             'About Us',
                             style: TextStyle(
