@@ -35,7 +35,7 @@ class _Screen_NavigationState extends State<Screen_Navigation> {
         items: [
           BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
           BottomNavigationBarItem(
-              icon: Icon(Icons.headphones), label: 'Favorite'),
+              icon: Icon(Icons.headphones), label: 'Favourite'),
           BottomNavigationBarItem(icon: Icon(Icons.layers), label: 'Playlist'),
           BottomNavigationBarItem(icon: Icon(Icons.person), label: 'Me'),
         ],

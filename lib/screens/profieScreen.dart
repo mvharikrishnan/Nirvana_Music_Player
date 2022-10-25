@@ -71,7 +71,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
           padding: const EdgeInsets.all(15.0),
           child: SingleChildScrollView(
             child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -142,20 +142,21 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     ),
                     Column(
                       children: [
-                        ListTile(
-                          title: Text(
-                            'Notification',
-                            style: TextStyle(
-                                fontSize: 20,
-                                color: Colors.white,
-                                fontWeight: FontWeight.w700),
-                          ),
-                          trailing: Switch(
-                            activeColor: Color(0xFFD933C3),
-                            value: isSwitched,
-                            onChanged: toogleSwitch,
-                          ),
-                        ),
+                        // ListTile(
+                        //   title: Text(
+                        //     'Notification',
+                        //     style: TextStyle(
+                        //         fontSize: 20,
+                        //         color: Colors.white,
+                        //         fontWeight: FontWeight.w700),
+                        //   ),
+                        //   trailing: Switch(
+                        //     activeColor: Color(0xFFD933C3),
+                        //     value: isSwitched,
+                        //     onChanged: toogleSwitch,
+                        //   ),
+                        // ),
+
                         ListTile(
                           onTap: () {
                             Navigator.of(context).push(MaterialPageRoute(

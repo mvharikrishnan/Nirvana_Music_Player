@@ -220,7 +220,7 @@ class _MiniMusicPlayerState extends State<MiniMusicPlayer> {
                       backgroundColor: Color(0xFFD594EE),
                       radius: 35,
                       backgroundImage:
-                          AssetImage('assets/images/wave-sound.gif'),
+                          AssetImage('assets/images/concreteGIF.gif'),
                     ),
                   ),
                 ),

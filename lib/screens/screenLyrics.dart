@@ -33,7 +33,7 @@ class _Screen_LyricsState extends State<Screen_Lyrics> {
                       '<<<<<<<<<<<<<<<<<<<<<<<<>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>');
                   print(_result.lyrics);
                   setState(() {
-                    Lyrics = _result.lyrics!;
+                    Lyrics = _result.lyrics??'Lyrics Not Available';
                   });
   }
   @override

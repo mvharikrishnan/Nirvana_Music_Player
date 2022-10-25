@@ -36,7 +36,7 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    'Favorite',
+                    'Favourite',
                     style: TextStyle(
                         color: Colors.white,
                         fontSize: 38,
@@ -66,7 +66,7 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
                         return (musicList.isEmpty)
                             ? Center(
                                 child: Text(
-                                'Add Your Favotite Songs',
+                                'Add Your Favourite Songs',
                                 style: TextStyle(color: Colors.white),
                               ))
                             : ListView.builder(
