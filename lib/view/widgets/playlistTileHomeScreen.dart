@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 import 'package:nirvana/database/database_functions/dbFunctions.dart';
 import 'package:nirvana/model/songdb.dart';
-import 'package:nirvana/screens/playlistViewingScreen.dart';
+import 'package:nirvana/view/screens/playlistViewingScreen.dart';
 
 class PlaylistHomeScreenTile extends StatefulWidget {
   const PlaylistHomeScreenTile({

@@ -5,8 +5,8 @@ import 'package:flutter/material.dart';
 
 import 'package:nirvana/database/database_functions/dbFunctions.dart';
 import 'package:nirvana/model/songdb.dart';
-import 'package:nirvana/widgets/bottomModelSheetAddSongs.dart';
-import 'package:nirvana/widgets/songTile.dart';
+import 'package:nirvana/view/widgets/bottomModelSheetAddSongs.dart';
+import 'package:nirvana/view/widgets/songTile.dart';
 
 class PlaylistViewingScreen extends StatelessWidget {
   PlaylistViewingScreen(

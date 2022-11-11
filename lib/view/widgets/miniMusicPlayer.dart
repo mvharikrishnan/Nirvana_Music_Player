@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 // import 'package:flutter/src/widgets/framework.dart';
 import 'package:marquee/marquee.dart';
 import 'package:nirvana/model/songdb.dart';
-import 'package:nirvana/screens/songPlayScreen.dart';
+import 'package:nirvana/view/screens/songPlayScreen.dart';
 import 'package:on_audio_query/on_audio_query.dart';
 
 class MiniMusicPlayer extends StatefulWidget {

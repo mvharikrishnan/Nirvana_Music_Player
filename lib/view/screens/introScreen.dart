@@ -1,8 +1,8 @@
 import 'package:action_slider/action_slider.dart';
 import 'package:flutter/material.dart';
-import 'package:nirvana/screens/homeScreen.dart';
-import 'package:nirvana/screens/splashScreen.dart';
-import 'package:nirvana/widgets/textFormField.dart';
+import 'package:nirvana/view/screens/homeScreen.dart';
+import 'package:nirvana/view/screens/splashScreen.dart';
+import 'package:nirvana/view/widgets/textFormField.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class IntroScreen extends StatelessWidget {

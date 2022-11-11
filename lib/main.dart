@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:hive_flutter/adapters.dart';
 import 'package:nirvana/model/songdb.dart';
-import 'package:nirvana/screens/introScreen.dart';
+import 'package:nirvana/view/screens/introScreen.dart';
 // import 'package:nirvana/screens/homeScreen.dart';
 // import 'package:nirvana/screens/navigationScreen.dart';
-import 'package:nirvana/screens/splashScreen.dart';
+import 'package:nirvana/view/screens/splashScreen.dart';
 
 Future <void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -24,7 +24,7 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return  const MaterialApp(
       debugShowCheckedModeBanner: false,
       home: SplashScreen(),
       //SplashScreen(),

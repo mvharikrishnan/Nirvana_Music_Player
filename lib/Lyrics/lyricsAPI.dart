@@ -2,7 +2,7 @@ import 'dart:convert';
 import 'dart:developer';
 
 import 'package:http/http.dart' as http;
-import 'package:nirvana/lyric_model/lyric_model.dart';
+import 'package:nirvana/model/lyric_model.dart';
 
 Future<LyricModel> getLyrics(
     {required String name, required String artist}) async {

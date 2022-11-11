@@ -4,12 +4,12 @@ import 'package:hive_flutter/hive_flutter.dart';
 // import 'package:nirvana/database/database_functions/dbFunctions.dart';
 import 'package:nirvana/model/songdb.dart';
 // import 'package:nirvana/screens/profieScreen.dart';
-import 'package:nirvana/screens/recentlyPlayedScreen.dart';
+import 'package:nirvana/view/screens/recentlyPlayedScreen.dart';
 // import 'package:nirvana/widgets/miniMusicPlayer.dart';
-import 'package:nirvana/widgets/playlistTileHomeScreen.dart';
-import 'package:nirvana/widgets/songTile.dart';
+import 'package:nirvana/view/widgets/playlistTileHomeScreen.dart';
+import 'package:nirvana/view/widgets/songTile.dart';
 
-import 'package:nirvana/widgets/textFormField.dart';
+import 'package:nirvana/view/widgets/textFormField.dart';
 import 'package:on_audio_query/on_audio_query.dart';
 // import 'package:permission_handler/permission_handler.dart';
 

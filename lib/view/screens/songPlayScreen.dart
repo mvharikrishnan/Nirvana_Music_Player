@@ -6,8 +6,8 @@ import 'package:marquee/marquee.dart';
 
 import 'package:nirvana/Functions/likedSongs.dart';
 
-import 'package:nirvana/screens/addPlaylist.dart';
-import 'package:nirvana/screens/screenLyrics.dart';
+import 'package:nirvana/view/screens/addPlaylist.dart';
+import 'package:nirvana/view/screens/screenLyrics.dart';
 import 'package:on_audio_query/on_audio_query.dart';
 
 class SongPlayScreen extends StatefulWidget {

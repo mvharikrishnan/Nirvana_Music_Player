@@ -6,7 +6,7 @@ import 'package:hive_flutter/hive_flutter.dart';
 import 'package:nirvana/Functions/usingFunctions.dart';
 import 'package:nirvana/database/database_functions/dbFunctions.dart';
 import 'package:nirvana/model/songdb.dart';
-import 'package:nirvana/widgets/playlistGridTile.dart';
+import 'package:nirvana/view/widgets/playlistGridTile.dart';
 
 class PlaylistScreen extends StatelessWidget {
   PlaylistScreen({Key? key}) : super(key: key);

@@ -7,7 +7,7 @@ import 'package:hive_flutter/hive_flutter.dart';
 import 'package:nirvana/database/database_functions/dbFunctions.dart';
 import 'package:nirvana/model/songdb.dart';
 // import 'package:nirvana/widgets/playlistRecenltyTile.dart';
-import 'package:nirvana/widgets/songTile.dart';
+import 'package:nirvana/view/widgets/songTile.dart';
 
 class RecentlyPlayedScreen extends StatelessWidget {
   RecentlyPlayedScreen({Key? key}) : super(key: key);

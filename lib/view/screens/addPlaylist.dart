@@ -6,8 +6,8 @@ import 'package:nirvana/Functions/usingFunctions.dart';
 import 'package:nirvana/database/database_functions/dbFunctions.dart';
 import 'package:nirvana/model/songdb.dart';
 
-import 'package:nirvana/widgets/addtoplaylistTile.dart';
-import 'package:nirvana/widgets/textFormField.dart';
+import 'package:nirvana/view/widgets/addtoplaylistTile.dart';
+import 'package:nirvana/view/widgets/textFormField.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class AddToPlaylist extends StatefulWidget {
