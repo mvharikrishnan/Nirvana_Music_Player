@@ -2,7 +2,7 @@ import 'package:assets_audio_player/assets_audio_player.dart';
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 // import 'package:nirvana/database/database_functions/dbFunctions.dart';
-import 'package:nirvana/database/songdb.dart';
+import 'package:nirvana/model/songdb.dart';
 // import 'package:nirvana/screens/profieScreen.dart';
 import 'package:nirvana/screens/recentlyPlayedScreen.dart';
 // import 'package:nirvana/widgets/miniMusicPlayer.dart';

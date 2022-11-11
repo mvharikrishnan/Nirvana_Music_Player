@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 // import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:nirvana/database/database_functions/dbFunctions.dart';
-import 'package:nirvana/database/songdb.dart';
+import 'package:nirvana/model/songdb.dart';
 // import 'package:nirvana/widgets/playlistRecenltyTile.dart';
 import 'package:nirvana/widgets/songTile.dart';
 

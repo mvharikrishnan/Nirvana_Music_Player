@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:hive/hive.dart';
 import 'package:nirvana/Functions/mostPlayedSong.dart';
 import 'package:nirvana/database/database_functions/dbFunctions.dart';
-import 'package:nirvana/database/songdb.dart';
+import 'package:nirvana/model/songdb.dart';
 
 class recentSongsClass {
   static final Box<List> playlistBox = getPlaylistBox();

@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:nirvana/Functions/usingFunctions.dart';
 import 'package:nirvana/database/database_functions/dbFunctions.dart';
-import 'package:nirvana/database/songdb.dart';
+import 'package:nirvana/model/songdb.dart';
 
 import 'package:nirvana/widgets/addtoplaylistTile.dart';
 import 'package:nirvana/widgets/textFormField.dart';

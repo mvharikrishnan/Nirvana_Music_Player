@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 // import 'package:flutter/src/foundation/key.dart';
 // import 'package:flutter/src/widgets/framework.dart';
 import 'package:nirvana/Functions/usingFunctions.dart';
-import 'package:nirvana/database/songdb.dart';
+import 'package:nirvana/model/songdb.dart';
 import 'package:nirvana/screens/playlistViewingScreen.dart';
 
 class PlaylistGridTile extends StatelessWidget {

@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 // import 'package:flutter/src/widgets/framework.dart';
 import 'package:hive/hive.dart';
 import 'package:nirvana/database/database_functions/dbFunctions.dart';
-import 'package:nirvana/database/songdb.dart';
+import 'package:nirvana/model/songdb.dart';
 import 'package:nirvana/screens/introScreen.dart';
 import 'package:nirvana/screens/navigationScreen.dart';
 import 'package:on_audio_query/on_audio_query.dart';

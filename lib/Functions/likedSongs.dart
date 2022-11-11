@@ -1,7 +1,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:nirvana/database/database_functions/dbFunctions.dart';
-import 'package:nirvana/database/songdb.dart';
+import 'package:nirvana/model/songdb.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:top_snackbar_flutter/tap_bounce_container.dart';
 import 'package:top_snackbar_flutter/top_snack_bar.dart';

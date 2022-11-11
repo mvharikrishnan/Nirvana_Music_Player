@@ -1,6 +1,6 @@
 import 'package:assets_audio_player/assets_audio_player.dart';
 import 'package:flutter/material.dart';
-import 'package:nirvana/database/songdb.dart';
+import 'package:nirvana/model/songdb.dart';
 import 'package:nirvana/widgets/miniMusicPlayer.dart';
 
 showMiniPlayer({
