@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:hive_flutter/adapters.dart';
 import 'package:nirvana/model/songdb.dart';
-import 'package:nirvana/view/screens/introScreen.dart';
+import 'package:nirvana/view/presentation/introduction_screen/introScreen.dart';
 // import 'package:nirvana/screens/homeScreen.dart';
 // import 'package:nirvana/screens/navigationScreen.dart';
-import 'package:nirvana/view/screens/splashScreen.dart';
+import 'package:nirvana/view/presentation/splashScreen.dart';
 
 Future <void> main() async {
   WidgetsFlutterBinding.ensureInitialized();

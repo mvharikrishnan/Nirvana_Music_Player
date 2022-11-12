@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 // import 'package:flutter/src/widgets/framework.dart';
 import 'package:nirvana/Functions/usingFunctions.dart';
 import 'package:nirvana/model/songdb.dart';
-import 'package:nirvana/view/screens/playlistViewingScreen.dart';
+import 'package:nirvana/view/presentation/playlist_screen/playlistViewingScreen.dart';
 
 class PlaylistGridTile extends StatelessWidget {
   PlaylistGridTile({

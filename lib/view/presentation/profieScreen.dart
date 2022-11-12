@@ -1,11 +1,11 @@
 import 'package:assets_audio_player/assets_audio_player.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_launcher_icons/xml_templates.dart';
-import 'package:nirvana/view/screens/Privacy%20Policies/termsAndConditions.dart';
-import 'package:nirvana/view/screens/privacyScreen.dart';
+import 'package:nirvana/view/presentation/Privacy%20Policies/termsAndConditions.dart';
+import 'package:nirvana/view/presentation/privacyScreen.dart';
 // import 'package:flutter/src/foundation/key.dart';
 // import 'package:flutter/src/widgets/framework.dart';
-import 'package:nirvana/view/screens/settingsScreen.dart';
+import 'package:nirvana/view/presentation/settings_screen/settingsScreen.dart';
 import 'package:nirvana/view/widgets/profileScreenPlaylistTIle.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 

@@ -4,7 +4,7 @@ import 'package:hive_flutter/hive_flutter.dart';
 // import 'package:nirvana/database/database_functions/dbFunctions.dart';
 import 'package:nirvana/model/songdb.dart';
 // import 'package:nirvana/screens/profieScreen.dart';
-import 'package:nirvana/view/screens/recentlyPlayedScreen.dart';
+import 'package:nirvana/view/presentation/recently_screen/recentlyPlayedScreen.dart';
 // import 'package:nirvana/widgets/miniMusicPlayer.dart';
 import 'package:nirvana/view/widgets/playlistTileHomeScreen.dart';
 import 'package:nirvana/view/widgets/songTile.dart';

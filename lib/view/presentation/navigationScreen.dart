@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 // import 'package:flutter/src/foundation/key.dart';
 // import 'package:flutter/src/widgets/framework.dart';
-import 'package:nirvana/view/screens/favoriteScreen.dart';
-import 'package:nirvana/view/screens/homeScreen.dart';
-import 'package:nirvana/view/screens/playlistScreen.dart';
-import 'package:nirvana/view/screens/profieScreen.dart';
+import 'package:nirvana/view/presentation/fav_screen/favoriteScreen.dart';
+import 'package:nirvana/view/presentation/home_screen/homeScreen.dart';
+import 'package:nirvana/view/presentation/playlist_screen/playlistScreen.dart';
+import 'package:nirvana/view/presentation/profieScreen.dart';
 
 class Screen_Navigation extends StatefulWidget {
   const Screen_Navigation({Key? key}) : super(key: key);

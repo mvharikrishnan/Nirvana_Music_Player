@@ -8,7 +8,7 @@ import 'package:nirvana/Functions/likedSongs.dart';
 import 'package:nirvana/Functions/musicFunctions.dart';
 import 'package:nirvana/Functions/recentSongs.dart';
 import 'package:nirvana/model/songdb.dart';
-import 'package:nirvana/view/screens/addPlaylist.dart';
+import 'package:nirvana/view/presentation/addPlaylist.dart';
 // import 'package:nirvana/screens/songPlayScreen.dart';
 import 'package:on_audio_query/on_audio_query.dart';
 
