@@ -13,11 +13,7 @@ part 'fav_screen_bloc.freezed.dart';
 class FavScreenBloc extends Bloc<FavScreenEvent, FavScreenState> {
   FavScreenBloc() : super(FavScreenState.initial()) {
     on<CurrentSongListInFAV>((event, emit) {
-      log('BlocFav Called');
-      Box<List> playlistBox = getPlaylistBox();
-      final List<Songs> songList = playlistBox.get('LikedSongs')!.toList().cast();
-      emit(FavScreenState(songList: songList));
-      log('Bloc Emited');
+      emit(FavScreenState(songList: event.songList));
     });
   }
 }
