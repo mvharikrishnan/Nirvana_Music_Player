@@ -23,14 +23,22 @@ class FavoriteScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Box<List> playlistBox = getPlaylistBox();
-    final List<Songs> songList = playlistBox.get('LikedSongs')!.toList().cast();
-    BlocProvider.of<FavScreenBloc>(context)
-        .add(CurrentSongListInFAV(songList: songList));
+    // Box<List> playlistBox = getPlaylistBox();
+    // final List<Songs> songList = playlistBox.get('LikedSongs')!.toList().cast();
+    // BlocProvider.of<FavScreenBloc>(context)
+    //     .add(CurrentSongListInFAV(songList: songList));
+
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      Box<List> playlistBox = getPlaylistBox();
+      final List<Songs> songList =
+          playlistBox.get('LikedSongs')!.toList().cast();
+      BlocProvider.of<FavScreenBloc>(context)
+          .add(CurrentSongListInFAV(songList: songList));
+    });
 
     log('fav screen called once');
     return Scaffold(
-      backgroundColor: Color(0xFF3B1F50),
+      backgroundColor: const Color(0xFF3B1F50),
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.all(15.0),
@@ -39,7 +47,7 @@ class FavoriteScreen extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text(
+                  const Text(
                     'Favourite',
                     style: TextStyle(
                         color: Colors.white,
@@ -51,58 +59,23 @@ class FavoriteScreen extends StatelessWidget {
                       log('count rebuild');
                       return Text(
                         '${state.songList.length} Songs',
-                        style:
-                            TextStyle(color: Color(0xFFC87DFF), fontSize: 15),
+                        style: const TextStyle(
+                            color: Color(0xFFC87DFF), fontSize: 15),
                       );
                     },
                   ),
                 ],
               ),
-              SizedBox(
+              const SizedBox(
                 height: 20,
               ),
               Expanded(
                 child: ListView(
                   children: [
-                    // ValueListenableBuilder(
-                    //   valueListenable: PlaylistBox.listenable(),
-                    //   builder: (BuildContext context, Box<List> value,
-                    //       Widget? child) {
-                    //     List<Songs> musicList = PlaylistBox.get('LikedSongs')!
-                    //         .reversed
-                    //         .toList()
-                    //         .cast<Songs>();
-
-                    //     return (musicList.isEmpty)
-                    //         ? Center(
-                    //             child: Text(
-                    //             'Add Your Favourite Songs',
-                    //             style: TextStyle(color: Colors.white),
-                    //           ))
-                    //         : ListView.builder(
-                    //             itemCount: musicList.length,
-                    //             shrinkWrap: true,
-                    //             physics: ScrollPhysics(),
-                    //             itemBuilder: (context, index) {
-                    //               return SongTile(
-                    //                 Index: index,
-                    //                 audioPlayer: audioPlayer,
-                    //                 //keys: keys,
-                    //                 onpressed: () {},
-                    //                 audioList: musicList,
-                    //                 homeScreen: true,
-                    //                 PlaylistName: 'LikedSongs',
-                    //               );
-                    //             },
-                    //           );
-                    //   },
-                    // ),
-
-                    //code after bloc
                     BlocBuilder<FavScreenBloc, FavScreenState>(
                       builder: (context, state) {
                         return (state.songList.isEmpty)
-                            ? Center(
+                            ? const Center(
                                 child: Text(
                                   'Add Your Favourite Songs',
                                   style: TextStyle(color: Colors.white),
@@ -111,12 +84,11 @@ class FavoriteScreen extends StatelessWidget {
                             : ListView.builder(
                                 itemCount: state.songList.length,
                                 shrinkWrap: true,
-                                physics: ScrollPhysics(),
+                                physics: const ScrollPhysics(),
                                 itemBuilder: (context, index) {
                                   return SongTile(
                                     Index: index,
                                     audioPlayer: audioPlayer,
-                                    //keys: keys,
                                     onpressed: () {},
                                     audioList: state.songList,
                                     homeScreen: true,
