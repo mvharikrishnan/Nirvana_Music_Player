@@ -1,9 +1,12 @@
+import 'dart:developer';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:nirvana/controller/fav_screen/fav_screen_bloc.dart';
 import 'package:nirvana/database/database_functions/dbFunctions.dart';
 import 'package:nirvana/model/songdb.dart';
 import 'package:hive_flutter/hive_flutter.dart';
-import 'package:top_snackbar_flutter/tap_bounce_container.dart';
+
 import 'package:top_snackbar_flutter/top_snack_bar.dart';
 
 class PlaylistSongsClass {
@@ -34,6 +37,9 @@ class PlaylistSongsClass {
       likedList
           .removeWhere((Songs) => Songs.songPath == likedMusicRef.songPath);
       await LikedSongBox.put('LikedSongs', likedList);
+      final List<Songs> songlist = LikedSongBox.get('LikedSongs')!.toList().cast();
+      BlocProvider.of<FavScreenBloc>(context)
+          .add(CurrentSongListInFAV(songList: songlist));
       //show the snakbar
       ShowSnackBar(
         context: context,

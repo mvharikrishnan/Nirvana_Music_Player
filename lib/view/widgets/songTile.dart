@@ -1,5 +1,6 @@
 import 'package:assets_audio_player/assets_audio_player.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 // import 'package:flutter/services.dart';
 import 'package:hive_flutter/adapters.dart';
 import 'package:nirvana/Functions/functionForAddingSongToPlaylist.dart';
@@ -7,6 +8,7 @@ import 'package:nirvana/Functions/functionForAddingSongToPlaylist.dart';
 import 'package:nirvana/Functions/likedSongs.dart';
 import 'package:nirvana/Functions/musicFunctions.dart';
 import 'package:nirvana/Functions/recentSongs.dart';
+import 'package:nirvana/controller/fav_screen/fav_screen_bloc.dart';
 import 'package:nirvana/model/songdb.dart';
 import 'package:nirvana/view/presentation/addPlaylist.dart';
 // import 'package:nirvana/screens/songPlayScreen.dart';
@@ -49,7 +51,7 @@ class _SongTileState extends State<SongTile> {
   Widget build(BuildContext context) {
     final Height = MediaQuery.of(context).size.height;
     final Width = MediaQuery.of(context).size.width;
-  //convertSong();
+    //convertSong();
     return GestureDetector(
       onTap: () async {
         //Navigator.of(context).push(_createRoute());
@@ -99,8 +101,8 @@ class _SongTileState extends State<SongTile> {
                               borderRadius: BorderRadius.circular(8),
                               image: DecorationImage(
                                 fit: BoxFit.cover,
-                                image:
-                                    AssetImage('assets/images/songTileDummy.jpg'),
+                                image: AssetImage(
+                                    'assets/images/songTileDummy.jpg'),
                               ),
                             ),
                           ),
@@ -115,7 +117,7 @@ class _SongTileState extends State<SongTile> {
                         children: [
                           SizedBox(
                             height: 20,
-                            width: Width/3,
+                            width: Width / 3,
                             child:
 
                                 //start here
@@ -154,6 +156,7 @@ class _SongTileState extends State<SongTile> {
                           PlaylistSongsClass.addSongToLiked(
                               context: context,
                               ID: widget.audioList[widget.Index].songPath);
+
                           setState(() {
                             PlaylistSongsClass.isLiked(
                                 ID: widget.audioList[widget.Index].songPath);
@@ -192,7 +195,8 @@ class _SongTileState extends State<SongTile> {
                                           Index: widget
                                               .audioList[widget.Index].songPath,
                                           audioPlayer: widget.audioPlayer,
-                                          songList: widget.audioList.cast<Audio>(),
+                                          songList:
+                                              widget.audioList.cast<Audio>(),
                                         ),
                                       ),
                                     );
@@ -210,7 +214,8 @@ class _SongTileState extends State<SongTile> {
                             onTap: () {
                               SongsToPlaylistClass.DeleteSongFromPlaylist(
                                 context: context,
-                                ID: widget.audioList[widget.Index].id.toString(),
+                                ID: widget.audioList[widget.Index].id
+                                    .toString(),
                                 PlaylistName: widget.PlaylistName,
                               );
                             },

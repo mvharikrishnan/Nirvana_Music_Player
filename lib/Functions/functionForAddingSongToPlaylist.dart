@@ -1,5 +1,9 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hive/hive.dart';
+import 'package:nirvana/controller/fav_screen/fav_screen_bloc.dart';
 import 'package:nirvana/database/database_functions/dbFunctions.dart';
 import 'package:nirvana/model/songdb.dart';
 import 'package:top_snackbar_flutter/top_snack_bar.dart';
@@ -41,14 +45,18 @@ class SongsToPlaylistClass {
       );
     }
   }
-  static AddFromSnackBar({required BuildContext context,required String ID,required String PlaylistName})async{
-    final List<Songs>songsList= songBox.values.toList().cast();
-     final List<Songs> PlaylistNameList =
+
+  static AddFromSnackBar(
+      {required BuildContext context,
+      required String ID,
+      required String PlaylistName}) async {
+    final List<Songs> songsList = songBox.values.toList().cast();
+    final List<Songs> PlaylistNameList =
         LikedSongBox.get(PlaylistName)!.toList().cast<Songs>();
     final Songs MusicRef =
         songsList.firstWhere((song) => song.songPath.contains(ID));
-         if (PlaylistNameList.where(
-        (Songs) => Songs.songPath == MusicRef.songPath).isEmpty) {
+    if (PlaylistNameList.where((Songs) => Songs.songPath == MusicRef.songPath)
+        .isEmpty) {
       PlaylistNameList.add(MusicRef);
       await LikedSongBox.put(PlaylistName, PlaylistNameList);
 
@@ -58,9 +66,9 @@ class SongsToPlaylistClass {
         songName: MusicRef.songTitle,
         message: 'Added to $PlaylistName Songs',
       );
-    }else {
-      PlaylistNameList
-          .removeWhere((Songs) => Songs.songPath == MusicRef.songPath);
+    } else {
+      PlaylistNameList.removeWhere(
+          (Songs) => Songs.songPath == MusicRef.songPath);
       await LikedSongBox.put(PlaylistName, PlaylistNameList);
       //show the snakbar
       ShowSnackBar(
@@ -69,7 +77,6 @@ class SongsToPlaylistClass {
         message: 'Removed From $PlaylistName ',
       );
     }
-
   }
 
   static ShowSnackBar({
@@ -122,5 +129,6 @@ class SongsToPlaylistClass {
         message: 'Removed From $PlaylistName',
       );
     }
+ 
   }
 }

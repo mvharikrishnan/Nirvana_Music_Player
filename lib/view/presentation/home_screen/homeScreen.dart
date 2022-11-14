@@ -99,25 +99,6 @@ class _HomeScreenState extends State<HomeScreen> {
                       SizedBox(
                         width: 12,
                       ),
-                      //change this to make onpressed for circle avatar
-                      // InkWell(
-                      //   onTap: (() {
-                      //     // Navigator.of(context).push(
-                      //     //   MaterialPageRoute(
-                      //     //     builder: (ctx) => ProfileScreen(),
-                      //     //   ),
-                      //     // );
-                      //   }),
-                      //THis is for future adding of profile in application
-                      //   child: CircleAvatar(
-                      //     radius: 20,
-                      //     backgroundImage:
-                      //         AssetImage('assets/images/Profile_Avatar.png'),
-                      //   ),
-                      // ),
-                      // SizedBox(
-                      //   width: 10,
-                      // ),
                     ],
                   ),
                 ],
@@ -125,9 +106,7 @@ class _HomeScreenState extends State<HomeScreen> {
               SizedBox(
                 height: 15,
               ),
-              // textFormField(
-              //     hinttext: 'Song or artist',
-              //     textEditController: searchController),
+
               TextField(
                 onEditingComplete: () {
                   setState(() {
