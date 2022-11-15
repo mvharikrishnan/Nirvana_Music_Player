@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hive/hive.dart';
 import 'package:nirvana/controller/fav_screen/fav_screen_bloc.dart';
+import 'package:nirvana/controller/playlist_screen/play_list_screen_bloc.dart';
 import 'package:nirvana/database/database_functions/dbFunctions.dart';
 import 'package:nirvana/model/songdb.dart';
 import 'package:top_snackbar_flutter/top_snack_bar.dart';
@@ -122,6 +123,9 @@ class SongsToPlaylistClass {
       PlaylistNameList.remove(DeleteMusicRef);
       await LikedSongBox.put(PlaylistName, PlaylistNameList);
 
+      BlocProvider.of<PlayListScreenBloc>(context)
+          .add(CurrentSongsList(PlaylistName: PlaylistName));
+
       //snackbarfunctionhere
       ShowSnackBar(
         context: context,
@@ -129,6 +133,5 @@ class SongsToPlaylistClass {
         message: 'Removed From $PlaylistName',
       );
     }
- 
   }
 }

@@ -1,7 +1,9 @@
 import 'dart:ui';
 import 'package:assets_audio_player/assets_audio_player.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:flutter/material.dart';
+import 'package:nirvana/controller/playlist_screen/play_list_screen_bloc.dart';
 
 import 'package:nirvana/database/database_functions/dbFunctions.dart';
 import 'package:nirvana/model/songdb.dart';
@@ -25,6 +27,12 @@ class PlaylistViewingScreen extends StatelessWidget {
   final AssetsAudioPlayer audioPlayer = AssetsAudioPlayer.withId('0');
   @override
   Widget build(BuildContext context) {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      Box<List> playlistBox = getPlaylistBox();
+
+      BlocProvider.of<PlayListScreenBloc>(context)
+          .add(CurrentSongsList(PlaylistName: playlistName));
+    });
     return Scaffold(
       backgroundColor: Color(0xFF3B1F50),
       body: SafeArea(
@@ -76,7 +84,7 @@ class PlaylistViewingScreen extends StatelessWidget {
                                     context: context,
                                   );
                                 },
-                                icon: Icon(
+                                icon: const Icon(
                                   Icons.add_box_outlined,
                                   color: Colors.white,
                                   size: 30,
@@ -88,12 +96,17 @@ class PlaylistViewingScreen extends StatelessWidget {
                           padding: const EdgeInsets.only(left: 48),
                           child: Row(
                             children: [
-                              Text(
-                                ' ${songList.length.toString()} Songs',
-                                style: TextStyle(
-                                    color: Color(0xFFC87DFF),
-                                    fontSize: 15,
-                                    fontWeight: FontWeight.w500),
+                              BlocBuilder<PlayListScreenBloc,
+                                  PlayListScreenState>(
+                                builder: (context, state) {
+                                  return Text(
+                                    ' ${state.playlistSongsList.length} Songs',
+                                    style: const TextStyle(
+                                        color: Color(0xFFC87DFF),
+                                        fontSize: 15,
+                                        fontWeight: FontWeight.w500),
+                                  );
+                                },
                               ),
                             ],
                           ),
@@ -109,43 +122,35 @@ class PlaylistViewingScreen extends StatelessWidget {
                   padding: const EdgeInsets.all(15.0),
                   child: ListView(
                     children: [
-                      ValueListenableBuilder(
-                        valueListenable: playlistBox.listenable(),
-                        builder: (context, Box<List> value, Widget? child) {
-                          List<Songs> musicList = playlistBox
-                              .get(playlistName)!
-                              .reversed
-                              .toList()
-                              .cast<Songs>();
-                          return (musicList.isEmpty)
-                              ? Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Center(
-                                        child: Text(
-                                      'Add some songs to $playlistName ',
-                                      style: TextStyle(color: Colors.white),
-                                    )),
-                                  ],
+                      //Bloc Using from Here
+
+                      BlocBuilder<PlayListScreenBloc, PlayListScreenState>(
+                        builder: (context, state) {
+                          return (state.playlistSongsList.isEmpty)
+                              ? const Center(
+                                  child: Text(
+                                    'Add Your Fav Songs to Playlist',
+                                    style: TextStyle(color: Colors.white),
+                                  ),
                                 )
                               : ListView.builder(
-                                  itemCount: musicList.length,
+                                  itemCount: state.playlistSongsList.length,
                                   shrinkWrap: true,
-                                  physics: ScrollPhysics(),
+                                  physics: const ScrollPhysics(),
                                   itemBuilder: (context, index) {
                                     return SongTile(
                                       Index: index,
                                       audioPlayer: audioPlayer,
                                       //keys: keys,
                                       onpressed: () {},
-                                      audioList: musicList,
+                                      audioList: state.playlistSongsList,
                                       homeScreen: true,
                                       PlaylistName: playlistName,
                                     );
                                   },
                                 );
                         },
-                      ),
+                      )
                     ],
                   ),
                 ),

@@ -14,7 +14,7 @@ class PlaylistScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(0xFF3B1F50),
+      backgroundColor: const Color(0xFF3B1F50),
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.all(15.0),
@@ -24,7 +24,7 @@ class PlaylistScreen extends StatelessWidget {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text(
+                    const Text(
                       'Playlist',
                       style: TextStyle(
                           color: Colors.white,
@@ -35,7 +35,7 @@ class PlaylistScreen extends StatelessWidget {
                       onPressed: () {
                         playlistCreateAlertBox(context: context);
                       },
-                      icon: Icon(
+                      icon: const Icon(
                         Icons.add,
                         size: 40,
                         color: Colors.white,
@@ -43,7 +43,7 @@ class PlaylistScreen extends StatelessWidget {
                     ),
                   ],
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 15,
                 ),
                 Padding(
@@ -56,7 +56,7 @@ class PlaylistScreen extends StatelessWidget {
                       Keys.removeWhere((element) => element == 'RecentSongs');
                       Keys.removeWhere((element) => element == 'MostPlayed');
                       return (Keys.isEmpty)
-                          ? Center(
+                          ? const Center(
                               child: Text(
                                 'Save your music collections in playlist',
                                 style: TextStyle(color: Colors.white),
@@ -65,9 +65,9 @@ class PlaylistScreen extends StatelessWidget {
                           : GridView.builder(
                               itemCount: Keys.length,
                               shrinkWrap: true,
-                              physics: ScrollPhysics(),
+                              physics: const ScrollPhysics(),
                               gridDelegate:
-                                SliverGridDelegateWithFixedCrossAxisCount(
+                                  const SliverGridDelegateWithFixedCrossAxisCount(
                                 crossAxisCount: 2,
                                 mainAxisSpacing: 15,
                                 crossAxisSpacing: 15,
@@ -75,11 +75,11 @@ class PlaylistScreen extends StatelessWidget {
                               ),
                               itemBuilder: (context, index) {
                                 final String playlistName = Keys[index];
-                                final List<Songs> playlistSongList =
-                                    playlistBox
-                                        .get(playlistName)!.reversed
-                                        .toList()
-                                        .cast<Songs>();
+                                final List<Songs> playlistSongList = playlistBox
+                                    .get(playlistName)!
+                                    .reversed
+                                    .toList()
+                                    .cast<Songs>();
                                 final String playlistSongCount =
                                     playlistSongList.length.toString();
                                 return PlaylistGridTile(

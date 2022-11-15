@@ -16,14 +16,14 @@ class RecentlyPlayedScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(0xFF3B1F50),
+      backgroundColor: const Color(0xFF3B1F50),
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.all(15.0),
           child: Column(
             children: [
               Row(
-                children: [
+                children: const [
                   Text(
                     'Recently Played',
                     style: TextStyle(
@@ -33,7 +33,7 @@ class RecentlyPlayedScreen extends StatelessWidget {
                   ),
                 ],
               ),
-              SizedBox(
+              const SizedBox(
                 height: 10,
               ),
               Expanded(
@@ -52,7 +52,7 @@ class RecentlyPlayedScreen extends StatelessWidget {
                             .toList()
                             .cast<Songs>();
                         return (musicList.isEmpty)
-                            ? Center(
+                            ? const Center(
                                 child: Text(
                                 'Playsome Music with Nirvana',
                                 style: TextStyle(color: Colors.white),
@@ -60,7 +60,7 @@ class RecentlyPlayedScreen extends StatelessWidget {
                             : ListView.builder(
                                 itemCount: musicList.length,
                                 shrinkWrap: true,
-                                physics: ScrollPhysics(),
+                                physics: const ScrollPhysics(),
                                 itemBuilder: (context, index) {
                                   return SongTile(
                                     Index: index,

@@ -201,7 +201,7 @@ class _SongTileState extends State<SongTile> {
                                       ),
                                     );
                                   },
-                                  child: Text(
+                                  child: const Text(
                                     'ADD TO PLAYLIST',
                                     style: TextStyle(color: Colors.white),
                                   ),
@@ -221,7 +221,7 @@ class _SongTileState extends State<SongTile> {
                             },
                             child: Visibility(
                               visible: widget.homeScreen,
-                              child: Text('REMOVE',
+                              child: const Text('REMOVE',
                                   style: TextStyle(color: Colors.white)),
                             ),
                           ),
