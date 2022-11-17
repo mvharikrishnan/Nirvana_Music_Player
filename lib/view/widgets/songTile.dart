@@ -1,32 +1,30 @@
 import 'package:assets_audio_player/assets_audio_player.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-// import 'package:flutter/services.dart';
+
 import 'package:hive_flutter/adapters.dart';
 import 'package:nirvana/Functions/functionForAddingSongToPlaylist.dart';
-// import 'package:marquee/marquee.dart';
+
 import 'package:nirvana/Functions/likedSongs.dart';
 import 'package:nirvana/Functions/musicFunctions.dart';
 import 'package:nirvana/Functions/recentSongs.dart';
 import 'package:nirvana/controller/fav_screen/fav_screen_bloc.dart';
 import 'package:nirvana/model/songdb.dart';
 import 'package:nirvana/view/presentation/addPlaylist.dart';
-// import 'package:nirvana/screens/songPlayScreen.dart';
+
 import 'package:on_audio_query/on_audio_query.dart';
 
-class SongTile extends StatefulWidget {
+class SongTile extends StatelessWidget {
   SongTile({
     Key? key,
     required this.Index,
     required this.audioPlayer,
-    // required this.keys,
     required this.onpressed,
     required this.audioList,
     required this.homeScreen,
     required this.PlaylistName,
   }) : super(key: key);
 
-  //final dynamic keys;
   final int Index;
   final AssetsAudioPlayer audioPlayer;
   final void Function()? onpressed;
@@ -34,36 +32,27 @@ class SongTile extends StatefulWidget {
   final bool homeScreen;
   final String PlaylistName;
 
-  @override
-  State<SongTile> createState() => _SongTileState();
-}
-
-class _SongTileState extends State<SongTile> {
-  // final _audioQurey = new OnAudioQuery();
   final _audioPlayer = new AssetsAudioPlayer();
 
   Box<Songs> songBox = Hive.box<Songs>('Songs');
 
   List<Songs> songConvertedList = [];
 
-  // required this.SongTitle,
   @override
   Widget build(BuildContext context) {
+    WidgetsBinding.instance.addPostFrameCallback((_) {});
     final Height = MediaQuery.of(context).size.height;
     final Width = MediaQuery.of(context).size.width;
-    //convertSong();
+
     return GestureDetector(
       onTap: () async {
-        //Navigator.of(context).push(_createRoute());
-        // PlaySong(songConvertedList[Index].songPath);
-        // print(songConvertedList[Index].songTitle);
         recentSongsClass.addSongtoRecent(
-            context: context, ID: widget.audioList[widget.Index].songPath);
+            context: context, ID: audioList[Index].songPath);
         showMiniPlayer(
           context: context,
-          index: widget.Index,
-          songList: widget.audioList,
-          audioPlayer: widget.audioPlayer,
+          index: Index,
+          songList: audioList,
+          audioPlayer: audioPlayer,
         );
       },
       child: Container(
@@ -93,8 +82,7 @@ class _SongTileState extends State<SongTile> {
                           artworkFit: BoxFit.cover,
                           artworkBorder: BorderRadius.circular(8),
                           artworkHeight: 200.0,
-                          id: int.parse(
-                              widget.audioList[widget.Index].id.toString()),
+                          id: int.parse(audioList[Index].id.toString()),
                           type: ArtworkType.AUDIO,
                           nullArtworkWidget: Container(
                             decoration: BoxDecoration(
@@ -122,7 +110,7 @@ class _SongTileState extends State<SongTile> {
 
                                 //start here
                                 Text(
-                              widget.audioList[widget.Index].songTitle,
+                              audioList[Index].songTitle,
                               overflow: TextOverflow.ellipsis,
                               style: TextStyle(
                                 color: Colors.white,
@@ -136,7 +124,7 @@ class _SongTileState extends State<SongTile> {
                             width: Width * 0.4,
                             height: 20,
                             child: Text(
-                              widget.audioList[widget.Index].songArtist,
+                              audioList[Index].songArtist,
                               overflow: TextOverflow.ellipsis,
                               style: TextStyle(
                                 color: Color(0xFFD594EE),
@@ -151,29 +139,31 @@ class _SongTileState extends State<SongTile> {
                   ),
                   Row(
                     children: [
-                      IconButton(
-                        onPressed: () {
-                          PlaylistSongsClass.addSongToLiked(
-                              context: context,
-                              ID: widget.audioList[widget.Index].songPath);
-
-                          setState(() {
-                            PlaylistSongsClass.isLiked(
-                                ID: widget.audioList[widget.Index].songPath);
-                          });
+                      BlocBuilder<FavScreenBloc, FavScreenState>(
+                        builder: (context, state) {
+                          return IconButton(
+                            onPressed: () {
+                              PlaylistSongsClass.addSongToLiked(
+                                  context: context,
+                                  ID: audioList[Index].songPath);
+                              BlocProvider.of<FavScreenBloc>(context).add(
+                                  CurrentSongListInFAV(songList: audioList));
+                            },
+                            icon: Icon(
+                              // Icons.favorite,
+                              color: const Color(
+                                0xFFD594EE,
+                              ),
+                              state.songList
+                                      .where((song) =>
+                                          song.id == audioList[Index].id)
+                                      .isEmpty
+                                  ? Icons.favorite_border
+                                  : Icons.favorite,
+                            ),
+                          );
                         },
-                        icon: Icon(
-                          // Icons.favorite,
-                          color: Color(
-                            0xFFD594EE,
-                          ),
-                          PlaylistSongsClass.isLiked(
-                              ID: widget.audioList[widget.Index].songPath),
-                        ),
                       ),
-                      // SizedBox(
-                      //   width: 5,
-                      // ),
                       PopupMenuButton(
                         color: Color.fromARGB(250, 59, 31, 80),
                         shape: RoundedRectangleBorder(
@@ -192,11 +182,9 @@ class _SongTileState extends State<SongTile> {
                                     Navigator.of(context).push(
                                       MaterialPageRoute(
                                         builder: (ctx) => AddToPlaylist(
-                                          Index: widget
-                                              .audioList[widget.Index].songPath,
-                                          audioPlayer: widget.audioPlayer,
-                                          songList:
-                                              widget.audioList.cast<Audio>(),
+                                          Index: audioList[Index].songPath,
+                                          audioPlayer: audioPlayer,
+                                          songList: audioList.cast<Audio>(),
                                         ),
                                       ),
                                     );
@@ -210,17 +198,16 @@ class _SongTileState extends State<SongTile> {
                             ),
                           ),
                           PopupMenuItem(
-                            enabled: widget.homeScreen,
+                            enabled: homeScreen,
                             onTap: () {
                               SongsToPlaylistClass.DeleteSongFromPlaylist(
                                 context: context,
-                                ID: widget.audioList[widget.Index].id
-                                    .toString(),
-                                PlaylistName: widget.PlaylistName,
+                                ID: audioList[Index].id.toString(),
+                                PlaylistName: PlaylistName,
                               );
                             },
                             child: Visibility(
-                              visible: widget.homeScreen,
+                              visible: homeScreen,
                               child: const Text('REMOVE',
                                   style: TextStyle(color: Colors.white)),
                             ),

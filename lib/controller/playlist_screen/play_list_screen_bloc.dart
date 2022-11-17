@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:bloc/bloc.dart';
 import 'package:flutter/foundation.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
@@ -19,7 +21,35 @@ class PlayListScreenBloc
       emit(PlayListScreenState(
         PlayListName: event.PlaylistName,
         playlistSongsList: playlistSongsList,
+        PlaylistNames: state.PlaylistNames,
       ));
+    });
+
+    on<PlaylistNames>((event, emit) {
+      emit(PlayListScreenState(
+        PlayListName: state.PlayListName,
+        playlistSongsList: state.playlistSongsList,
+        PlaylistNames: PlaylistBox.keys.toList(),
+      ));
+    });
+
+    on<RenamePlaylist>((event, emit) async{
+      log('Entered to bloc');
+     
+      List<Songs> PlaylistSongs =
+          PlaylistBox.get(state.PlayListName)!.toList().cast();
+          log(state.PlayListName);
+      log('New Playlist Songs Fetched -- ${PlaylistSongs.length}');
+      PlaylistBox.put(event.newPlayListName, PlaylistSongs);
+      log('New SongsList Saved');
+      PlaylistBox.delete( event.oldPlayListName);
+     
+      emit(PlayListScreenState(
+        PlayListName: event.newPlayListName,
+        playlistSongsList: PlaylistSongs,
+        PlaylistNames: state.PlaylistNames,
+      ));
+      log('Exited From Bloc');
     });
   }
 }

@@ -1,8 +1,10 @@
 import 'package:assets_audio_player/assets_audio_player.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 // import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:nirvana/Functions/usingFunctions.dart';
+import 'package:nirvana/controller/playlist_screen/play_list_screen_bloc.dart';
 import 'package:nirvana/database/database_functions/dbFunctions.dart';
 import 'package:nirvana/model/songdb.dart';
 
@@ -10,8 +12,8 @@ import 'package:nirvana/view/widgets/addtoplaylistTile.dart';
 import 'package:nirvana/view/widgets/textFormField.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-class AddToPlaylist extends StatefulWidget {
-  const AddToPlaylist(
+class AddToPlaylist extends StatelessWidget {
+  AddToPlaylist(
       {Key? key,
       required this.Index,
       required this.audioPlayer,
@@ -20,31 +22,17 @@ class AddToPlaylist extends StatefulWidget {
   final String Index;
   final List<Audio> songList;
   final AssetsAudioPlayer audioPlayer;
-  @override
-  State<AddToPlaylist> createState() => _AddToPlaylistState();
-}
 
-class _AddToPlaylistState extends State<AddToPlaylist> {
   TextEditingController editingController = TextEditingController();
   Box<List> playlistBox = getPlaylistBox();
   List playlistcontent = [];
   List _foundedPlaylist = [];
-  
-  String proflieUserName='Guest';
-  getUserName()async{
-  final _sharedPrefs = await SharedPreferences.getInstance();
-  final String username = _sharedPrefs.getString('userNamekey').toString();
-  setState(() {
-    proflieUserName=username;
-  });
-  }
-  @override
-  void initState() {
-    // TODO: implement initState
-    playlistcontent = List.from(playlistBox.keys.toList());
-    _foundedPlaylist = playlistcontent;
-    getUserName();
-    super.initState();
+
+  String? proflieUserName;
+  getUserName(BuildContext context) async {
+    final _sharedPrefs = await SharedPreferences.getInstance();
+    final String username = _sharedPrefs.getString('userNamekey').toString();
+    proflieUserName = username;
   }
 
   void searchPlaylist(String enteredKeyword) {
@@ -60,13 +48,18 @@ class _AddToPlaylistState extends State<AddToPlaylist> {
           .toList()
           .cast();
     }
-    setState(() {
-      _foundedPlaylist = results;
-    });
+    // setState(() {
+    //   _foundedPlaylist = results;
+    // });
   }
 
   @override
   Widget build(BuildContext context) {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      BlocProvider.of<PlayListScreenBloc>(context).add(PlaylistNames());
+      getUserName(context);
+    });
+
     TextEditingController? playlistcontroler;
     return Scaffold(
       appBar: AppBar(
@@ -95,9 +88,9 @@ class _AddToPlaylistState extends State<AddToPlaylist> {
                       height: 42,
                       width: 145,
                       decoration: BoxDecoration(
-                          color: Color(0xFFD933C3),
+                          color: const Color(0xFFD933C3),
                           borderRadius: BorderRadius.circular(20)),
-                      child: Center(
+                      child: const Center(
                         child: Text(
                           'New Playlist',
                           style: TextStyle(
@@ -142,34 +135,65 @@ class _AddToPlaylistState extends State<AddToPlaylist> {
                   padding: const EdgeInsets.all(15.0),
                   child: ListView(
                     children: [
-                      ValueListenableBuilder(
-                        valueListenable: playlistBox.listenable(),
-                        builder: (context, Box<List> value, child) {
-                          _foundedPlaylist.removeWhere(
-                              (element) => element == 'MostPlayed');
-                          _foundedPlaylist.removeWhere(
-                              (element) => element == 'LikedSongs');
-                          _foundedPlaylist.removeWhere(
-                              (element) => element == 'RecentSongs');
-                          // String playlist = playlistcontent[]
+                      // ValueListenableBuilder(
+                      //   valueListenable: playlistBox.listenable(),
+                      //   builder: (context, Box<List> value, child) {
+                      //     _foundedPlaylist.removeWhere(
+                      //         (element) => element == 'MostPlayed');
+                      //     _foundedPlaylist.removeWhere(
+                      //         (element) => element == 'LikedSongs');
+                      //     _foundedPlaylist.removeWhere(
+                      //         (element) => element == 'RecentSongs');
+                      //     // String playlist = playlistcontent[]
+                      //     return (playlistBox.isEmpty)
+                      //         ? Center(
+                      //             child: Text(
+                      //             'No Playlist Found Please Create One',
+                      //             style: TextStyle(color: Colors.white),
+                      //           ))
+                      //         : ListView.builder(
+                      //             shrinkWrap: true,
+                      //             physics: ScrollPhysics(),
+                      //             itemCount: _foundedPlaylist.length,
+                      //             itemBuilder: (context, index) {
+                      //               return AddtoPlayListTILE(
+                      //                 proflieUserName,
+                      //                 ImagePathAddToProfile:
+                      //                     'assets/images/PlaylistImage3.jpg',
+                      //                 PlaylistTitle: _foundedPlaylist[index],
+                      //                 Index: Index,
+                      //                 audioPlayer: audioPlayer,
+                      //                 songList: [],
+                      //                 context: context,
+                      //               );
+                      //             },
+                      //           );
+                      //   },
+                      // ),
+
+                      // here BlocBuilder
+
+                      BlocBuilder<PlayListScreenBloc, PlayListScreenState>(
+                        builder: (context, state) {
+                          getUserName(context);
                           return (playlistBox.isEmpty)
-                              ? Center(
+                              ? const Center(
                                   child: Text(
                                   'No Playlist Found Please Create One',
                                   style: TextStyle(color: Colors.white),
                                 ))
                               : ListView.builder(
                                   shrinkWrap: true,
-                                  physics: ScrollPhysics(),
-                                  itemCount: _foundedPlaylist.length,
+                                  physics: const ScrollPhysics(),
+                                  itemCount: state.PlaylistNames.length,
                                   itemBuilder: (context, index) {
                                     return AddtoPlayListTILE(
-                                      proflieUserName,
+                                      proflieUserName ?? 'Guest',
                                       ImagePathAddToProfile:
                                           'assets/images/PlaylistImage3.jpg',
-                                      PlaylistTitle: _foundedPlaylist[index],
-                                      Index: widget.Index,
-                                      audioPlayer: widget.audioPlayer,
+                                      PlaylistTitle: state.PlaylistNames[index],
+                                      Index: Index,
+                                      audioPlayer: audioPlayer,
                                       songList: [],
                                       context: context,
                                     );

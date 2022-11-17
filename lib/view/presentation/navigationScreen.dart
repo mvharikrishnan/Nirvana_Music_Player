@@ -15,7 +15,7 @@ class Screen_Navigation extends StatefulWidget {
 
 class _Screen_NavigationState extends State<Screen_Navigation> {
   final List<Widget> _screens = <Widget>[
-    const HomeScreen(),
+     HomeScreen(),
     FavoriteScreen(),
     PlaylistScreen(),
     const ProfileScreen(),

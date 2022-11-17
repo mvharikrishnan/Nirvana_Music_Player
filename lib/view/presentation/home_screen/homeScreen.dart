@@ -1,19 +1,17 @@
 import 'package:assets_audio_player/assets_audio_player.dart';
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
-// import 'package:nirvana/database/database_functions/dbFunctions.dart';
+
 import 'package:nirvana/model/songdb.dart';
-// import 'package:nirvana/screens/profieScreen.dart';
+
 import 'package:nirvana/view/presentation/recently_screen/recentlyPlayedScreen.dart';
-// import 'package:nirvana/widgets/miniMusicPlayer.dart';
+
 import 'package:nirvana/view/widgets/playlistTileHomeScreen.dart';
 import 'package:nirvana/view/widgets/songTile.dart';
 
 import 'package:nirvana/view/widgets/textFormField.dart';
 import 'package:on_audio_query/on_audio_query.dart';
-// import 'package:permission_handler/permission_handler.dart';
 
-// ignore_for_file: prefer_const_constructors
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
 
@@ -30,16 +28,13 @@ class _HomeScreenState extends State<HomeScreen> {
 
   List<Songs> audioList = [];
   List<Songs> _foundSongs = [];
-  @override
-  void initState() {
-    // TODO: implement initState
+
+  void initFunction() {
     final List<int> Keys = songBox.keys.toList().cast<int>();
     for (var key in Keys) {
       audioList.add(songBox.get(key)!);
     }
     _foundSongs = audioList;
-    super.initState();
-    //requestPermission();
   }
 
   //accessig the songBOx
@@ -63,6 +58,7 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     //var songSearchController;
+    initFunction();
     return Scaffold(
       backgroundColor: Color(0xFF3B1F50),
       body: SafeArea(

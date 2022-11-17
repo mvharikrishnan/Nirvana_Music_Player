@@ -16,42 +16,52 @@ final _privateConstructorUsedError = UnsupportedError(
 
 /// @nodoc
 mixin _$PlayListScreenEvent {
-  String get PlaylistName => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function(String PlaylistName) currentSongsList,
+    required TResult Function() playlistNames,
+    required TResult Function(String newPlayListName, String oldPlayListName)
+        renamePlaylist,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function(String PlaylistName)? currentSongsList,
+    TResult? Function()? playlistNames,
+    TResult? Function(String newPlayListName, String oldPlayListName)?
+        renamePlaylist,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(String PlaylistName)? currentSongsList,
+    TResult Function()? playlistNames,
+    TResult Function(String newPlayListName, String oldPlayListName)?
+        renamePlaylist,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(CurrentSongsList value) currentSongsList,
+    required TResult Function(PlaylistNames value) playlistNames,
+    required TResult Function(RenamePlaylist value) renamePlaylist,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(CurrentSongsList value)? currentSongsList,
+    TResult? Function(PlaylistNames value)? playlistNames,
+    TResult? Function(RenamePlaylist value)? renamePlaylist,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(CurrentSongsList value)? currentSongsList,
+    TResult Function(PlaylistNames value)? playlistNames,
+    TResult Function(RenamePlaylist value)? renamePlaylist,
     required TResult orElse(),
   }) =>
-      throw _privateConstructorUsedError;
-
-  @JsonKey(ignore: true)
-  $PlayListScreenEventCopyWith<PlayListScreenEvent> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
@@ -60,8 +70,6 @@ abstract class $PlayListScreenEventCopyWith<$Res> {
   factory $PlayListScreenEventCopyWith(
           PlayListScreenEvent value, $Res Function(PlayListScreenEvent) then) =
       _$PlayListScreenEventCopyWithImpl<$Res, PlayListScreenEvent>;
-  @useResult
-  $Res call({String PlaylistName});
 }
 
 /// @nodoc
@@ -73,28 +81,13 @@ class _$PlayListScreenEventCopyWithImpl<$Res, $Val extends PlayListScreenEvent>
   final $Val _value;
   // ignore: unused_field
   final $Res Function($Val) _then;
-
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? PlaylistName = null,
-  }) {
-    return _then(_value.copyWith(
-      PlaylistName: null == PlaylistName
-          ? _value.PlaylistName
-          : PlaylistName // ignore: cast_nullable_to_non_nullable
-              as String,
-    ) as $Val);
-  }
 }
 
 /// @nodoc
-abstract class _$$CurrentSongsListCopyWith<$Res>
-    implements $PlayListScreenEventCopyWith<$Res> {
+abstract class _$$CurrentSongsListCopyWith<$Res> {
   factory _$$CurrentSongsListCopyWith(
           _$CurrentSongsList value, $Res Function(_$CurrentSongsList) then) =
       __$$CurrentSongsListCopyWithImpl<$Res>;
-  @override
   @useResult
   $Res call({String PlaylistName});
 }
@@ -166,6 +159,9 @@ class _$CurrentSongsList
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function(String PlaylistName) currentSongsList,
+    required TResult Function() playlistNames,
+    required TResult Function(String newPlayListName, String oldPlayListName)
+        renamePlaylist,
   }) {
     return currentSongsList(PlaylistName);
   }
@@ -174,6 +170,9 @@ class _$CurrentSongsList
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function(String PlaylistName)? currentSongsList,
+    TResult? Function()? playlistNames,
+    TResult? Function(String newPlayListName, String oldPlayListName)?
+        renamePlaylist,
   }) {
     return currentSongsList?.call(PlaylistName);
   }
@@ -182,6 +181,9 @@ class _$CurrentSongsList
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(String PlaylistName)? currentSongsList,
+    TResult Function()? playlistNames,
+    TResult Function(String newPlayListName, String oldPlayListName)?
+        renamePlaylist,
     required TResult orElse(),
   }) {
     if (currentSongsList != null) {
@@ -194,6 +196,8 @@ class _$CurrentSongsList
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(CurrentSongsList value) currentSongsList,
+    required TResult Function(PlaylistNames value) playlistNames,
+    required TResult Function(RenamePlaylist value) renamePlaylist,
   }) {
     return currentSongsList(this);
   }
@@ -202,6 +206,8 @@ class _$CurrentSongsList
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(CurrentSongsList value)? currentSongsList,
+    TResult? Function(PlaylistNames value)? playlistNames,
+    TResult? Function(RenamePlaylist value)? renamePlaylist,
   }) {
     return currentSongsList?.call(this);
   }
@@ -210,6 +216,8 @@ class _$CurrentSongsList
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(CurrentSongsList value)? currentSongsList,
+    TResult Function(PlaylistNames value)? playlistNames,
+    TResult Function(RenamePlaylist value)? renamePlaylist,
     required TResult orElse(),
   }) {
     if (currentSongsList != null) {
@@ -223,11 +231,293 @@ abstract class CurrentSongsList implements PlayListScreenEvent {
   const factory CurrentSongsList({required final String PlaylistName}) =
       _$CurrentSongsList;
 
-  @override
   String get PlaylistName;
-  @override
   @JsonKey(ignore: true)
   _$$CurrentSongsListCopyWith<_$CurrentSongsList> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$$PlaylistNamesCopyWith<$Res> {
+  factory _$$PlaylistNamesCopyWith(
+          _$PlaylistNames value, $Res Function(_$PlaylistNames) then) =
+      __$$PlaylistNamesCopyWithImpl<$Res>;
+}
+
+/// @nodoc
+class __$$PlaylistNamesCopyWithImpl<$Res>
+    extends _$PlayListScreenEventCopyWithImpl<$Res, _$PlaylistNames>
+    implements _$$PlaylistNamesCopyWith<$Res> {
+  __$$PlaylistNamesCopyWithImpl(
+      _$PlaylistNames _value, $Res Function(_$PlaylistNames) _then)
+      : super(_value, _then);
+}
+
+/// @nodoc
+
+class _$PlaylistNames with DiagnosticableTreeMixin implements PlaylistNames {
+  const _$PlaylistNames();
+
+  @override
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+    return 'PlayListScreenEvent.playlistNames()';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties
+        .add(DiagnosticsProperty('type', 'PlayListScreenEvent.playlistNames'));
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType && other is _$PlaylistNames);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function(String PlaylistName) currentSongsList,
+    required TResult Function() playlistNames,
+    required TResult Function(String newPlayListName, String oldPlayListName)
+        renamePlaylist,
+  }) {
+    return playlistNames();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function(String PlaylistName)? currentSongsList,
+    TResult? Function()? playlistNames,
+    TResult? Function(String newPlayListName, String oldPlayListName)?
+        renamePlaylist,
+  }) {
+    return playlistNames?.call();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(String PlaylistName)? currentSongsList,
+    TResult Function()? playlistNames,
+    TResult Function(String newPlayListName, String oldPlayListName)?
+        renamePlaylist,
+    required TResult orElse(),
+  }) {
+    if (playlistNames != null) {
+      return playlistNames();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(CurrentSongsList value) currentSongsList,
+    required TResult Function(PlaylistNames value) playlistNames,
+    required TResult Function(RenamePlaylist value) renamePlaylist,
+  }) {
+    return playlistNames(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(CurrentSongsList value)? currentSongsList,
+    TResult? Function(PlaylistNames value)? playlistNames,
+    TResult? Function(RenamePlaylist value)? renamePlaylist,
+  }) {
+    return playlistNames?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(CurrentSongsList value)? currentSongsList,
+    TResult Function(PlaylistNames value)? playlistNames,
+    TResult Function(RenamePlaylist value)? renamePlaylist,
+    required TResult orElse(),
+  }) {
+    if (playlistNames != null) {
+      return playlistNames(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class PlaylistNames implements PlayListScreenEvent {
+  const factory PlaylistNames() = _$PlaylistNames;
+}
+
+/// @nodoc
+abstract class _$$RenamePlaylistCopyWith<$Res> {
+  factory _$$RenamePlaylistCopyWith(
+          _$RenamePlaylist value, $Res Function(_$RenamePlaylist) then) =
+      __$$RenamePlaylistCopyWithImpl<$Res>;
+  @useResult
+  $Res call({String newPlayListName, String oldPlayListName});
+}
+
+/// @nodoc
+class __$$RenamePlaylistCopyWithImpl<$Res>
+    extends _$PlayListScreenEventCopyWithImpl<$Res, _$RenamePlaylist>
+    implements _$$RenamePlaylistCopyWith<$Res> {
+  __$$RenamePlaylistCopyWithImpl(
+      _$RenamePlaylist _value, $Res Function(_$RenamePlaylist) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? newPlayListName = null,
+    Object? oldPlayListName = null,
+  }) {
+    return _then(_$RenamePlaylist(
+      newPlayListName: null == newPlayListName
+          ? _value.newPlayListName
+          : newPlayListName // ignore: cast_nullable_to_non_nullable
+              as String,
+      oldPlayListName: null == oldPlayListName
+          ? _value.oldPlayListName
+          : oldPlayListName // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$RenamePlaylist with DiagnosticableTreeMixin implements RenamePlaylist {
+  const _$RenamePlaylist(
+      {required this.newPlayListName, required this.oldPlayListName});
+
+  @override
+  final String newPlayListName;
+  @override
+  final String oldPlayListName;
+
+  @override
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+    return 'PlayListScreenEvent.renamePlaylist(newPlayListName: $newPlayListName, oldPlayListName: $oldPlayListName)';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties
+      ..add(DiagnosticsProperty('type', 'PlayListScreenEvent.renamePlaylist'))
+      ..add(DiagnosticsProperty('newPlayListName', newPlayListName))
+      ..add(DiagnosticsProperty('oldPlayListName', oldPlayListName));
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$RenamePlaylist &&
+            (identical(other.newPlayListName, newPlayListName) ||
+                other.newPlayListName == newPlayListName) &&
+            (identical(other.oldPlayListName, oldPlayListName) ||
+                other.oldPlayListName == oldPlayListName));
+  }
+
+  @override
+  int get hashCode =>
+      Object.hash(runtimeType, newPlayListName, oldPlayListName);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$RenamePlaylistCopyWith<_$RenamePlaylist> get copyWith =>
+      __$$RenamePlaylistCopyWithImpl<_$RenamePlaylist>(this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function(String PlaylistName) currentSongsList,
+    required TResult Function() playlistNames,
+    required TResult Function(String newPlayListName, String oldPlayListName)
+        renamePlaylist,
+  }) {
+    return renamePlaylist(newPlayListName, oldPlayListName);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function(String PlaylistName)? currentSongsList,
+    TResult? Function()? playlistNames,
+    TResult? Function(String newPlayListName, String oldPlayListName)?
+        renamePlaylist,
+  }) {
+    return renamePlaylist?.call(newPlayListName, oldPlayListName);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(String PlaylistName)? currentSongsList,
+    TResult Function()? playlistNames,
+    TResult Function(String newPlayListName, String oldPlayListName)?
+        renamePlaylist,
+    required TResult orElse(),
+  }) {
+    if (renamePlaylist != null) {
+      return renamePlaylist(newPlayListName, oldPlayListName);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(CurrentSongsList value) currentSongsList,
+    required TResult Function(PlaylistNames value) playlistNames,
+    required TResult Function(RenamePlaylist value) renamePlaylist,
+  }) {
+    return renamePlaylist(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(CurrentSongsList value)? currentSongsList,
+    TResult? Function(PlaylistNames value)? playlistNames,
+    TResult? Function(RenamePlaylist value)? renamePlaylist,
+  }) {
+    return renamePlaylist?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(CurrentSongsList value)? currentSongsList,
+    TResult Function(PlaylistNames value)? playlistNames,
+    TResult Function(RenamePlaylist value)? renamePlaylist,
+    required TResult orElse(),
+  }) {
+    if (renamePlaylist != null) {
+      return renamePlaylist(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class RenamePlaylist implements PlayListScreenEvent {
+  const factory RenamePlaylist(
+      {required final String newPlayListName,
+      required final String oldPlayListName}) = _$RenamePlaylist;
+
+  String get newPlayListName;
+  String get oldPlayListName;
+  @JsonKey(ignore: true)
+  _$$RenamePlaylistCopyWith<_$RenamePlaylist> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
@@ -235,6 +525,7 @@ abstract class CurrentSongsList implements PlayListScreenEvent {
 mixin _$PlayListScreenState {
   String get PlayListName => throw _privateConstructorUsedError;
   List<Songs> get playlistSongsList => throw _privateConstructorUsedError;
+  List<dynamic> get PlaylistNames => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $PlayListScreenStateCopyWith<PlayListScreenState> get copyWith =>
@@ -247,7 +538,10 @@ abstract class $PlayListScreenStateCopyWith<$Res> {
           PlayListScreenState value, $Res Function(PlayListScreenState) then) =
       _$PlayListScreenStateCopyWithImpl<$Res, PlayListScreenState>;
   @useResult
-  $Res call({String PlayListName, List<Songs> playlistSongsList});
+  $Res call(
+      {String PlayListName,
+      List<Songs> playlistSongsList,
+      List<dynamic> PlaylistNames});
 }
 
 /// @nodoc
@@ -265,6 +559,7 @@ class _$PlayListScreenStateCopyWithImpl<$Res, $Val extends PlayListScreenState>
   $Res call({
     Object? PlayListName = null,
     Object? playlistSongsList = null,
+    Object? PlaylistNames = null,
   }) {
     return _then(_value.copyWith(
       PlayListName: null == PlayListName
@@ -275,6 +570,10 @@ class _$PlayListScreenStateCopyWithImpl<$Res, $Val extends PlayListScreenState>
           ? _value.playlistSongsList
           : playlistSongsList // ignore: cast_nullable_to_non_nullable
               as List<Songs>,
+      PlaylistNames: null == PlaylistNames
+          ? _value.PlaylistNames
+          : PlaylistNames // ignore: cast_nullable_to_non_nullable
+              as List<dynamic>,
     ) as $Val);
   }
 }
@@ -287,7 +586,10 @@ abstract class _$$_PlayListScreenStateCopyWith<$Res>
       __$$_PlayListScreenStateCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String PlayListName, List<Songs> playlistSongsList});
+  $Res call(
+      {String PlayListName,
+      List<Songs> playlistSongsList,
+      List<dynamic> PlaylistNames});
 }
 
 /// @nodoc
@@ -303,6 +605,7 @@ class __$$_PlayListScreenStateCopyWithImpl<$Res>
   $Res call({
     Object? PlayListName = null,
     Object? playlistSongsList = null,
+    Object? PlaylistNames = null,
   }) {
     return _then(_$_PlayListScreenState(
       PlayListName: null == PlayListName
@@ -313,6 +616,10 @@ class __$$_PlayListScreenStateCopyWithImpl<$Res>
           ? _value._playlistSongsList
           : playlistSongsList // ignore: cast_nullable_to_non_nullable
               as List<Songs>,
+      PlaylistNames: null == PlaylistNames
+          ? _value._PlaylistNames
+          : PlaylistNames // ignore: cast_nullable_to_non_nullable
+              as List<dynamic>,
     ));
   }
 }
@@ -324,8 +631,10 @@ class _$_PlayListScreenState
     implements _PlayListScreenState {
   const _$_PlayListScreenState(
       {required this.PlayListName,
-      required final List<Songs> playlistSongsList})
-      : _playlistSongsList = playlistSongsList;
+      required final List<Songs> playlistSongsList,
+      required final List<dynamic> PlaylistNames})
+      : _playlistSongsList = playlistSongsList,
+        _PlaylistNames = PlaylistNames;
 
   @override
   final String PlayListName;
@@ -336,9 +645,16 @@ class _$_PlayListScreenState
     return EqualUnmodifiableListView(_playlistSongsList);
   }
 
+  final List<dynamic> _PlaylistNames;
+  @override
+  List<dynamic> get PlaylistNames {
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_PlaylistNames);
+  }
+
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'PlayListScreenState(PlayListName: $PlayListName, playlistSongsList: $playlistSongsList)';
+    return 'PlayListScreenState(PlayListName: $PlayListName, playlistSongsList: $playlistSongsList, PlaylistNames: $PlaylistNames)';
   }
 
   @override
@@ -347,7 +663,8 @@ class _$_PlayListScreenState
     properties
       ..add(DiagnosticsProperty('type', 'PlayListScreenState'))
       ..add(DiagnosticsProperty('PlayListName', PlayListName))
-      ..add(DiagnosticsProperty('playlistSongsList', playlistSongsList));
+      ..add(DiagnosticsProperty('playlistSongsList', playlistSongsList))
+      ..add(DiagnosticsProperty('PlaylistNames', PlaylistNames));
   }
 
   @override
@@ -358,12 +675,17 @@ class _$_PlayListScreenState
             (identical(other.PlayListName, PlayListName) ||
                 other.PlayListName == PlayListName) &&
             const DeepCollectionEquality()
-                .equals(other._playlistSongsList, _playlistSongsList));
+                .equals(other._playlistSongsList, _playlistSongsList) &&
+            const DeepCollectionEquality()
+                .equals(other._PlaylistNames, _PlaylistNames));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, PlayListName,
-      const DeepCollectionEquality().hash(_playlistSongsList));
+  int get hashCode => Object.hash(
+      runtimeType,
+      PlayListName,
+      const DeepCollectionEquality().hash(_playlistSongsList),
+      const DeepCollectionEquality().hash(_PlaylistNames));
 
   @JsonKey(ignore: true)
   @override
@@ -376,12 +698,15 @@ class _$_PlayListScreenState
 abstract class _PlayListScreenState implements PlayListScreenState {
   const factory _PlayListScreenState(
       {required final String PlayListName,
-      required final List<Songs> playlistSongsList}) = _$_PlayListScreenState;
+      required final List<Songs> playlistSongsList,
+      required final List<dynamic> PlaylistNames}) = _$_PlayListScreenState;
 
   @override
   String get PlayListName;
   @override
   List<Songs> get playlistSongsList;
+  @override
+  List<dynamic> get PlaylistNames;
   @override
   @JsonKey(ignore: true)
   _$$_PlayListScreenStateCopyWith<_$_PlayListScreenState> get copyWith =>

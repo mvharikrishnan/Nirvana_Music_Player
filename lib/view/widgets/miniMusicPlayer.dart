@@ -11,22 +11,11 @@ import 'package:on_audio_query/on_audio_query.dart';
 class MiniMusicPlayer extends StatefulWidget {
   const MiniMusicPlayer(
       {Key? key,
-      // required this.miniSongTitle,
-      // required this.miniSongAuther,
-      // required this.miniImagePath,
-      // required this.miniSongStart,
-      // required this.miniSongEnd,
-      // required this.miniSongURI,
       required this.audioPlayer,
       required this.index,
       required this.songList})
       : super(key: key);
-  // final String miniImagePath;
-  // final String miniSongTitle;
-  // final String miniSongAuther;
-  // final String miniSongEnd;
-  // final String miniSongStart;
-  // final String miniSongURI;
+
   final List<Songs> songList;
   final int index;
   final AssetsAudioPlayer audioPlayer;

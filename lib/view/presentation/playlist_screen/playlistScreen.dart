@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 // import 'package:flutter/src/foundation/key.dart';
 // import 'package:flutter/src/widgets/framework.dart';
 // import 'package:hive_flutter.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:nirvana/Functions/usingFunctions.dart';
+import 'package:nirvana/controller/playlist_screen/play_list_screen_bloc.dart';
 import 'package:nirvana/database/database_functions/dbFunctions.dart';
 import 'package:nirvana/model/songdb.dart';
 import 'package:nirvana/view/widgets/playlistGridTile.dart';
@@ -13,6 +15,9 @@ class PlaylistScreen extends StatelessWidget {
   Box<List> playlistBox = getPlaylistBox();
   @override
   Widget build(BuildContext context) {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      BlocProvider.of<PlayListScreenBloc>(context).add(PlaylistNames());
+    });
     return Scaffold(
       backgroundColor: const Color(0xFF3B1F50),
       body: SafeArea(
@@ -48,10 +53,9 @@ class PlaylistScreen extends StatelessWidget {
                 ),
                 Padding(
                   padding: const EdgeInsets.all(8.0),
-                  child: ValueListenableBuilder(
-                    valueListenable: playlistBox.listenable(),
-                    builder: (context, value, child) {
-                      List Keys = playlistBox.keys.toList();
+                  child: BlocBuilder<PlayListScreenBloc, PlayListScreenState>(
+                    builder: (context, state) {
+                      List Keys = state.PlaylistNames.toList();
                       Keys.removeWhere((element) => element == 'LikedSongs');
                       Keys.removeWhere((element) => element == 'RecentSongs');
                       Keys.removeWhere((element) => element == 'MostPlayed');

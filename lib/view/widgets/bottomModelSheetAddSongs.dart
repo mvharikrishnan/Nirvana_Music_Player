@@ -23,7 +23,7 @@ class BottomModelSheet {
     // List<Songs> ToBeAddedSongs = [];
     showModalBottomSheet(
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-      backgroundColor: Color.fromARGB(255, 51, 3, 58),
+      backgroundColor: const Color.fromARGB(255, 51, 3, 58),
       context: context,
       builder: (context) {
         return BlocBuilder<PlayListScreenBloc, PlayListScreenState>(
@@ -33,7 +33,7 @@ class BottomModelSheet {
               itemBuilder: (context, index) {
                 return ListTile(
                   leading: Container(
-                    margin: EdgeInsets.only(left: 10),
+                    margin: const EdgeInsets.only(left: 10),
                     height: 40,
                     width: 40,
                     child: QueryArtworkWidget(
@@ -45,7 +45,7 @@ class BottomModelSheet {
                       nullArtworkWidget: Container(
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(8),
-                          image: DecorationImage(
+                          image: const DecorationImage(
                             fit: BoxFit.cover,
                             image:
                                 AssetImage('assets/images/songTileDummy.jpg'),
@@ -57,7 +57,7 @@ class BottomModelSheet {
                   title: Text(
                     audioList[index].songTitle,
                     overflow: TextOverflow.ellipsis,
-                    style: TextStyle(
+                    style: const TextStyle(
                       color: Colors.white,
                       fontSize: 15,
                       fontWeight: FontWeight.w500,

@@ -1,6 +1,11 @@
 // import 'package:flutter/cupertino.dart';
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hive/hive.dart';
+
+import 'package:nirvana/controller/playlist_screen/play_list_screen_bloc.dart';
 import 'package:nirvana/database/database_functions/dbFunctions.dart';
 import 'package:nirvana/model/songdb.dart';
 import 'package:nirvana/view/widgets/searching.dart';
@@ -17,6 +22,7 @@ playlistCreateAlertBox({required BuildContext context}) {
     } else {
       await playlistBox.put(playlistName, songList);
     }
+     
   }
 
   return showDialog(
@@ -64,8 +70,10 @@ playlistCreateAlertBox({required BuildContext context}) {
                     await createNewPlaylist();
                     Navigator.pop(context);
                   }
+                  BlocProvider.of<PlayListScreenBloc>(context)
+                      .add(const PlaylistNames());
                 },
-                child: Text(
+                child: const Text(
                   'Confirm',
                   style: TextStyle(color: Colors.green),
                 )),
@@ -106,6 +114,8 @@ PlaylistDeleteFuntion(
             onPressed: () {
               //function to delete playlist
               deletePlaylist(PlaylistName: Playlistname);
+              BlocProvider.of<PlayListScreenBloc>(context)
+                  .add(const PlaylistNames());
             },
             child: Text('Confirm'),
             style: ButtonStyle(
@@ -125,14 +135,16 @@ PlaylistEditFunction(
   TextEditingController editcontroller = TextEditingController()
     ..text = playlistName;
   Box<List> playlistBox = getPlaylistBox();
-  Future editPlaylist(
-      {required String playlistName,
-      required List<Songs> playlistSongList,
-      required String oldPlaylistName}) async {
-    playlistBox.put(playlistName, playlistSongList);
-    playlistBox.delete(oldPlaylistName);
-    Navigator.pop(context);
-  }
+  // Future editPlaylist(
+  //     {required String playlistName,
+  //     required List<Songs> playlistSongList,
+  //     required String oldPlaylistName}) async {
+  //   BlocProvider.of<PlayListScreenBloc>(context).add(RenamePlaylist(
+  //     newPlayListName: playlistName,
+  //     oldPlayListName: oldPlaylistName,
+  //   ));
+
+  // }
 
   return showDialog(
     context: context,
@@ -146,7 +158,7 @@ PlaylistEditFunction(
           textInputAction: TextInputAction.done,
           decoration: InputDecoration(
             border: OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
-            prefixIcon: Icon(
+            prefixIcon: const Icon(
               Icons.edit,
               size: 25,
             ),
@@ -164,11 +176,13 @@ PlaylistEditFunction(
           ),
           ElevatedButton(
             onPressed: () {
-              //function to delete playlist
-              editPlaylist(
-                  playlistName: editcontroller.text.trim(),
-                  playlistSongList: songs,
-                  oldPlaylistName: playlistName);
+              BlocProvider.of<PlayListScreenBloc>(context).add(RenamePlaylist(
+                newPlayListName: editcontroller.text.trim(),
+                oldPlayListName: playlistName,
+              ));
+              log(editcontroller.text);
+
+              BlocProvider.of<PlayListScreenBloc>(context).add(PlaylistNames());
             },
             child: Text('Confirm'),
             style: ButtonStyle(
