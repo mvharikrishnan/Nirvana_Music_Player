@@ -6,6 +6,7 @@ import 'package:nirvana/controller/fav_screen/fav_screen_bloc.dart';
 
 import 'package:nirvana/controller/home_screen/home_screen_bloc.dart';
 import 'package:nirvana/controller/playlist_screen/play_list_screen_bloc.dart';
+import 'package:nirvana/controller/profile_screen/profile_screen_bloc.dart';
 import 'package:nirvana/model/songdb.dart';
 import 'package:nirvana/view/presentation/introduction_screen/introScreen.dart';
 // import 'package:nirvana/screens/homeScreen.dart';
@@ -39,7 +40,10 @@ class MyApp extends StatelessWidget {
         ),
         BlocProvider(
           create: (context) => PlayListScreenBloc(),
-        )
+        ),
+         BlocProvider(
+          create: (context) => ProfileScreenBloc(),
+        ),
       ],
       child: const MaterialApp(
         debugShowCheckedModeBanner: false,

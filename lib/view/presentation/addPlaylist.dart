@@ -1,16 +1,15 @@
 import 'package:assets_audio_player/assets_audio_player.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-// import 'package:hive/hive.dart';
+
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:nirvana/Functions/usingFunctions.dart';
 import 'package:nirvana/controller/playlist_screen/play_list_screen_bloc.dart';
 import 'package:nirvana/database/database_functions/dbFunctions.dart';
-import 'package:nirvana/model/songdb.dart';
+
+import 'package:nirvana/view/presentation/settings_screen/constants.dart';
 
 import 'package:nirvana/view/widgets/addtoplaylistTile.dart';
-import 'package:nirvana/view/widgets/textFormField.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class AddToPlaylist extends StatelessWidget {
   AddToPlaylist(
@@ -29,11 +28,6 @@ class AddToPlaylist extends StatelessWidget {
   List _foundedPlaylist = [];
 
   String? proflieUserName;
-  getUserName(BuildContext context) async {
-    final _sharedPrefs = await SharedPreferences.getInstance();
-    final String username = _sharedPrefs.getString('userNamekey').toString();
-    proflieUserName = username;
-  }
 
   void searchPlaylist(String enteredKeyword) {
     List results = [];
@@ -57,7 +51,6 @@ class AddToPlaylist extends StatelessWidget {
   Widget build(BuildContext context) {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       BlocProvider.of<PlayListScreenBloc>(context).add(PlaylistNames());
-      getUserName(context);
     });
 
     TextEditingController? playlistcontroler;
@@ -123,7 +116,7 @@ class AddToPlaylist extends StatelessWidget {
                       borderRadius: BorderRadius.circular(20)),
                   fillColor: Color.fromARGB(99, 201, 125, 255),
                   filled: true,
-                  prefixIcon: Icon(
+                  prefixIcon: const Icon(
                     Icons.search,
                     color: Colors.white,
                   ),
@@ -175,7 +168,6 @@ class AddToPlaylist extends StatelessWidget {
 
                       BlocBuilder<PlayListScreenBloc, PlayListScreenState>(
                         builder: (context, state) {
-                          getUserName(context);
                           return (playlistBox.isEmpty)
                               ? const Center(
                                   child: Text(
@@ -188,7 +180,7 @@ class AddToPlaylist extends StatelessWidget {
                                   itemCount: state.PlaylistNames.length,
                                   itemBuilder: (context, index) {
                                     return AddtoPlayListTILE(
-                                      proflieUserName ?? 'Guest',
+                                      OldUserName ?? 'Guest',
                                       ImagePathAddToProfile:
                                           'assets/images/PlaylistImage3.jpg',
                                       PlaylistTitle: state.PlaylistNames[index],

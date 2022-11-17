@@ -1,66 +1,60 @@
 import 'package:assets_audio_player/assets_audio_player.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_launcher_icons/xml_templates.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:nirvana/controller/profile_screen/profile_screen_bloc.dart';
+
 import 'package:nirvana/view/presentation/Privacy%20Policies/termsAndConditions.dart';
 import 'package:nirvana/view/presentation/privacyScreen.dart';
-// import 'package:flutter/src/foundation/key.dart';
-// import 'package:flutter/src/widgets/framework.dart';
-import 'package:nirvana/view/presentation/settings_screen/settingsScreen.dart';
-import 'package:nirvana/view/widgets/profileScreenPlaylistTIle.dart';
+import 'package:nirvana/view/presentation/settings_screen/constants.dart';
+
 import 'package:shared_preferences/shared_preferences.dart';
 
-class ProfileScreen extends StatefulWidget {
-  const ProfileScreen({Key? key}) : super(key: key);
+class ProfileScreen extends StatelessWidget {
+  ProfileScreen({Key? key}) : super(key: key);
 
-  @override
-  State<ProfileScreen> createState() => _ProfileScreenState();
-}
-
-class _ProfileScreenState extends State<ProfileScreen> {
   AssetsAudioPlayer audioPlayer = AssetsAudioPlayer();
-  String oldNameStored = 'Enter Your Name';
-  bool showNotification = true;
-  String? ProfileNameUser;
-  getUnsernaemFromSP() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    final String Username = prefs.getString('userNamekey').toString();
+  // String oldNameStored = 'Enter Your Name';
 
-    setState(() {
-      ProfileNameUser = Username;
-      oldNameStored = prefs.getString('userNamekey').toString();
-    });
-    if (ProfileNameUser == null) {
-      ProfileNameUser = 'Guest';
-    } else {
-      setState(() {
-        ProfileNameUser = Username;
-      });
-    }
-  }
+  // getUnsernaemFromSP() async {
+  //   SharedPreferences prefs = await SharedPreferences.getInstance();
+  //   final String Username = prefs.getString('userNamekey').toString();
+
+  // setState(() {
+  //   ProfileNameUser = Username;
+  //   oldNameStored = prefs.getString('userNamekey').toString();
+  // });
+  // if (ProfileNameUser == null) {
+  //   ProfileNameUser = 'Guest';
+  // } else {
+  //   setState(() {
+  //     ProfileNameUser = Username;
+  //   });
+  // }
+  // }
 
 //switch
-  bool isSwitched = true;
-  void toogleSwitch(bool value) {
-    if (isSwitched == false) {
-      //notification function to set the notification true
-      setState(() {
-        isSwitched = true;
-        //audioPlayer.open(showNotification: showNotification);
-      });
-    } else {
-      //notification function to set the notification false
-      setState(() {
-        isSwitched = false;
-      });
-    }
-  }
+  // bool isSwitched = true;
+  // void toogleSwitch(bool value) {
+  //   if (isSwitched == false) {
+  //     //notification function to set the notification true
+  //     setState(() {
+  //       isSwitched = true;
+  //       //audioPlayer.open(showNotification: showNotification);
+  //     });
+  //   } else {
+  //     //notification function to set the notification false
+  //     setState(() {
+  //       isSwitched = false;
+  //     });
+  //   }
+  // }
 
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-    getUnsernaemFromSP();
-  }
+  // @override
+  // void initState() {
+  //   // TODO: implement initState
+  //   super.initState();
+  //   getUnsernaemFromSP();
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -85,12 +79,16 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           fontSize: 32,
                           fontWeight: FontWeight.bold),
                     ),
-                    Text(
-                      ProfileNameUser ?? 'Guest',
-                      style: TextStyle(
-                          fontSize: 38,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.white),
+                    BlocBuilder<ProfileScreenBloc, ProfileScreenState>(
+                      builder: (context, state) {
+                        return Text(
+                          state.ProfileUserName,
+                          style: TextStyle(
+                              fontSize: 38,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.white),
+                        );
+                      },
                     ),
                     SizedBox(
                       height: 12,
@@ -209,10 +207,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                   actions: [
                                     Text(
                                         'Nirvana is an advanced music player where you can get the lyrics of the song that you are playling along with the feature of a  music player.',
-                                        style: TextStyle(color: Colors.white,fontSize: 20)),
-                                        SizedBox(height: 20),
+                                        style: TextStyle(
+                                            color: Colors.white, fontSize: 20)),
+                                    SizedBox(height: 20),
                                     Text('Created by: Harikrishnan MV',
-                                        style: TextStyle(color: Color.fromARGB(255, 42, 42, 42)))
+                                        style: TextStyle(
+                                            color: Color.fromARGB(
+                                                255, 42, 42, 42)))
                                   ],
                                 );
                               },
@@ -298,7 +299,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
   //profile edit function
   ProfileEditFunction({required BuildContext context}) async {
     TextEditingController editcontroller = TextEditingController()
-      ..text = oldNameStored;
+      ..text = OldUserName ?? 'Guest';
     SharedPreferences prefs = await SharedPreferences.getInstance();
     final String oldusername = prefs.getString('userNamekey').toString();
     Future editPlaylist() async {
@@ -312,7 +313,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
           backgroundColor: Color.fromARGB(255, 188, 140, 224),
           title: Text('EDIT YOUR NAME'),
           content: TextFormField(
-            controller: editcontroller..text = oldNameStored,
+            controller: editcontroller..text = OldUserName ?? 'Guest',
             keyboardType: TextInputType.name,
             textInputAction: TextInputAction.done,
             decoration: InputDecoration(
@@ -337,11 +338,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
             ElevatedButton(
               onPressed: () async {
                 //function to edit Profile
-                setState(() {
-                  prefs.setString(
-                      'userNamekey', editcontroller.text.toString());
-                  ProfileNameUser = prefs.getString('userNamekey').toString();
-                });
+                // setState(() {
+                prefs.setString('userNamekey', editcontroller.text.toString());
+                final String ProfileNameUser =
+                    prefs.getString('userNamekey').toString();
+                BlocProvider.of<ProfileScreenBloc>(context)
+                    .add(GetUserName(userNameSP: ProfileNameUser));
+                // });
                 Navigator.pop(context);
               },
               child: Text('Confirm'),

@@ -18,7 +18,7 @@ class _Screen_NavigationState extends State<Screen_Navigation> {
      HomeScreen(),
     FavoriteScreen(),
     PlaylistScreen(),
-    const ProfileScreen(),
+     ProfileScreen(),
   ];
   int _currentIndex = 0;
   @override
