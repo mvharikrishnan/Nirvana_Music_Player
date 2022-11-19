@@ -200,44 +200,6 @@ class HomeScreen extends StatelessWidget {
                         SizedBox(
                           height: 8,
                         ),
-
-                        //This code below contains the songs that are accecced form the database
-                        // ValueListenableBuilder(
-                        //   valueListenable: songBox.listenable(),
-                        //   builder: (context, Box<Songs> Songs, Widget? child) {
-                        //     // final keys = Songs.keys.toList();
-                        //     if (Songs.values == null) {
-                        //       return Center(
-                        //         child: CircularProgressIndicator(),
-                        //       );
-                        //     }
-                        //     if (Songs.values.isEmpty) {
-                        //       return Center(
-                        //           child: Text(
-                        //         'No Songs Identified',
-                        //         style: TextStyle(color: Colors.white),
-                        //       ));
-                        //     }
-                        //     return ListView.builder(
-                        //       itemCount: _foundSongs.length,
-                        //       shrinkWrap: true,
-                        //       physics: ScrollPhysics(),
-                        //       itemBuilder: (context, index) {
-                        //         return SongTile(
-                        //           Index: index,
-                        //           audioPlayer: audioPlayer,
-                        //           onpressed: () {},
-                        //           audioList: _foundSongs,
-                        //           homeScreen: false,
-                        //           PlaylistName: 'MostPlayed',
-                        //         );
-                        //       },
-                        //     );
-                        //   },
-                        // ),
-
-                        //
-
                         BlocBuilder<HomeScreenBloc, HomeScreenState>(
                           builder: (context, state) {
                             return ListView.builder(

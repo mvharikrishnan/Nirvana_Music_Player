@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hive_flutter/adapters.dart';
+import 'package:nirvana/controller/addToPlaylist/add_to_playlist_bloc.dart';
 import 'package:nirvana/controller/fav_screen/fav_screen_bloc.dart';
 
 import 'package:nirvana/controller/home_screen/home_screen_bloc.dart';
@@ -47,6 +48,9 @@ class MyApp extends StatelessWidget {
         ),
         BlocProvider(
           create: (context) => NowPlaylingBloc(),
+        ),
+        BlocProvider(
+          create: (context) => AddToPlaylistBloc(),
         ),
       ],
       child: const MaterialApp(

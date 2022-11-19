@@ -15,9 +15,7 @@ part 'fav_screen_bloc.freezed.dart';
 class FavScreenBloc extends Bloc<FavScreenEvent, FavScreenState> {
   FavScreenBloc() : super(FavScreenState.initial()) {
     on<CurrentSongListInFAV>((event, emit)async {
-      SharedPreferences prefs = await SharedPreferences.getInstance();
-      final String Username = prefs.getString('userNamekey').toString();
-      OldUserName = Username;
+      
       emit(FavScreenState(songList: event.songList));
     });
   }

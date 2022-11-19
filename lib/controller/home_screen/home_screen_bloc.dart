@@ -5,6 +5,8 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:nirvana/database/database_functions/dbFunctions.dart';
 import 'package:nirvana/model/songdb.dart';
+import 'package:nirvana/view/presentation/settings_screen/constants.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 part 'home_screen_event.dart';
 part 'home_screen_state.dart';
@@ -15,7 +17,8 @@ class HomeScreenBloc extends Bloc<HomeScreenEvent, HomeScreenState> {
     Box<Songs> songBox = getSongBox();
     final List<Songs> homeSongsList = songBox.values.toList();
 
-    on<Initialise>((event, emit) {
+    on<Initialise>((event, emit) async{
+     
       emit(HomeScreenState(HomeSongs: homeSongsList,));
     });
 

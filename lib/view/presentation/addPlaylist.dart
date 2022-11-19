@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:nirvana/Functions/usingFunctions.dart';
+import 'package:nirvana/controller/addToPlaylist/add_to_playlist_bloc.dart';
 import 'package:nirvana/controller/playlist_screen/play_list_screen_bloc.dart';
 import 'package:nirvana/database/database_functions/dbFunctions.dart';
 
@@ -29,10 +30,12 @@ class AddToPlaylist extends StatelessWidget {
 
   String? proflieUserName;
 
-  void searchPlaylist(String enteredKeyword) {
+  void searchPlaylist(String enteredKeyword, BuildContext context) {
+    Box<List> playlistBox = getPlaylistBox();
+    final List playlistNamesList = playlistBox.keys.toList();
     List results = [];
     if (enteredKeyword.isEmpty) {
-      results = playlistcontent;
+      results = playlistNamesList;
     } else {
       results = playlistBox.keys
           .where((element) => element
@@ -45,12 +48,17 @@ class AddToPlaylist extends StatelessWidget {
     // setState(() {
     //   _foundedPlaylist = results;
     // });
+    BlocProvider.of<AddToPlaylistBloc>(context)
+        .add(PlaylistSearch(NewPlaylistLists: results));
   }
 
   @override
   Widget build(BuildContext context) {
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      BlocProvider.of<PlayListScreenBloc>(context).add(PlaylistNames());
+      Box<List> playlistBox = getPlaylistBox();
+      final List playlistNamesList = playlistBox.keys.toList();
+      BlocProvider.of<AddToPlaylistBloc>(context)
+          .add(InitiailPlaylistNames(NewPlaylistLists: playlistNamesList));
     });
 
     TextEditingController? playlistcontroler;
@@ -103,9 +111,7 @@ class AddToPlaylist extends StatelessWidget {
               //     hinttext: 'Find Playlist',
               //     textEditController: playlistcontroler),
               TextField(
-                onChanged: (value) {
-                  searchPlaylist(value);
-                },
+                onChanged: (value) => searchPlaylist(value, context),
                 style: TextStyle(color: Colors.white),
                 controller: editingController,
                 decoration: InputDecoration(
@@ -166,7 +172,7 @@ class AddToPlaylist extends StatelessWidget {
 
                       // here BlocBuilder
 
-                      BlocBuilder<PlayListScreenBloc, PlayListScreenState>(
+                      BlocBuilder<AddToPlaylistBloc, AddToPlaylistState>(
                         builder: (context, state) {
                           return (playlistBox.isEmpty)
                               ? const Center(

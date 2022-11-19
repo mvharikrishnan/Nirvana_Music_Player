@@ -7,6 +7,7 @@ import 'package:nirvana/database/database_functions/dbFunctions.dart';
 import 'package:nirvana/model/songdb.dart';
 import 'package:nirvana/view/presentation/introduction_screen/introScreen.dart';
 import 'package:nirvana/view/presentation/navigationScreen.dart';
+import 'package:nirvana/view/presentation/settings_screen/constants.dart';
 import 'package:on_audio_query/on_audio_query.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -54,7 +55,7 @@ class _SplashScreenState extends State<SplashScreen> {
   //functions for requseting the songs from the storage
   Future<void> requestPermission() async {
     await Permission.storage.request();
-     }
+  }
 
   //function for accescessing the songs form the storage
   Future<void> accessSongs() async {
@@ -97,6 +98,10 @@ class _SplashScreenState extends State<SplashScreen> {
     accesssTheKeysForLikedSongs();
     accessTheKeysForRecentSongs();
     accessTheKeysForMostPlayedSongs();
+
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    final String Username = prefs.getString('userNamekey').toString();
+    OldUserName = Username;
   }
 
   Future accesssTheKeysForLikedSongs() async {
@@ -116,7 +121,8 @@ class _SplashScreenState extends State<SplashScreen> {
       await playlistbox.put('MostPlayed', MostPlayed);
     }
   }
-   bool SaveLogKey = false;
+
+  bool SaveLogKey = false;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -164,24 +170,23 @@ class _SplashScreenState extends State<SplashScreen> {
 
 Future<void> gotoScreenHome(BuildContext context) async {
   final _sharedPrefs = await SharedPreferences.getInstance();
-  final SaveLogKey=_sharedPrefs.getBool('SaveLogKey');
-  if(SaveLogKey==null||SaveLogKey==false){
+  final SaveLogKey = _sharedPrefs.getBool('SaveLogKey');
+  if (SaveLogKey == null || SaveLogKey == false) {
     //navigate to intro screen
-     Navigator.pushReplacement(
-    context,
-    MaterialPageRoute(
-      builder: (ctx) =>  IntroScreen(),
-    ),
-  );
-  }else{
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(
+        builder: (ctx) => IntroScreen(),
+      ),
+    );
+  } else {
     await Future.delayed(const Duration(seconds: 5));
-  // ignore: use_build_context_synchronously
-  Navigator.pushReplacement(
-    context,
-    MaterialPageRoute(
-      builder: (ctx) => const Screen_Navigation(),
-    ),
-  );
+    // ignore: use_build_context_synchronously
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(
+        builder: (ctx) => const Screen_Navigation(),
+      ),
+    );
   }
 }
-
