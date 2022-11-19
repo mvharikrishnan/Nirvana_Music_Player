@@ -5,6 +5,7 @@ import 'package:hive_flutter/adapters.dart';
 import 'package:nirvana/controller/fav_screen/fav_screen_bloc.dart';
 
 import 'package:nirvana/controller/home_screen/home_screen_bloc.dart';
+import 'package:nirvana/controller/now_playling_screen/now_playling_bloc.dart';
 import 'package:nirvana/controller/playlist_screen/play_list_screen_bloc.dart';
 import 'package:nirvana/controller/profile_screen/profile_screen_bloc.dart';
 import 'package:nirvana/model/songdb.dart';
@@ -43,6 +44,9 @@ class MyApp extends StatelessWidget {
         ),
          BlocProvider(
           create: (context) => ProfileScreenBloc(),
+        ),
+        BlocProvider(
+          create: (context) => NowPlaylingBloc(),
         ),
       ],
       child: const MaterialApp(

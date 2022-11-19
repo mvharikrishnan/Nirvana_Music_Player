@@ -1,15 +1,14 @@
 import 'package:assets_audio_player/assets_audio_player.dart';
-// import 'package:flutter/cupertino.dart';
+
 import 'package:flutter/material.dart';
-// import 'package:flutter/src/foundation/key.dart';
-// import 'package:flutter/src/widgets/framework.dart';
+
 import 'package:marquee/marquee.dart';
 import 'package:nirvana/model/songdb.dart';
 import 'package:nirvana/view/presentation/playing_screen/songPlayScreen.dart';
 import 'package:on_audio_query/on_audio_query.dart';
 
-class MiniMusicPlayer extends StatefulWidget {
-  const MiniMusicPlayer(
+class MiniMusicPlayer extends StatelessWidget {
+  MiniMusicPlayer(
       {Key? key,
       required this.audioPlayer,
       required this.index,
@@ -20,21 +19,15 @@ class MiniMusicPlayer extends StatefulWidget {
   final int index;
   final AssetsAudioPlayer audioPlayer;
 
-  @override
-  State<MiniMusicPlayer> createState() => _MiniMusicPlayerState();
-}
-
-class _MiniMusicPlayerState extends State<MiniMusicPlayer> {
   List<Audio> songAudio = [];
   bool playbuttonMini = true;
-  //bool playorpause = false;
-  //final _audioPlayer = AssetsAudioPlayer();
+
   Audio find(List<Audio> source, String fromPath) {
     return source.firstWhere((element) => element.path == fromPath);
   }
 
   convertMusic() {
-    for (var song in widget.songList) {
+    for (var song in songList) {
       songAudio.add(
         Audio.file(song.songPath,
             metas: Metas(
@@ -47,28 +40,24 @@ class _MiniMusicPlayerState extends State<MiniMusicPlayer> {
   }
 
   Future<void> openAudioPlayer() async {
-    // convertMusic();
-    await widget.audioPlayer.open(
-      Playlist(audios: songAudio, startIndex: widget.index),
+    await audioPlayer.open(
+      Playlist(audios: songAudio, startIndex: index),
       autoStart: true,
       showNotification: true,
       playInBackground: PlayInBackground.enabled,
     );
   }
 
-  @override
   void initState() {
-    // TODO: implement initState
     convertMusic();
     openAudioPlayer();
-    super.initState();
   }
 
   Route _createRoute() {
     return PageRouteBuilder(
       pageBuilder: (context, animation, secondaryAnimation) => SongPlayScreen(
-        Index: widget.index,
-        audioPlayer: widget.audioPlayer,
+        Index: index,
+        audioPlayer: audioPlayer,
         songList: songAudio,
       ),
       transitionsBuilder: (context, animation, secondaryAnimation, child) {
@@ -89,7 +78,8 @@ class _MiniMusicPlayerState extends State<MiniMusicPlayer> {
 
   @override
   Widget build(BuildContext context) {
-    return widget.audioPlayer.builderCurrent(
+    initState();
+    return audioPlayer.builderCurrent(
       builder: (context, playing) {
         final musicAudio = find(songAudio, playing.audio.assetAudioPath);
         return Padding(
@@ -120,7 +110,7 @@ class _MiniMusicPlayerState extends State<MiniMusicPlayer> {
                                 width: 120,
                                 child: Marquee(
                                   startAfter: Duration(seconds: 2),
-                                  text: widget.audioPlayer.getCurrentAudioTitle,
+                                  text: audioPlayer.getCurrentAudioTitle,
                                   style: TextStyle(
                                     color: Colors.white,
                                     fontSize: 15,
@@ -134,8 +124,7 @@ class _MiniMusicPlayerState extends State<MiniMusicPlayer> {
                                 children: [
                                   IconButton(
                                     onPressed: () {
-                                      widget.audioPlayer.previous();
-                                      playMini();
+                                      audioPlayer.previous();
                                     },
                                     icon: Icon(
                                       Icons.skip_previous_rounded,
@@ -144,12 +133,7 @@ class _MiniMusicPlayerState extends State<MiniMusicPlayer> {
                                   ),
                                   InkWell(
                                     onTap: () {
-                                      widget.audioPlayer.playOrPause();
-                                      setState(() {
-                                        playbuttonMini
-                                            ? pausedmini()
-                                            : playMini();
-                                      });
+                                      audioPlayer.playOrPause();
                                     },
                                     child: Container(
                                       height: 50,
@@ -158,7 +142,7 @@ class _MiniMusicPlayerState extends State<MiniMusicPlayer> {
                                           shape: BoxShape.circle,
                                           color: Color(0xFFD933C3)),
                                       child: PlayerBuilder.isPlaying(
-                                        player: widget.audioPlayer,
+                                        player: audioPlayer,
                                         builder: (context, isPlaying) {
                                           return isPlaying
                                               ? Icon(
@@ -177,8 +161,7 @@ class _MiniMusicPlayerState extends State<MiniMusicPlayer> {
                                   ),
                                   IconButton(
                                     onPressed: () {
-                                      widget.audioPlayer.next();
-                                      playMini();
+                                      audioPlayer.next();
                                     },
                                     icon: Icon(
                                       Icons.skip_next_rounded,
@@ -219,17 +202,5 @@ class _MiniMusicPlayerState extends State<MiniMusicPlayer> {
         );
       },
     );
-  }
-
-  pausedmini() {
-    setState(() {
-      playbuttonMini = false;
-    });
-  }
-
-  playMini() {
-    setState(() {
-      playbuttonMini = true;
-    });
   }
 }

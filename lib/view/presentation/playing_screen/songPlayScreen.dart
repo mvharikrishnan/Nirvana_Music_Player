@@ -1,16 +1,24 @@
+import 'dart:developer';
+
 import 'package:assets_audio_player/assets_audio_player.dart';
 import 'package:audio_video_progress_bar/audio_video_progress_bar.dart';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 import 'package:marquee/marquee.dart';
 
 import 'package:nirvana/Functions/likedSongs.dart';
+import 'package:nirvana/controller/fav_screen/fav_screen_bloc.dart';
+import 'package:nirvana/controller/now_playling_screen/now_playling_bloc.dart';
+import 'package:nirvana/database/database_functions/dbFunctions.dart';
+import 'package:nirvana/model/songdb.dart';
 
 import 'package:nirvana/view/presentation/addPlaylist.dart';
 import 'package:nirvana/view/presentation/lyrics_screen/screenLyrics.dart';
 import 'package:on_audio_query/on_audio_query.dart';
 
-class SongPlayScreen extends StatefulWidget {
+class SongPlayScreen extends StatelessWidget {
   SongPlayScreen({
     Key? key,
     required this.Index,
@@ -22,23 +30,11 @@ class SongPlayScreen extends StatefulWidget {
   final List<Audio> songList;
   final AssetsAudioPlayer audioPlayer;
 
-  @override
-  State<SongPlayScreen> createState() => _SongPlayScreenState();
-}
-
-class _SongPlayScreenState extends State<SongPlayScreen> {
   final _audioQurey = new OnAudioQuery();
   final _audioPlayer = new AssetsAudioPlayer();
   bool playorpauseIcon = true;
   bool isLooping = false;
   bool isSound = true;
-
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-    //PlaySong(widget.songList[widget.Index].songPath);
-  }
 
   Audio find(List<Audio> source, String fromPath) {
     return source.firstWhere((element) {
@@ -48,15 +44,22 @@ class _SongPlayScreenState extends State<SongPlayScreen> {
 
   @override
   Widget build(BuildContext context) {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      BlocProvider.of<NowPlaylingBloc>(context).add(const Initialising());
+      BlocProvider.of<NowPlaylingBloc>(context).add(
+                                      IsFavorite(ID: songList[Index].metas.id!));
+    });
     final Height = MediaQuery.of(context).size.height;
     final Width = MediaQuery.of(context).size.width;
+    Box<List> playlistBox = getPlaylistBox();
+    final List<Songs> audioFavList =
+        playlistBox.get('LikedSongs')!.toList().cast();
     return Scaffold(
       backgroundColor: Color(0xFF3B1F50),
       body: SafeArea(
-        child: widget.audioPlayer.builderCurrent(
+        child: audioPlayer.builderCurrent(
           builder: (context, playing) {
-            final musicAuido =
-                find(widget.songList, playing.audio.assetAudioPath);
+            final musicAuido = find(songList, playing.audio.assetAudioPath);
             return Padding(
               padding: const EdgeInsets.all(15.0),
               child: Column(
@@ -70,7 +73,7 @@ class _SongPlayScreenState extends State<SongPlayScreen> {
                           GestureDetector(
                             onPanDown: (details) {
                               Navigator.of(context).pop();
-                              widget.audioPlayer.stop();
+                              audioPlayer.stop();
                             },
                             child: Container(
                               height: 13,
@@ -120,7 +123,7 @@ class _SongPlayScreenState extends State<SongPlayScreen> {
                           child: Marquee(
                             blankSpace: 70,
                             startAfter: Duration(seconds: 5),
-                            text: widget.audioPlayer.getCurrentAudioTitle,
+                            text: audioPlayer.getCurrentAudioTitle,
                             style: TextStyle(
                                 color: Colors.white,
                                 fontSize: 24,
@@ -135,7 +138,7 @@ class _SongPlayScreenState extends State<SongPlayScreen> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Text(
-                            widget.audioPlayer.getCurrentAudioArtist,
+                            audioPlayer.getCurrentAudioArtist,
                             style: TextStyle(
                                 color: Color(0xFFC87DFF),
                                 fontSize: 15,
@@ -149,7 +152,7 @@ class _SongPlayScreenState extends State<SongPlayScreen> {
                     height: Height / 20,
                   ),
                   //blank
-                  widget.audioPlayer.builderRealtimePlayingInfos(
+                  audioPlayer.builderRealtimePlayingInfos(
                       builder: (context, info) {
                     final duration = info.current!.audio.duration;
                     final progress = info.currentPosition;
@@ -168,64 +171,51 @@ class _SongPlayScreenState extends State<SongPlayScreen> {
                         timeLabelTextStyle:
                             TextStyle(color: Colors.white, fontSize: 13),
                         onSeek: ((value) {
-                          widget.audioPlayer.seek(value);
+                          audioPlayer.seek(value);
                         }),
                       ),
                     );
                   }),
-                  // SizedBox(
-                  //   height: 50,
-                  // ),
-                  // Row(
-                  //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  //   children: [
-                  //     IconButton(
-                  //       onPressed: () {},
-                  //       icon: Icon(
-                  //         Icons.shuffle,
-                  //         size: 30,
-                  //         color: Colors.white,
-                  //       ),
-                  //     ),
-                  //     IconButton(
-                  //       onPressed: () {},
-                  //       icon: Icon(
-                  //         Icons.share,
-                  //         size: 30,
-                  //         color: Colors.white,
-                  //       ),
-                  //     ),
-                  //   ],
-                  // ),
-                  // SizedBox(
-                  //   height: Height/5,
-                  // ),
-                  //blank
 
                   Column(
                     children: [
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          IconButton(
-                            onPressed: () {
-                              isLooping ? loopingOff() : loopingOn();
-                            },
-                            icon: isLooping
-                                ? Icon(
-                                    Icons.loop,
-                                    size: 30,
-                                    color: Color(0xFFD933C3),
-                                  )
-                                : Icon(
-                                    Icons.loop,
-                                    size: 30,
-                                    color: Colors.white,
-                                  ),
-                          ),
+                         
+                             PlayerBuilder.loopMode(
+                              player: audioPlayer,
+                               builder: (context,loopMode) {
+                                 return IconButton(
+                                    onPressed: () {
+                                      if(loopMode ==LoopMode.playlist){
+                                        audioPlayer.setLoopMode(LoopMode.single);
+                                      }
+                                      else{
+                                        audioPlayer.setLoopMode(LoopMode.playlist);
+                                      }
+                                      log('Loop Button Pressed');
+                                    },
+                                    icon:(loopMode == LoopMode.playlist)
+                                        ? const Icon(
+                                            Icons.loop,
+                                            size: 30,
+                                            color: Color(0xFFD933C3),
+                                          )
+                                        : const Icon(
+                                            Icons.loop,
+                                            size: 30,
+                                            color: Colors.white,
+                                          ),
+                                  );
+                               }
+                             ),
+                          
                           IconButton(
                               onPressed: () {
-                                widget.audioPlayer.previous();
+                                audioPlayer.previous();
+                                BlocProvider.of<NowPlaylingBloc>(context)
+                                    .add(IsFavorite(ID: musicAuido.metas.id!));
                               },
                               icon: Icon(
                                 Icons.fast_rewind,
@@ -234,27 +224,24 @@ class _SongPlayScreenState extends State<SongPlayScreen> {
                               )),
                           GestureDetector(
                             onTap: () {
-                              widget.audioPlayer.playOrPause();
-                              setState(() {
-                                playorpauseIcon ? pauseIcons() : PlayIcon();
-                              });
+                              audioPlayer.playOrPause();
                             },
                             child: Container(
                               height: 60,
                               width: 60,
-                              decoration: BoxDecoration(
+                              decoration: const BoxDecoration(
                                   shape: BoxShape.circle,
                                   color: Color(0xFFD933C3)),
                               child: PlayerBuilder.isPlaying(
-                                player: widget.audioPlayer,
+                                player: audioPlayer,
                                 builder: (context, isPlaying) {
                                   return isPlaying
-                                      ? Icon(
+                                      ? const Icon(
                                           Icons.pause_rounded,
                                           color: Colors.white,
                                           size: 40,
                                         )
-                                      : Icon(
+                                      : const Icon(
                                           Icons.play_arrow_rounded,
                                           color: Colors.white,
                                           size: 40,
@@ -266,29 +253,47 @@ class _SongPlayScreenState extends State<SongPlayScreen> {
                           IconButton(
                               onPressed: () async {
                                 //_audioPlayer.next();
-                                await widget.audioPlayer.next();
+                                audioPlayer.next();
+                                BlocProvider.of<NowPlaylingBloc>(context)
+                                    .add(IsFavorite(ID: musicAuido.metas.id!));
+                                
                               },
-                              icon: Icon(
+                              icon: const Icon(
                                 Icons.fast_forward,
                                 size: 30,
                                 color: Colors.white,
                               )),
-                          IconButton(
-                            onPressed: () {
-                              isSound ? soundOff() : soundOn();
-                            },
-                            icon: isSound
-                                ? Icon(
-                                    Icons.music_note_outlined,
-                                    size: 30,
-                                    color: Colors.white,
-                                  )
-                                : Icon(
-                                    Icons.music_off_outlined,
-                                    size: 30,
-                                    color: Color(0xFFD933C3),
-                                  ),
-                          ),
+                         
+                              
+                             PlayerBuilder.volume(
+                              player: audioPlayer,
+                               builder: (context,volume) {
+                                 return IconButton(
+                                    onPressed: () {
+                                      // isSound ? soundOff() : soundOn();
+
+                                      if(volume == 0.0){
+                                        audioPlayer.setVolume(1);
+                                      }
+                                      else{
+                                        audioPlayer.setVolume(0);
+                                      }
+                                    },
+                                    icon: (volume == 1.0)
+                                        ? const Icon(
+                                            Icons.music_note_outlined,
+                                            size: 30,
+                                            color: Colors.white,
+                                          )
+                                        : const Icon(
+                                            Icons.music_off_outlined,
+                                            size: 30,
+                                            color: Color(0xFFD933C3),
+                                          ),
+                                  );
+                               }
+                             ),
+                            
                         ],
                       ),
                     ],
@@ -323,30 +328,43 @@ class _SongPlayScreenState extends State<SongPlayScreen> {
                             size: 30,
                           ),
                         ),
-                        IconButton(
-                            onPressed: () {
-                              setState(() {
-                                PlaylistSongsClass.addSongToLiked(
-                                    context: context, ID: musicAuido.metas.id!);
-                                PlaylistSongsClass.isLiked(
-                                    ID: musicAuido.metas.id!);
-                              });
-                            },
-                            icon: Icon(
-                                PlaylistSongsClass.isLiked(
-                                    ID: musicAuido.metas.id!),
-                                color: Color(
-                                  0xFFD933C3,
-                                ),
-                                size: 30)),
+                        BlocBuilder<NowPlaylingBloc, NowPlaylingState>(
+                          builder: (context, state) {
+                            return IconButton(
+                                onPressed: () {
+                                  PlaylistSongsClass.addSongToLiked(
+                                      context: context,
+                                      ID: musicAuido.metas.id!);
+                                  // PlaylistSongsClass.isLiked(
+                                  //     ID: musicAuido.metas.id!);
+                                  BlocProvider.of<NowPlaylingBloc>(context).add(
+                                      IsFavorite(ID: musicAuido.metas.id!));
+                                },
+                                icon: Icon(
+                                    // PlaylistSongsClass.isLiked(
+                                    //     ID: musicAuido.metas.id!),
+                                    // state.songList
+                                    //         .where((song) =>
+                                    //             song.id ==
+                                    //             musicAuido.metas.id!)
+                                    //         .isNotEmpty
+                                    state.isFavorite
+                                        ? Icons.favorite
+                                        : Icons.favorite_border,
+                                    color: Color(
+                                      0xFFD933C3,
+                                    ),
+                                    size: 30));
+                          },
+                        ),
                         IconButton(
                           onPressed: () {
                             Navigator.of(context).push(
                               MaterialPageRoute(
                                 builder: (ctx) => AddToPlaylist(
                                   Index: musicAuido.metas.id!,
-                                  audioPlayer: widget.audioPlayer,
-                                  songList: widget.songList,
+                                  audioPlayer: audioPlayer,
+                                  songList: songList,
                                 ),
                               ),
                             );
@@ -368,56 +386,56 @@ class _SongPlayScreenState extends State<SongPlayScreen> {
 
   PlaySong(String? Uri) {
     try {
-      widget.audioPlayer.open(
+      audioPlayer.open(
         Audio.file(Uri!),
         showNotification: true,
       );
-      widget.audioPlayer.play();
+      audioPlayer.play();
     } on Exception {
       print('Song is not Playable');
     }
   }
 
-  pauseIcons() {
-    setState(() {
-      playorpauseIcon = false;
-    });
-  }
+  // pauseIcons() {
+  //   setState(() {
+  //     playorpauseIcon = false;
+  //   });
+  // }
 
-  PlayIcon() {
-    setState(() {
-      playorpauseIcon = true;
-    });
-  }
+  // PlayIcon() {
+  //   setState(() {
+  //     playorpauseIcon = true;
+  //   });
+  // }
 
-  //code for looping
-  loopingOn() {
-    widget.audioPlayer.play();
-    widget.audioPlayer.setLoopMode(LoopMode.single);
-    PlayIcon();
-    setState(() {
-      isLooping = true;
-    });
-  }
+  // //code for looping
+  // loopingOn() {
+  //   audioPlayer.play();
+  //   audioPlayer.setLoopMode(LoopMode.single);
+  //   PlayIcon();
+  //   setState(() {
+  //     isLooping = true;
+  //   });
+  // }
 
-  loopingOff() {
-    widget.audioPlayer.setLoopMode(LoopMode.none);
-    setState(() {
-      isLooping = false;
-    });
-  }
+  // loopingOff() {
+  //   audioPlayer.setLoopMode(LoopMode.none);
+  //   setState(() {
+  //     isLooping = false;
+  //   });
+  // }
 
-  soundOn() {
-    widget.audioPlayer.setVolume(1);
-    setState(() {
-      isSound = true;
-    });
-  }
+  // soundOn() {
+  //   audioPlayer.setVolume(1);
+  //   setState(() {
+  //     isSound = true;
+  //   });
+  // }
 
-  soundOff() {
-    widget.audioPlayer.setVolume(0.0);
-    setState(() {
-      isSound = false;
-    });
-  }
+  // soundOff() {
+  //   audioPlayer.setVolume(0.0);
+  //   setState(() {
+  //     isSound = false;
+  //   });
+  // }
 }

@@ -13,47 +13,22 @@ class ProfileScreen extends StatelessWidget {
   ProfileScreen({Key? key}) : super(key: key);
 
   AssetsAudioPlayer audioPlayer = AssetsAudioPlayer();
-  // String oldNameStored = 'Enter Your Name';
-
-  // getUnsernaemFromSP() async {
-  //   SharedPreferences prefs = await SharedPreferences.getInstance();
-  //   final String Username = prefs.getString('userNamekey').toString();
-
-  // setState(() {
-  //   ProfileNameUser = Username;
-  //   oldNameStored = prefs.getString('userNamekey').toString();
-  // });
-  // if (ProfileNameUser == null) {
-  //   ProfileNameUser = 'Guest';
-  // } else {
-  //   setState(() {
-  //     ProfileNameUser = Username;
-  //   });
-  // }
-  // }
 
 //switch
   // bool isSwitched = true;
   // void toogleSwitch(bool value) {
   //   if (isSwitched == false) {
-  //     //notification function to set the notification true
+  //     notification function to set the notification true
   //     setState(() {
   //       isSwitched = true;
-  //       //audioPlayer.open(showNotification: showNotification);
+  //       audioPlayer.open(showNotification: showNotification);
   //     });
   //   } else {
-  //     //notification function to set the notification false
+  //     notification function to set the notification false
   //     setState(() {
   //       isSwitched = false;
   //     });
   //   }
-  // }
-
-  // @override
-  // void initState() {
-  //   // TODO: implement initState
-  //   super.initState();
-  //   getUnsernaemFromSP();
   // }
 
   @override
@@ -338,13 +313,13 @@ class ProfileScreen extends StatelessWidget {
             ElevatedButton(
               onPressed: () async {
                 //function to edit Profile
-                // setState(() {
+
                 prefs.setString('userNamekey', editcontroller.text.toString());
                 final String ProfileNameUser =
                     prefs.getString('userNamekey').toString();
                 BlocProvider.of<ProfileScreenBloc>(context)
                     .add(GetUserName(userNameSP: ProfileNameUser));
-                // });
+
                 Navigator.pop(context);
               },
               child: Text('Confirm'),
