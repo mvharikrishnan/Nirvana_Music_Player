@@ -1,6 +1,8 @@
 import 'package:assets_audio_player/assets_audio_player.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:nirvana/controller/home_screen/home_screen_bloc.dart';
 
 import 'package:nirvana/model/songdb.dart';
 
@@ -12,14 +14,9 @@ import 'package:nirvana/view/widgets/songTile.dart';
 import 'package:nirvana/view/widgets/textFormField.dart';
 import 'package:on_audio_query/on_audio_query.dart';
 
-class HomeScreen extends StatefulWidget {
-  const HomeScreen({Key? key}) : super(key: key);
+class HomeScreen extends StatelessWidget {
+  HomeScreen({Key? key}) : super(key: key);
 
-  @override
-  State<HomeScreen> createState() => _HomeScreenState();
-}
-
-class _HomeScreenState extends State<HomeScreen> {
   final _audioQurey = new OnAudioQuery();
   final audioPlayer = new AssetsAudioPlayer();
   TextEditingController searchController = new TextEditingController();
@@ -38,7 +35,7 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   //accessig the songBOx
-  void searchSongs(String enteredKeyword) {
+  void searchSongs(String enteredKeyword, BuildContext context) {
     List<Songs> results = [];
     if (enteredKeyword.isEmpty) {
       results = audioList;
@@ -50,9 +47,11 @@ class _HomeScreenState extends State<HomeScreen> {
               .contains(enteredKeyword.toLowerCase()))
           .toList();
     }
-    setState(() {
-      _foundSongs = results;
-    });
+    // setState(() {
+    //   _foundSongs = results;
+    // });
+    BlocProvider.of<HomeScreenBloc>(context)
+        .add(SearchSongs(NewListSongs: results));
   }
 
   @override
@@ -105,18 +104,18 @@ class _HomeScreenState extends State<HomeScreen> {
 
               TextField(
                 onEditingComplete: () {
-                  setState(() {
-                    isVisibile = true;
-                  });
+                  // setState(() {
+                  //   isVisibile = true;
+                  // });
                 },
                 onTap: () {
-                  setState(() {
-                    isVisibile = false;
-                  });
+                  // setState(() {
+                  //   isVisibile = false;
+                  // });
                 },
                 enableSuggestions: true,
                 style: TextStyle(color: Colors.white),
-                onChanged: (value) => searchSongs(value),
+                onChanged: (value) => searchSongs(value, context),
                 controller: searchController,
                 decoration: InputDecoration(
                   prefixIconColor: Colors.white,
@@ -203,24 +202,46 @@ class _HomeScreenState extends State<HomeScreen> {
                         ),
 
                         //This code below contains the songs that are accecced form the database
-                        ValueListenableBuilder(
-                          valueListenable: songBox.listenable(),
-                          builder: (context, Box<Songs> Songs, Widget? child) {
-                            // final keys = Songs.keys.toList();
-                            if (Songs.values == null) {
-                              return Center(
-                                child: CircularProgressIndicator(),
-                              );
-                            }
-                            if (Songs.values.isEmpty) {
-                              return Center(
-                                  child: Text(
-                                'No Songs Identified',
-                                style: TextStyle(color: Colors.white),
-                              ));
-                            }
+                        // ValueListenableBuilder(
+                        //   valueListenable: songBox.listenable(),
+                        //   builder: (context, Box<Songs> Songs, Widget? child) {
+                        //     // final keys = Songs.keys.toList();
+                        //     if (Songs.values == null) {
+                        //       return Center(
+                        //         child: CircularProgressIndicator(),
+                        //       );
+                        //     }
+                        //     if (Songs.values.isEmpty) {
+                        //       return Center(
+                        //           child: Text(
+                        //         'No Songs Identified',
+                        //         style: TextStyle(color: Colors.white),
+                        //       ));
+                        //     }
+                        //     return ListView.builder(
+                        //       itemCount: _foundSongs.length,
+                        //       shrinkWrap: true,
+                        //       physics: ScrollPhysics(),
+                        //       itemBuilder: (context, index) {
+                        //         return SongTile(
+                        //           Index: index,
+                        //           audioPlayer: audioPlayer,
+                        //           onpressed: () {},
+                        //           audioList: _foundSongs,
+                        //           homeScreen: false,
+                        //           PlaylistName: 'MostPlayed',
+                        //         );
+                        //       },
+                        //     );
+                        //   },
+                        // ),
+
+                        //
+
+                        BlocBuilder<HomeScreenBloc, HomeScreenState>(
+                          builder: (context, state) {
                             return ListView.builder(
-                              itemCount: _foundSongs.length,
+                              itemCount: state.HomeSongs.length,
                               shrinkWrap: true,
                               physics: ScrollPhysics(),
                               itemBuilder: (context, index) {
@@ -228,7 +249,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                   Index: index,
                                   audioPlayer: audioPlayer,
                                   onpressed: () {},
-                                  audioList: _foundSongs,
+                                  audioList: state.HomeSongs,
                                   homeScreen: false,
                                   PlaylistName: 'MostPlayed',
                                 );

@@ -19,19 +19,19 @@ mixin _$HomeScreenEvent {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() initialise,
-    required TResult Function(String searchValue) searchSongs,
+    required TResult Function(List<Songs> NewListSongs) searchSongs,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initialise,
-    TResult? Function(String searchValue)? searchSongs,
+    TResult? Function(List<Songs> NewListSongs)? searchSongs,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initialise,
-    TResult Function(String searchValue)? searchSongs,
+    TResult Function(List<Songs> NewListSongs)? searchSongs,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -113,7 +113,7 @@ class _$Initialise implements Initialise {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() initialise,
-    required TResult Function(String searchValue) searchSongs,
+    required TResult Function(List<Songs> NewListSongs) searchSongs,
   }) {
     return initialise();
   }
@@ -122,7 +122,7 @@ class _$Initialise implements Initialise {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initialise,
-    TResult? Function(String searchValue)? searchSongs,
+    TResult? Function(List<Songs> NewListSongs)? searchSongs,
   }) {
     return initialise?.call();
   }
@@ -131,7 +131,7 @@ class _$Initialise implements Initialise {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initialise,
-    TResult Function(String searchValue)? searchSongs,
+    TResult Function(List<Songs> NewListSongs)? searchSongs,
     required TResult orElse(),
   }) {
     if (initialise != null) {
@@ -182,7 +182,7 @@ abstract class _$$SearchSongsCopyWith<$Res> {
           _$SearchSongs value, $Res Function(_$SearchSongs) then) =
       __$$SearchSongsCopyWithImpl<$Res>;
   @useResult
-  $Res call({String searchValue});
+  $Res call({List<Songs> NewListSongs});
 }
 
 /// @nodoc
@@ -196,13 +196,13 @@ class __$$SearchSongsCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? searchValue = null,
+    Object? NewListSongs = null,
   }) {
     return _then(_$SearchSongs(
-      searchValue: null == searchValue
-          ? _value.searchValue
-          : searchValue // ignore: cast_nullable_to_non_nullable
-              as String,
+      NewListSongs: null == NewListSongs
+          ? _value._NewListSongs
+          : NewListSongs // ignore: cast_nullable_to_non_nullable
+              as List<Songs>,
     ));
   }
 }
@@ -210,14 +210,19 @@ class __$$SearchSongsCopyWithImpl<$Res>
 /// @nodoc
 
 class _$SearchSongs implements SearchSongs {
-  const _$SearchSongs({required this.searchValue});
+  const _$SearchSongs({required final List<Songs> NewListSongs})
+      : _NewListSongs = NewListSongs;
 
+  final List<Songs> _NewListSongs;
   @override
-  final String searchValue;
+  List<Songs> get NewListSongs {
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_NewListSongs);
+  }
 
   @override
   String toString() {
-    return 'HomeScreenEvent.searchSongs(searchValue: $searchValue)';
+    return 'HomeScreenEvent.searchSongs(NewListSongs: $NewListSongs)';
   }
 
   @override
@@ -225,12 +230,13 @@ class _$SearchSongs implements SearchSongs {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$SearchSongs &&
-            (identical(other.searchValue, searchValue) ||
-                other.searchValue == searchValue));
+            const DeepCollectionEquality()
+                .equals(other._NewListSongs, _NewListSongs));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, searchValue);
+  int get hashCode => Object.hash(
+      runtimeType, const DeepCollectionEquality().hash(_NewListSongs));
 
   @JsonKey(ignore: true)
   @override
@@ -242,29 +248,29 @@ class _$SearchSongs implements SearchSongs {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() initialise,
-    required TResult Function(String searchValue) searchSongs,
+    required TResult Function(List<Songs> NewListSongs) searchSongs,
   }) {
-    return searchSongs(searchValue);
+    return searchSongs(NewListSongs);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initialise,
-    TResult? Function(String searchValue)? searchSongs,
+    TResult? Function(List<Songs> NewListSongs)? searchSongs,
   }) {
-    return searchSongs?.call(searchValue);
+    return searchSongs?.call(NewListSongs);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initialise,
-    TResult Function(String searchValue)? searchSongs,
+    TResult Function(List<Songs> NewListSongs)? searchSongs,
     required TResult orElse(),
   }) {
     if (searchSongs != null) {
-      return searchSongs(searchValue);
+      return searchSongs(NewListSongs);
     }
     return orElse();
   }
@@ -302,10 +308,10 @@ class _$SearchSongs implements SearchSongs {
 }
 
 abstract class SearchSongs implements HomeScreenEvent {
-  const factory SearchSongs({required final String searchValue}) =
+  const factory SearchSongs({required final List<Songs> NewListSongs}) =
       _$SearchSongs;
 
-  String get searchValue;
+  List<Songs> get NewListSongs;
   @JsonKey(ignore: true)
   _$$SearchSongsCopyWith<_$SearchSongs> get copyWith =>
       throw _privateConstructorUsedError;
@@ -314,7 +320,6 @@ abstract class SearchSongs implements HomeScreenEvent {
 /// @nodoc
 mixin _$HomeScreenState {
   List<Songs> get HomeSongs => throw _privateConstructorUsedError;
-  List<Songs> get SearchedSOngs => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $HomeScreenStateCopyWith<HomeScreenState> get copyWith =>
@@ -327,7 +332,7 @@ abstract class $HomeScreenStateCopyWith<$Res> {
           HomeScreenState value, $Res Function(HomeScreenState) then) =
       _$HomeScreenStateCopyWithImpl<$Res, HomeScreenState>;
   @useResult
-  $Res call({List<Songs> HomeSongs, List<Songs> SearchedSOngs});
+  $Res call({List<Songs> HomeSongs});
 }
 
 /// @nodoc
@@ -344,16 +349,11 @@ class _$HomeScreenStateCopyWithImpl<$Res, $Val extends HomeScreenState>
   @override
   $Res call({
     Object? HomeSongs = null,
-    Object? SearchedSOngs = null,
   }) {
     return _then(_value.copyWith(
       HomeSongs: null == HomeSongs
           ? _value.HomeSongs
           : HomeSongs // ignore: cast_nullable_to_non_nullable
-              as List<Songs>,
-      SearchedSOngs: null == SearchedSOngs
-          ? _value.SearchedSOngs
-          : SearchedSOngs // ignore: cast_nullable_to_non_nullable
               as List<Songs>,
     ) as $Val);
   }
@@ -367,7 +367,7 @@ abstract class _$$_HomeScreenStateCopyWith<$Res>
       __$$_HomeScreenStateCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({List<Songs> HomeSongs, List<Songs> SearchedSOngs});
+  $Res call({List<Songs> HomeSongs});
 }
 
 /// @nodoc
@@ -382,16 +382,11 @@ class __$$_HomeScreenStateCopyWithImpl<$Res>
   @override
   $Res call({
     Object? HomeSongs = null,
-    Object? SearchedSOngs = null,
   }) {
     return _then(_$_HomeScreenState(
       HomeSongs: null == HomeSongs
           ? _value._HomeSongs
           : HomeSongs // ignore: cast_nullable_to_non_nullable
-              as List<Songs>,
-      SearchedSOngs: null == SearchedSOngs
-          ? _value._SearchedSOngs
-          : SearchedSOngs // ignore: cast_nullable_to_non_nullable
               as List<Songs>,
     ));
   }
@@ -400,11 +395,8 @@ class __$$_HomeScreenStateCopyWithImpl<$Res>
 /// @nodoc
 
 class _$_HomeScreenState implements _HomeScreenState {
-  const _$_HomeScreenState(
-      {required final List<Songs> HomeSongs,
-      required final List<Songs> SearchedSOngs})
-      : _HomeSongs = HomeSongs,
-        _SearchedSOngs = SearchedSOngs;
+  const _$_HomeScreenState({required final List<Songs> HomeSongs})
+      : _HomeSongs = HomeSongs;
 
   final List<Songs> _HomeSongs;
   @override
@@ -413,16 +405,9 @@ class _$_HomeScreenState implements _HomeScreenState {
     return EqualUnmodifiableListView(_HomeSongs);
   }
 
-  final List<Songs> _SearchedSOngs;
-  @override
-  List<Songs> get SearchedSOngs {
-    // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_SearchedSOngs);
-  }
-
   @override
   String toString() {
-    return 'HomeScreenState(HomeSongs: $HomeSongs, SearchedSOngs: $SearchedSOngs)';
+    return 'HomeScreenState(HomeSongs: $HomeSongs)';
   }
 
   @override
@@ -431,16 +416,12 @@ class _$_HomeScreenState implements _HomeScreenState {
         (other.runtimeType == runtimeType &&
             other is _$_HomeScreenState &&
             const DeepCollectionEquality()
-                .equals(other._HomeSongs, _HomeSongs) &&
-            const DeepCollectionEquality()
-                .equals(other._SearchedSOngs, _SearchedSOngs));
+                .equals(other._HomeSongs, _HomeSongs));
   }
 
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      const DeepCollectionEquality().hash(_HomeSongs),
-      const DeepCollectionEquality().hash(_SearchedSOngs));
+  int get hashCode =>
+      Object.hash(runtimeType, const DeepCollectionEquality().hash(_HomeSongs));
 
   @JsonKey(ignore: true)
   @override
@@ -450,14 +431,11 @@ class _$_HomeScreenState implements _HomeScreenState {
 }
 
 abstract class _HomeScreenState implements HomeScreenState {
-  const factory _HomeScreenState(
-      {required final List<Songs> HomeSongs,
-      required final List<Songs> SearchedSOngs}) = _$_HomeScreenState;
+  const factory _HomeScreenState({required final List<Songs> HomeSongs}) =
+      _$_HomeScreenState;
 
   @override
   List<Songs> get HomeSongs;
-  @override
-  List<Songs> get SearchedSOngs;
   @override
   @JsonKey(ignore: true)
   _$$_HomeScreenStateCopyWith<_$_HomeScreenState> get copyWith =>

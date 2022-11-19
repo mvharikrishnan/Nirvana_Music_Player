@@ -4,15 +4,17 @@ part of 'home_screen_bloc.dart';
 class HomeScreenState with _$HomeScreenState {
   const factory HomeScreenState({
     required List<Songs> HomeSongs,
-    required List<Songs> SearchedSOngs,
+    
   }) = _HomeScreenState;
 
   factory HomeScreenState.initial() {
     Box<Songs> songBox = getSongBox();
+    
     final List<Songs> homeSongsList = songBox.values.toList();
+    
     return HomeScreenState(
       HomeSongs: homeSongsList,
-      SearchedSOngs: [],
+      
     );
   }
 }

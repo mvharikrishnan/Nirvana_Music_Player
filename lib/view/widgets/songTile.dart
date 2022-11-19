@@ -148,6 +148,8 @@ class SongTile extends StatelessWidget {
                                   ID: audioList[Index].songPath);
                               BlocProvider.of<FavScreenBloc>(context).add(
                                   CurrentSongListInFAV(songList: audioList));
+
+                                  
                             },
                             icon: Icon(
                               // Icons.favorite,
