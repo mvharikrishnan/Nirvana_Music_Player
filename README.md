@@ -1,10 +1,8 @@
 # nirvana
 
-A new Flutter project.
+A complete Music player where it serves basic funtionalities like Play Pause,Next Prev,Playlist ,Fav and recent.
 
-## Getting Started
 
-This project is a starting point for a Flutter application.
 
 A few resources to get you started if this is your first Flutter project:
 
